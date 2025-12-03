@@ -15,11 +15,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
-public class TokenAuthenticationFilter extends OncePerRequestFilter {
+public class TokenAuthentificationFilter extends OncePerRequestFilter {
 
     private final AuthService authService;
 
-    public TokenAuthenticationFilter(AuthService authService) {
+    public TokenAuthentificationFilter(AuthService authService) {
         this.authService = authService;
     }
 
