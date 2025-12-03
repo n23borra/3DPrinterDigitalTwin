@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/twin
+    username: twin
+    password: twin
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: never
+server:
+  port: 8080
+polling:
+  interval-ms: 5000
+connectors:
+  moonraker:
+    base-url: http://localhost:7125
