@@ -1,0 +1,4232 @@
+[
+  {
+    "threat_code": "MA11",
+    "threat_uuid": "b402d4e0-4576-11e9-9173-0800277f0571",
+    "threat_label": "Error in use",
+    "vulnerabilities": [
+      {
+        "vuln_code": "132",
+        "vuln_uuid": "69fc074f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "24",
+        "vuln_uuid": "69fc0b70-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No passing up of information for a centralised malfunction analysis"
+      },
+      {
+        "vuln_code": "524",
+        "vuln_uuid": "69fc19fc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No reporting on malfunctions"
+      },
+      {
+        "vuln_code": "1049",
+        "vuln_uuid": "69fc0003-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. too many users for the maximum capacity of the directory)"
+      },
+      {
+        "vuln_code": "1021",
+        "vuln_uuid": "69fbfedc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete version of the messaging server"
+      },
+      {
+        "vuln_code": "859",
+        "vuln_uuid": "69fc23f9-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No sizing of the automatic fire extinction system, or incorrect sizing or inadequacy of this system."
+      },
+      {
+        "vuln_code": "1052",
+        "vuln_uuid": "69fc003a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on LDAP server)"
+      },
+      {
+        "vuln_code": "429",
+        "vuln_uuid": "69fc16f3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No clause covering response time for repair and treatment in the event of malfunction"
+      },
+      {
+        "vuln_code": "904",
+        "vuln_uuid": "69fc2881-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency resources"
+      },
+      {
+        "vuln_code": "890",
+        "vuln_uuid": "69fc2701-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of telecommunication resources, resulting, for example, from daily use of resources intended for the emergency solution."
+      },
+      {
+        "vuln_code": "298",
+        "vuln_uuid": "69fc10dd-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Obsolete medium"
+      },
+      {
+        "vuln_code": "223",
+        "vuln_uuid": "69fc0ad8-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Obsolete hardware"
+      },
+      {
+        "vuln_code": "37",
+        "vuln_uuid": "69fc1351-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Obsolete software"
+      },
+      {
+        "vuln_code": "1084",
+        "vuln_uuid": "69fc017e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. not enough storage or file share space)"
+      },
+      {
+        "vuln_code": "725",
+        "vuln_uuid": "69fc1fce-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Existence of obsolete components in the information processing infrastructure (development in languages no longer used, etc.)"
+      },
+      {
+        "vuln_code": "1118",
+        "vuln_uuid": "69fc03a0-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete version of the messaging server"
+      },
+      {
+        "vuln_code": "196",
+        "vuln_uuid": "69fc083d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. insufficient reserve time on a laptop battery)."
+      },
+      {
+        "vuln_code": "1014",
+        "vuln_uuid": "69fbfe99-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing (e.g. too much data for the maximum passband)"
+      },
+      {
+        "vuln_code": "456",
+        "vuln_uuid": "69fc184b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No updated display of information for calling the emergency services"
+      },
+      {
+        "vuln_code": "1107",
+        "vuln_uuid": "69fc0278-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of storage spaces for received messages"
+      },
+      {
+        "vuln_code": "1113",
+        "vuln_uuid": "69fc038b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on SMTP, POP3, IMAP server)"
+      },
+      {
+        "vuln_code": "1022",
+        "vuln_uuid": "69fbfee8-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete system"
+      },
+      {
+        "vuln_code": "1124",
+        "vuln_uuid": "69fc03f6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. too many simultaneous connections)"
+      },
+      {
+        "vuln_code": "722",
+        "vuln_uuid": "69fc1fae-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No incident monitoring to foresee malfunctions (trend charts)"
+      },
+      {
+        "vuln_code": "1062",
+        "vuln_uuid": "69fc00a3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "428",
+        "vuln_uuid": "69fc16dc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No clause covering response time for repair and replacement in the event of equipment failure"
+      },
+      {
+        "vuln_code": "109",
+        "vuln_uuid": "69fc01a6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete version of the operating system or applications"
+      },
+      {
+        "vuln_code": "896",
+        "vuln_uuid": "69fc280e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency power supply equipment (inverter, batteries, etc.)"
+      },
+      {
+        "vuln_code": "106",
+        "vuln_uuid": "69fc0098-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No diagnostic function to prevent equipment failures"
+      },
+      {
+        "vuln_code": "1070",
+        "vuln_uuid": "69fc0101-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. too many users for the number of connections possible and the passband)"
+      },
+      {
+        "vuln_code": "777",
+        "vuln_uuid": "69fc21c4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of operating and maintenance resources"
+      }
+    ]
+  },
+  {
+    "threat_code": "MA15",
+    "threat_uuid": "b402d513-4576-11e9-9173-0800277f0571",
+    "threat_label": "Software malfunction",
+    "vulnerabilities": [
+      {
+        "vuln_code": "132",
+        "vuln_uuid": "69fc074f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "24",
+        "vuln_uuid": "69fc0b70-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No passing up of information for a centralised malfunction analysis"
+      },
+      {
+        "vuln_code": "524",
+        "vuln_uuid": "69fc19fc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No reporting on malfunctions"
+      },
+      {
+        "vuln_code": "1049",
+        "vuln_uuid": "69fc0003-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. too many users for the maximum capacity of the directory)"
+      },
+      {
+        "vuln_code": "1021",
+        "vuln_uuid": "69fbfedc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete version of the messaging server"
+      },
+      {
+        "vuln_code": "859",
+        "vuln_uuid": "69fc23f9-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No sizing of the automatic fire extinction system, or incorrect sizing or inadequacy of this system."
+      },
+      {
+        "vuln_code": "1052",
+        "vuln_uuid": "69fc003a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on LDAP server)"
+      },
+      {
+        "vuln_code": "429",
+        "vuln_uuid": "69fc16f3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No clause covering response time for repair and treatment in the event of malfunction"
+      },
+      {
+        "vuln_code": "904",
+        "vuln_uuid": "69fc2881-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency resources"
+      },
+      {
+        "vuln_code": "890",
+        "vuln_uuid": "69fc2701-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of telecommunication resources, resulting, for example, from daily use of resources intended for the emergency solution."
+      },
+      {
+        "vuln_code": "298",
+        "vuln_uuid": "69fc10dd-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Obsolete medium"
+      },
+      {
+        "vuln_code": "223",
+        "vuln_uuid": "69fc0ad8-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Obsolete hardware"
+      },
+      {
+        "vuln_code": "37",
+        "vuln_uuid": "69fc1351-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Obsolete software"
+      },
+      {
+        "vuln_code": "1084",
+        "vuln_uuid": "69fc017e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. not enough storage or file share space)"
+      },
+      {
+        "vuln_code": "725",
+        "vuln_uuid": "69fc1fce-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Existence of obsolete components in the information processing infrastructure (development in languages no longer used, etc.)"
+      },
+      {
+        "vuln_code": "1118",
+        "vuln_uuid": "69fc03a0-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete version of the messaging server"
+      },
+      {
+        "vuln_code": "196",
+        "vuln_uuid": "69fc083d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. insufficient reserve time on a laptop battery)."
+      },
+      {
+        "vuln_code": "1014",
+        "vuln_uuid": "69fbfe99-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing (e.g. too much data for the maximum passband)"
+      },
+      {
+        "vuln_code": "456",
+        "vuln_uuid": "69fc184b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No updated display of information for calling the emergency services"
+      },
+      {
+        "vuln_code": "1107",
+        "vuln_uuid": "69fc0278-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of storage spaces for received messages"
+      },
+      {
+        "vuln_code": "1113",
+        "vuln_uuid": "69fc038b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on SMTP, POP3, IMAP server)"
+      },
+      {
+        "vuln_code": "1022",
+        "vuln_uuid": "69fbfee8-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete system"
+      },
+      {
+        "vuln_code": "1124",
+        "vuln_uuid": "69fc03f6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. too many simultaneous connections)"
+      },
+      {
+        "vuln_code": "722",
+        "vuln_uuid": "69fc1fae-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No incident monitoring to foresee malfunctions (trend charts)"
+      },
+      {
+        "vuln_code": "1062",
+        "vuln_uuid": "69fc00a3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "428",
+        "vuln_uuid": "69fc16dc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No clause covering response time for repair and replacement in the event of equipment failure"
+      },
+      {
+        "vuln_code": "109",
+        "vuln_uuid": "69fc01a6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete version of the operating system or applications"
+      },
+      {
+        "vuln_code": "896",
+        "vuln_uuid": "69fc280e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency power supply equipment (inverter, batteries, etc.)"
+      },
+      {
+        "vuln_code": "106",
+        "vuln_uuid": "69fc0098-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No diagnostic function to prevent equipment failures"
+      },
+      {
+        "vuln_code": "1070",
+        "vuln_uuid": "69fc0101-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. too many users for the number of connections possible and the passband)"
+      },
+      {
+        "vuln_code": "777",
+        "vuln_uuid": "69fc21c4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of operating and maintenance resources"
+      }
+    ]
+  },
+  {
+    "threat_code": "MA16",
+    "threat_uuid": "b402d523-4576-11e9-9173-0800277f0571",
+    "threat_label": "Equipment malfunction or failure",
+    "vulnerabilities": [
+      {
+        "vuln_code": "132",
+        "vuln_uuid": "69fc074f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "24",
+        "vuln_uuid": "69fc0b70-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No passing up of information for a centralised malfunction analysis"
+      },
+      {
+        "vuln_code": "524",
+        "vuln_uuid": "69fc19fc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No reporting on malfunctions"
+      },
+      {
+        "vuln_code": "1049",
+        "vuln_uuid": "69fc0003-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. too many users for the maximum capacity of the directory)"
+      },
+      {
+        "vuln_code": "1021",
+        "vuln_uuid": "69fbfedc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete version of the messaging server"
+      },
+      {
+        "vuln_code": "859",
+        "vuln_uuid": "69fc23f9-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No sizing of the automatic fire extinction system, or incorrect sizing or inadequacy of this system."
+      },
+      {
+        "vuln_code": "1052",
+        "vuln_uuid": "69fc003a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on LDAP server)"
+      },
+      {
+        "vuln_code": "429",
+        "vuln_uuid": "69fc16f3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No clause covering response time for repair and treatment in the event of malfunction"
+      },
+      {
+        "vuln_code": "904",
+        "vuln_uuid": "69fc2881-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency resources"
+      },
+      {
+        "vuln_code": "890",
+        "vuln_uuid": "69fc2701-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of telecommunication resources, resulting, for example, from daily use of resources intended for the emergency solution."
+      },
+      {
+        "vuln_code": "298",
+        "vuln_uuid": "69fc10dd-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Obsolete medium"
+      },
+      {
+        "vuln_code": "223",
+        "vuln_uuid": "69fc0ad8-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Obsolete hardware"
+      },
+      {
+        "vuln_code": "37",
+        "vuln_uuid": "69fc1351-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Obsolete software"
+      },
+      {
+        "vuln_code": "1084",
+        "vuln_uuid": "69fc017e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. not enough storage or file share space)"
+      },
+      {
+        "vuln_code": "725",
+        "vuln_uuid": "69fc1fce-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Existence of obsolete components in the information processing infrastructure (development in languages no longer used, etc.)"
+      },
+      {
+        "vuln_code": "1118",
+        "vuln_uuid": "69fc03a0-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete version of the messaging server"
+      },
+      {
+        "vuln_code": "196",
+        "vuln_uuid": "69fc083d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. insufficient reserve time on a laptop battery)."
+      },
+      {
+        "vuln_code": "1014",
+        "vuln_uuid": "69fbfe99-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing (e.g. too much data for the maximum passband)"
+      },
+      {
+        "vuln_code": "456",
+        "vuln_uuid": "69fc184b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No updated display of information for calling the emergency services"
+      },
+      {
+        "vuln_code": "1107",
+        "vuln_uuid": "69fc0278-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of storage spaces for received messages"
+      },
+      {
+        "vuln_code": "1113",
+        "vuln_uuid": "69fc038b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on SMTP, POP3, IMAP server)"
+      },
+      {
+        "vuln_code": "1022",
+        "vuln_uuid": "69fbfee8-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete system"
+      },
+      {
+        "vuln_code": "1124",
+        "vuln_uuid": "69fc03f6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. too many simultaneous connections)"
+      },
+      {
+        "vuln_code": "722",
+        "vuln_uuid": "69fc1fae-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No incident monitoring to foresee malfunctions (trend charts)"
+      },
+      {
+        "vuln_code": "1062",
+        "vuln_uuid": "69fc00a3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "428",
+        "vuln_uuid": "69fc16dc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No clause covering response time for repair and replacement in the event of equipment failure"
+      },
+      {
+        "vuln_code": "109",
+        "vuln_uuid": "69fc01a6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete version of the operating system or applications"
+      },
+      {
+        "vuln_code": "896",
+        "vuln_uuid": "69fc280e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency power supply equipment (inverter, batteries, etc.)"
+      },
+      {
+        "vuln_code": "106",
+        "vuln_uuid": "69fc0098-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No diagnostic function to prevent equipment failures"
+      },
+      {
+        "vuln_code": "1070",
+        "vuln_uuid": "69fc0101-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. too many users for the number of connections possible and the passband)"
+      },
+      {
+        "vuln_code": "777",
+        "vuln_uuid": "69fc21c4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of operating and maintenance resources"
+      }
+    ]
+  },
+  {
+    "threat_code": "MD14",
+    "threat_uuid": "b402d530-4576-11e9-9173-0800277f0571",
+    "threat_label": "Forging of rights",
+    "vulnerabilities": [
+      {
+        "vuln_code": "469",
+        "vuln_uuid": "69fc18c1-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules for the use and storage of hardware and information media (protection conditions during transport, smoking ban, etc.)"
+      },
+      {
+        "vuln_code": "396",
+        "vuln_uuid": "69fc15bb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No global policy for managing and archiving tracks and other elements of proof"
+      },
+      {
+        "vuln_code": "1215",
+        "vuln_uuid": "69fc05c9-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Logical access authorisations are not checked regularly"
+      },
+      {
+        "vuln_code": "532",
+        "vuln_uuid": "69fc1a3b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for partitioning user environments to avoid unintentional assignment of rights to modify the system and application"
+      },
+      {
+        "vuln_code": "1019",
+        "vuln_uuid": "69fbfeba-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system is connected to external networks"
+      },
+      {
+        "vuln_code": "1044",
+        "vuln_uuid": "69fbffc5-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No control of access to information stored in the directory"
+      },
+      {
+        "vuln_code": "527",
+        "vuln_uuid": "69fc1a07-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering the operating environment of information processing infrastructures (temperature, humidity, etc.)"
+      },
+      {
+        "vuln_code": "520",
+        "vuln_uuid": "69fc19c5-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering conditions of use of information processing infrastructures (ban on smoking, drinks and food in rooms housing IT equipment)"
+      },
+      {
+        "vuln_code": "447",
+        "vuln_uuid": "69fc17d4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No procedure for personnel authorisation"
+      },
+      {
+        "vuln_code": "1001",
+        "vuln_uuid": "69fbfe14-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The principle of least privilege is not applied"
+      },
+      {
+        "vuln_code": "338",
+        "vuln_uuid": "69fc11fb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules for protecting the exchange of confidential information"
+      },
+      {
+        "vuln_code": "957",
+        "vuln_uuid": "69fc2a2c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The interfaces are connected to external networks"
+      },
+      {
+        "vuln_code": "956",
+        "vuln_uuid": "69fc2a22-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No network partitioning"
+      },
+      {
+        "vuln_code": "483",
+        "vuln_uuid": "69fc18e2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security responsibilities concerning authorisation management are not formalised."
+      },
+      {
+        "vuln_code": "458",
+        "vuln_uuid": "69fc1860-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance contracts for fire-fighting equipment"
+      },
+      {
+        "vuln_code": "344",
+        "vuln_uuid": "69fc1225-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of sensitive assets"
+      },
+      {
+        "vuln_code": "817",
+        "vuln_uuid": "69fc2301-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No control of access to the site or premises"
+      },
+      {
+        "vuln_code": "264",
+        "vuln_uuid": "69fc0e34-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No partitioning of equipment"
+      },
+      {
+        "vuln_code": "958",
+        "vuln_uuid": "69fc2a37-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The supports and medium are connected to external networks"
+      },
+      {
+        "vuln_code": "43",
+        "vuln_uuid": "69fc16fe-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of data integrity"
+      },
+      {
+        "vuln_code": "557",
+        "vuln_uuid": "69fc1ade-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of product origin"
+      },
+      {
+        "vuln_code": "375",
+        "vuln_uuid": "69fc1370-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No authorisation management and monitoring policy imposed at the organisation's sites"
+      },
+      {
+        "vuln_code": "225",
+        "vuln_uuid": "69fc0aed-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system is connected to external networks"
+      },
+      {
+        "vuln_code": "803",
+        "vuln_uuid": "69fc2296-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No control of access to the site or premises or possibility of intrusion via indirect access routes."
+      },
+      {
+        "vuln_code": "371",
+        "vuln_uuid": "69fc135b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No licence monitoring policy imposed at the organisation's sites"
+      },
+      {
+        "vuln_code": "374",
+        "vuln_uuid": "69fc1366-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules and procedures for personnel authorisation"
+      },
+      {
+        "vuln_code": "559",
+        "vuln_uuid": "69fc1ae8-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security policy does not include reminding all personnel of their obligations and responsibilities in civil, criminal and regulatory matters."
+      },
+      {
+        "vuln_code": "518",
+        "vuln_uuid": "69fc19a6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance and support contracts with suppliers"
+      },
+      {
+        "vuln_code": "1190",
+        "vuln_uuid": "69fc0574-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Backup media are not stored in a suitable place"
+      },
+      {
+        "vuln_code": "349",
+        "vuln_uuid": "69fc12e7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security policy is not applied"
+      },
+      {
+        "vuln_code": "1058",
+        "vuln_uuid": "69fc0083-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No management of access authorisation"
+      },
+      {
+        "vuln_code": "1027",
+        "vuln_uuid": "69fbff1b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit or supervision of accesses (for example inventory of accesses outside the organisation and types of data flow)"
+      },
+      {
+        "vuln_code": "1075",
+        "vuln_uuid": "69fc011f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No partitioning of communication networks"
+      },
+      {
+        "vuln_code": "497",
+        "vuln_uuid": "69fc190e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules for checking equipment entering/leaving the organisation"
+      },
+      {
+        "vuln_code": "1167",
+        "vuln_uuid": "69fc04d1-4591-11e9-9173-0800277f0571",
+        "vuln_label": "User authentication is not ensured"
+      },
+      {
+        "vuln_code": "571",
+        "vuln_uuid": "69fc1b55-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security policy is not applied especially in relation to processing of personal information"
+      },
+      {
+        "vuln_code": "975",
+        "vuln_uuid": "69fc2afc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No user notification"
+      },
+      {
+        "vuln_code": "928",
+        "vuln_uuid": "69fc2939-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The equipment is connected to external networks"
+      },
+      {
+        "vuln_code": "1174",
+        "vuln_uuid": "69fc0501-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Backups are not carried out in accordance with the state of the art"
+      },
+      {
+        "vuln_code": "245",
+        "vuln_uuid": "69fc0c35-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No data protection rules"
+      },
+      {
+        "vuln_code": "1056",
+        "vuln_uuid": "69fc0063-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No content monitoring"
+      },
+      {
+        "vuln_code": "529",
+        "vuln_uuid": "69fc1a11-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for checking the correct sizing of the equipment of the information processing infrastructure, including the emergency equipment"
+      },
+      {
+        "vuln_code": "345",
+        "vuln_uuid": "69fc122f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of application of the security policy"
+      },
+      {
+        "vuln_code": "1210",
+        "vuln_uuid": "69fc059f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Lack of a system hardening policy"
+      },
+      {
+        "vuln_code": "514",
+        "vuln_uuid": "69fc1991-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for protecting the workstations"
+      },
+      {
+        "vuln_code": "45",
+        "vuln_uuid": "69fc17f4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit policy"
+      },
+      {
+        "vuln_code": "382",
+        "vuln_uuid": "69fc13a4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of critical processes by the parent organisation"
+      },
+      {
+        "vuln_code": "1057",
+        "vuln_uuid": "69fc006d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit or supervision of accesses"
+      },
+      {
+        "vuln_code": "510",
+        "vuln_uuid": "69fc1985-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No global policy for fighting against malicious code"
+      },
+      {
+        "vuln_code": "1173",
+        "vuln_uuid": "69fc04f7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No recovery plan"
+      },
+      {
+        "vuln_code": "310",
+        "vuln_uuid": "69fc116e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit of physical access control procedures"
+      },
+      {
+        "vuln_code": "1214",
+        "vuln_uuid": "69fc05bf-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Physical access authorisations are not checked regularly"
+      },
+      {
+        "vuln_code": "354",
+        "vuln_uuid": "69fc131a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy"
+      },
+      {
+        "vuln_code": "463",
+        "vuln_uuid": "69fc188a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance contracts"
+      },
+      {
+        "vuln_code": "578",
+        "vuln_uuid": "69fc1b89-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Personnel receive no communication or information concerning authorisation procedures"
+      },
+      {
+        "vuln_code": "632",
+        "vuln_uuid": "69fc1d5d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No management support for application of the security policy"
+      },
+      {
+        "vuln_code": "1029",
+        "vuln_uuid": "69fbff3c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system is connected to external networks"
+      },
+      {
+        "vuln_code": "341",
+        "vuln_uuid": "69fc1210-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No security policy for protecting the information processing infrastructure in the organisation's sites"
+      },
+      {
+        "vuln_code": "351",
+        "vuln_uuid": "69fc1305-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Procedures for managing and applying authorisation too heavy to use"
+      },
+      {
+        "vuln_code": "438",
+        "vuln_uuid": "69fc175e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for authorising access to information"
+      },
+      {
+        "vuln_code": "346",
+        "vuln_uuid": "69fc1246-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy applicable to recycling and discarding"
+      },
+      {
+        "vuln_code": "500",
+        "vuln_uuid": "69fc192e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for storing and analysing activity tracks"
+      },
+      {
+        "vuln_code": "842",
+        "vuln_uuid": "69fc23ba-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No logging of entry to the site"
+      },
+      {
+        "vuln_code": "556",
+        "vuln_uuid": "69fc1ad3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of product certification"
+      },
+      {
+        "vuln_code": "930",
+        "vuln_uuid": "69fc294f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No physical and logical protection (partitioning, etc.)"
+      },
+      {
+        "vuln_code": "1168",
+        "vuln_uuid": "69fc04e2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The need-to-know principle is not respected"
+      },
+      {
+        "vuln_code": "602",
+        "vuln_uuid": "69fc1c92-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering conditions of use of information processing infrastructures (ban on smoking, drinks and food in rooms housing IT equipment)"
+      },
+      {
+        "vuln_code": "337",
+        "vuln_uuid": "69fc11f0-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No security policy for protecting the information processing infrastructure in the organisation's sites"
+      },
+      {
+        "vuln_code": "896",
+        "vuln_uuid": "69fc280e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency power supply equipment (inverter, batteries, etc.)"
+      },
+      {
+        "vuln_code": "1166",
+        "vuln_uuid": "69fc04c4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Authorisation management is flawed"
+      },
+      {
+        "vuln_code": "1172",
+        "vuln_uuid": "69fc04ed-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No SLAs with third parties (internal or external)"
+      },
+      {
+        "vuln_code": "562",
+        "vuln_uuid": "69fc1afd-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No detection system of malicious programs"
+      },
+      {
+        "vuln_code": "390",
+        "vuln_uuid": "69fc1482-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring procedure"
+      },
+      {
+        "vuln_code": "391",
+        "vuln_uuid": "69fc148d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Change of the organisation's policy or strategy"
+      },
+      {
+        "vuln_code": "336",
+        "vuln_uuid": "69fc11e6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules imposing the use of standards"
+      },
+      {
+        "vuln_code": "1024",
+        "vuln_uuid": "69fbfefc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of installation and maintenance procedures (configuration and parameter setting records)"
+      },
+      {
+        "vuln_code": "1028",
+        "vuln_uuid": "69fbff25-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No access rules"
+      },
+      {
+        "vuln_code": "376",
+        "vuln_uuid": "69fc137a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy imposed at the organisation's sites"
+      },
+      {
+        "vuln_code": "840",
+        "vuln_uuid": "69fc238c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No procedures for checking authorisation of personnel entering the site or premises"
+      }
+    ]
+  },
+  {
+    "threat_code": "MD15",
+    "threat_uuid": "b402d557-4576-11e9-9173-0800277f0571",
+    "threat_label": "Eavesdropping",
+    "vulnerabilities": [
+      {
+        "vuln_code": "132",
+        "vuln_uuid": "69fc074f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "1050",
+        "vuln_uuid": "69fc0025-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of subjecting the system to an unlimited number of requests"
+      },
+      {
+        "vuln_code": "938",
+        "vuln_uuid": "69fc2979-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Physical or logical access to a relay allowing eavesdropping equipment to be installed"
+      },
+      {
+        "vuln_code": "984",
+        "vuln_uuid": "69fc2b3b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The network allows the system resources to be modified or adjusted"
+      },
+      {
+        "vuln_code": "967",
+        "vuln_uuid": "69fc2aa2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No authentication of equipment connected to the network"
+      },
+      {
+        "vuln_code": "1052",
+        "vuln_uuid": "69fc003a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on LDAP server)"
+      },
+      {
+        "vuln_code": "1013",
+        "vuln_uuid": "69fbfe8a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The relays identify neither the sources nor the destinations (example of impact: system vulnerable to spoofing attacks)"
+      },
+      {
+        "vuln_code": "983",
+        "vuln_uuid": "69fc2b30-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of adding software derivations"
+      },
+      {
+        "vuln_code": "1055",
+        "vuln_uuid": "69fc0058-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of the system protection levels"
+      },
+      {
+        "vuln_code": "1123",
+        "vuln_uuid": "69fc03ec-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Public access to the gateway"
+      },
+      {
+        "vuln_code": "830",
+        "vuln_uuid": "69fc2362-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Public access close to the buildings"
+      },
+      {
+        "vuln_code": "977",
+        "vuln_uuid": "69fc2b06-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No strict routing between sub-networks"
+      },
+      {
+        "vuln_code": "1068",
+        "vuln_uuid": "69fc00ec-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No anti-virus check on exchanges"
+      },
+      {
+        "vuln_code": "593",
+        "vuln_uuid": "69fc1c5d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of security needs for a project"
+      },
+      {
+        "vuln_code": "1012",
+        "vuln_uuid": "69fbfe7a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No filtering and logging on communication relays between networks"
+      },
+      {
+        "vuln_code": "988",
+        "vuln_uuid": "69fc2b67-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of incorrect configuration, installation or modification of relays"
+      },
+      {
+        "vuln_code": "1075",
+        "vuln_uuid": "69fc011f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No partitioning of communication networks"
+      },
+      {
+        "vuln_code": "961",
+        "vuln_uuid": "69fc2a56-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The relays can be accessed by everyone"
+      },
+      {
+        "vuln_code": "981",
+        "vuln_uuid": "69fc2b26-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The network makes it easy for unauthorised persons to use the resources"
+      },
+      {
+        "vuln_code": "1018",
+        "vuln_uuid": "69fbfeaa-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Circulating information in clear text"
+      },
+      {
+        "vuln_code": "1077",
+        "vuln_uuid": "69fc0134-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of eavesdropping on exchanges with application servers"
+      },
+      {
+        "vuln_code": "105",
+        "vuln_uuid": "69fc001a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The SNMP layer is activated"
+      },
+      {
+        "vuln_code": "1113",
+        "vuln_uuid": "69fc038b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on SMTP, POP3, IMAP server)"
+      },
+      {
+        "vuln_code": "343",
+        "vuln_uuid": "69fc121a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of sensitive assets"
+      },
+      {
+        "vuln_code": "1105",
+        "vuln_uuid": "69fc0264-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No anti-virus filtering system"
+      },
+      {
+        "vuln_code": "1062",
+        "vuln_uuid": "69fc00a3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "1096",
+        "vuln_uuid": "69fc01fb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system allows relaying"
+      },
+      {
+        "vuln_code": "1076",
+        "vuln_uuid": "69fc012a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of eavesdropping on exchanges with authentication servers"
+      },
+      {
+        "vuln_code": "461",
+        "vuln_uuid": "69fc1875-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No warning, reaction or information instructions in the event of water damage (no identification of stop cocks, etc.)"
+      },
+      {
+        "vuln_code": "1004",
+        "vuln_uuid": "69fbfe22-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Presence of protocol that has no authentication function"
+      },
+      {
+        "vuln_code": "1038",
+        "vuln_uuid": "69fbff85-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No supervision tool"
+      },
+      {
+        "vuln_code": "991",
+        "vuln_uuid": "69fc2b87-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of subjecting the relays to an excessive number of requests or intense interference (e.g. denial of service attacks such as smurfing, SYN flood etc.)"
+      },
+      {
+        "vuln_code": "1064",
+        "vuln_uuid": "69fc00b7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No filtering system"
+      }
+    ]
+  },
+  {
+    "threat_code": "MD21",
+    "threat_uuid": "b402d56f-4576-11e9-9173-0800277f0571",
+    "threat_label": "Tampering with hardware",
+    "vulnerabilities": [
+      {
+        "vuln_code": "132",
+        "vuln_uuid": "69fc074f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "1050",
+        "vuln_uuid": "69fc0025-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of subjecting the system to an unlimited number of requests"
+      },
+      {
+        "vuln_code": "938",
+        "vuln_uuid": "69fc2979-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Physical or logical access to a relay allowing eavesdropping equipment to be installed"
+      },
+      {
+        "vuln_code": "984",
+        "vuln_uuid": "69fc2b3b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The network allows the system resources to be modified or adjusted"
+      },
+      {
+        "vuln_code": "967",
+        "vuln_uuid": "69fc2aa2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No authentication of equipment connected to the network"
+      },
+      {
+        "vuln_code": "1052",
+        "vuln_uuid": "69fc003a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on LDAP server)"
+      },
+      {
+        "vuln_code": "1013",
+        "vuln_uuid": "69fbfe8a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The relays identify neither the sources nor the destinations (example of impact: system vulnerable to spoofing attacks)"
+      },
+      {
+        "vuln_code": "983",
+        "vuln_uuid": "69fc2b30-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of adding software derivations"
+      },
+      {
+        "vuln_code": "1055",
+        "vuln_uuid": "69fc0058-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of the system protection levels"
+      },
+      {
+        "vuln_code": "1123",
+        "vuln_uuid": "69fc03ec-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Public access to the gateway"
+      },
+      {
+        "vuln_code": "830",
+        "vuln_uuid": "69fc2362-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Public access close to the buildings"
+      },
+      {
+        "vuln_code": "977",
+        "vuln_uuid": "69fc2b06-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No strict routing between sub-networks"
+      },
+      {
+        "vuln_code": "1068",
+        "vuln_uuid": "69fc00ec-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No anti-virus check on exchanges"
+      },
+      {
+        "vuln_code": "593",
+        "vuln_uuid": "69fc1c5d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of security needs for a project"
+      },
+      {
+        "vuln_code": "1012",
+        "vuln_uuid": "69fbfe7a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No filtering and logging on communication relays between networks"
+      },
+      {
+        "vuln_code": "988",
+        "vuln_uuid": "69fc2b67-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of incorrect configuration, installation or modification of relays"
+      },
+      {
+        "vuln_code": "1075",
+        "vuln_uuid": "69fc011f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No partitioning of communication networks"
+      },
+      {
+        "vuln_code": "961",
+        "vuln_uuid": "69fc2a56-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The relays can be accessed by everyone"
+      },
+      {
+        "vuln_code": "981",
+        "vuln_uuid": "69fc2b26-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The network makes it easy for unauthorised persons to use the resources"
+      },
+      {
+        "vuln_code": "1018",
+        "vuln_uuid": "69fbfeaa-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Circulating information in clear text"
+      },
+      {
+        "vuln_code": "1077",
+        "vuln_uuid": "69fc0134-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of eavesdropping on exchanges with application servers"
+      },
+      {
+        "vuln_code": "105",
+        "vuln_uuid": "69fc001a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The SNMP layer is activated"
+      },
+      {
+        "vuln_code": "1113",
+        "vuln_uuid": "69fc038b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on SMTP, POP3, IMAP server)"
+      },
+      {
+        "vuln_code": "343",
+        "vuln_uuid": "69fc121a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of sensitive assets"
+      },
+      {
+        "vuln_code": "1105",
+        "vuln_uuid": "69fc0264-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No anti-virus filtering system"
+      },
+      {
+        "vuln_code": "1062",
+        "vuln_uuid": "69fc00a3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "1096",
+        "vuln_uuid": "69fc01fb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system allows relaying"
+      },
+      {
+        "vuln_code": "1076",
+        "vuln_uuid": "69fc012a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of eavesdropping on exchanges with authentication servers"
+      },
+      {
+        "vuln_code": "461",
+        "vuln_uuid": "69fc1875-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No warning, reaction or information instructions in the event of water damage (no identification of stop cocks, etc.)"
+      },
+      {
+        "vuln_code": "1004",
+        "vuln_uuid": "69fbfe22-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Presence of protocol that has no authentication function"
+      },
+      {
+        "vuln_code": "1038",
+        "vuln_uuid": "69fbff85-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No supervision tool"
+      },
+      {
+        "vuln_code": "991",
+        "vuln_uuid": "69fc2b87-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of subjecting the relays to an excessive number of requests or intense interference (e.g. denial of service attacks such as smurfing, SYN flood etc.)"
+      },
+      {
+        "vuln_code": "1064",
+        "vuln_uuid": "69fc00b7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No filtering system"
+      }
+    ]
+  },
+  {
+    "threat_code": "MD23",
+    "threat_uuid": "b402d584-4576-11e9-9173-0800277f0571",
+    "threat_label": "Corruption of data",
+    "vulnerabilities": [
+      {
+        "vuln_code": "132",
+        "vuln_uuid": "69fc074f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "469",
+        "vuln_uuid": "69fc18c1-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules for the use and storage of hardware and information media (protection conditions during transport, smoking ban, etc.)"
+      },
+      {
+        "vuln_code": "396",
+        "vuln_uuid": "69fc15bb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No global policy for managing and archiving tracks and other elements of proof"
+      },
+      {
+        "vuln_code": "1215",
+        "vuln_uuid": "69fc05c9-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Logical access authorisations are not checked regularly"
+      },
+      {
+        "vuln_code": "532",
+        "vuln_uuid": "69fc1a3b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for partitioning user environments to avoid unintentional assignment of rights to modify the system and application"
+      },
+      {
+        "vuln_code": "1050",
+        "vuln_uuid": "69fc0025-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of subjecting the system to an unlimited number of requests"
+      },
+      {
+        "vuln_code": "1019",
+        "vuln_uuid": "69fbfeba-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system is connected to external networks"
+      },
+      {
+        "vuln_code": "938",
+        "vuln_uuid": "69fc2979-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Physical or logical access to a relay allowing eavesdropping equipment to be installed"
+      },
+      {
+        "vuln_code": "1044",
+        "vuln_uuid": "69fbffc5-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No control of access to information stored in the directory"
+      },
+      {
+        "vuln_code": "527",
+        "vuln_uuid": "69fc1a07-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering the operating environment of information processing infrastructures (temperature, humidity, etc.)"
+      },
+      {
+        "vuln_code": "984",
+        "vuln_uuid": "69fc2b3b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The network allows the system resources to be modified or adjusted"
+      },
+      {
+        "vuln_code": "520",
+        "vuln_uuid": "69fc19c5-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering conditions of use of information processing infrastructures (ban on smoking, drinks and food in rooms housing IT equipment)"
+      },
+      {
+        "vuln_code": "967",
+        "vuln_uuid": "69fc2aa2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No authentication of equipment connected to the network"
+      },
+      {
+        "vuln_code": "447",
+        "vuln_uuid": "69fc17d4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No procedure for personnel authorisation"
+      },
+      {
+        "vuln_code": "1001",
+        "vuln_uuid": "69fbfe14-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The principle of least privilege is not applied"
+      },
+      {
+        "vuln_code": "1052",
+        "vuln_uuid": "69fc003a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on LDAP server)"
+      },
+      {
+        "vuln_code": "338",
+        "vuln_uuid": "69fc11fb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules for protecting the exchange of confidential information"
+      },
+      {
+        "vuln_code": "1013",
+        "vuln_uuid": "69fbfe8a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The relays identify neither the sources nor the destinations (example of impact: system vulnerable to spoofing attacks)"
+      },
+      {
+        "vuln_code": "957",
+        "vuln_uuid": "69fc2a2c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The interfaces are connected to external networks"
+      },
+      {
+        "vuln_code": "956",
+        "vuln_uuid": "69fc2a22-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No network partitioning"
+      },
+      {
+        "vuln_code": "983",
+        "vuln_uuid": "69fc2b30-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of adding software derivations"
+      },
+      {
+        "vuln_code": "483",
+        "vuln_uuid": "69fc18e2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security responsibilities concerning authorisation management are not formalised."
+      },
+      {
+        "vuln_code": "458",
+        "vuln_uuid": "69fc1860-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance contracts for fire-fighting equipment"
+      },
+      {
+        "vuln_code": "344",
+        "vuln_uuid": "69fc1225-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of sensitive assets"
+      },
+      {
+        "vuln_code": "817",
+        "vuln_uuid": "69fc2301-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No control of access to the site or premises"
+      },
+      {
+        "vuln_code": "1055",
+        "vuln_uuid": "69fc0058-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of the system protection levels"
+      },
+      {
+        "vuln_code": "264",
+        "vuln_uuid": "69fc0e34-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No partitioning of equipment"
+      },
+      {
+        "vuln_code": "1123",
+        "vuln_uuid": "69fc03ec-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Public access to the gateway"
+      },
+      {
+        "vuln_code": "958",
+        "vuln_uuid": "69fc2a37-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The supports and medium are connected to external networks"
+      },
+      {
+        "vuln_code": "43",
+        "vuln_uuid": "69fc16fe-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of data integrity"
+      },
+      {
+        "vuln_code": "557",
+        "vuln_uuid": "69fc1ade-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of product origin"
+      },
+      {
+        "vuln_code": "375",
+        "vuln_uuid": "69fc1370-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No authorisation management and monitoring policy imposed at the organisation's sites"
+      },
+      {
+        "vuln_code": "225",
+        "vuln_uuid": "69fc0aed-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system is connected to external networks"
+      },
+      {
+        "vuln_code": "830",
+        "vuln_uuid": "69fc2362-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Public access close to the buildings"
+      },
+      {
+        "vuln_code": "803",
+        "vuln_uuid": "69fc2296-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No control of access to the site or premises or possibility of intrusion via indirect access routes."
+      },
+      {
+        "vuln_code": "977",
+        "vuln_uuid": "69fc2b06-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No strict routing between sub-networks"
+      },
+      {
+        "vuln_code": "371",
+        "vuln_uuid": "69fc135b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No licence monitoring policy imposed at the organisation's sites"
+      },
+      {
+        "vuln_code": "374",
+        "vuln_uuid": "69fc1366-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules and procedures for personnel authorisation"
+      },
+      {
+        "vuln_code": "1068",
+        "vuln_uuid": "69fc00ec-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No anti-virus check on exchanges"
+      },
+      {
+        "vuln_code": "593",
+        "vuln_uuid": "69fc1c5d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of security needs for a project"
+      },
+      {
+        "vuln_code": "559",
+        "vuln_uuid": "69fc1ae8-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security policy does not include reminding all personnel of their obligations and responsibilities in civil, criminal and regulatory matters."
+      },
+      {
+        "vuln_code": "1012",
+        "vuln_uuid": "69fbfe7a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No filtering and logging on communication relays between networks"
+      },
+      {
+        "vuln_code": "988",
+        "vuln_uuid": "69fc2b67-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of incorrect configuration, installation or modification of relays"
+      },
+      {
+        "vuln_code": "518",
+        "vuln_uuid": "69fc19a6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance and support contracts with suppliers"
+      },
+      {
+        "vuln_code": "1190",
+        "vuln_uuid": "69fc0574-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Backup media are not stored in a suitable place"
+      },
+      {
+        "vuln_code": "349",
+        "vuln_uuid": "69fc12e7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security policy is not applied"
+      },
+      {
+        "vuln_code": "1058",
+        "vuln_uuid": "69fc0083-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No management of access authorisation"
+      },
+      {
+        "vuln_code": "1027",
+        "vuln_uuid": "69fbff1b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit or supervision of accesses (for example inventory of accesses outside the organisation and types of data flow)"
+      },
+      {
+        "vuln_code": "1075",
+        "vuln_uuid": "69fc011f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No partitioning of communication networks"
+      },
+      {
+        "vuln_code": "497",
+        "vuln_uuid": "69fc190e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules for checking equipment entering/leaving the organisation"
+      },
+      {
+        "vuln_code": "961",
+        "vuln_uuid": "69fc2a56-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The relays can be accessed by everyone"
+      },
+      {
+        "vuln_code": "981",
+        "vuln_uuid": "69fc2b26-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The network makes it easy for unauthorised persons to use the resources"
+      },
+      {
+        "vuln_code": "1018",
+        "vuln_uuid": "69fbfeaa-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Circulating information in clear text"
+      },
+      {
+        "vuln_code": "1167",
+        "vuln_uuid": "69fc04d1-4591-11e9-9173-0800277f0571",
+        "vuln_label": "User authentication is not ensured"
+      },
+      {
+        "vuln_code": "571",
+        "vuln_uuid": "69fc1b55-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security policy is not applied especially in relation to processing of personal information"
+      },
+      {
+        "vuln_code": "1077",
+        "vuln_uuid": "69fc0134-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of eavesdropping on exchanges with application servers"
+      },
+      {
+        "vuln_code": "975",
+        "vuln_uuid": "69fc2afc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No user notification"
+      },
+      {
+        "vuln_code": "928",
+        "vuln_uuid": "69fc2939-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The equipment is connected to external networks"
+      },
+      {
+        "vuln_code": "1174",
+        "vuln_uuid": "69fc0501-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Backups are not carried out in accordance with the state of the art"
+      },
+      {
+        "vuln_code": "245",
+        "vuln_uuid": "69fc0c35-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No data protection rules"
+      },
+      {
+        "vuln_code": "1056",
+        "vuln_uuid": "69fc0063-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No content monitoring"
+      },
+      {
+        "vuln_code": "105",
+        "vuln_uuid": "69fc001a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The SNMP layer is activated"
+      },
+      {
+        "vuln_code": "529",
+        "vuln_uuid": "69fc1a11-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for checking the correct sizing of the equipment of the information processing infrastructure, including the emergency equipment"
+      },
+      {
+        "vuln_code": "345",
+        "vuln_uuid": "69fc122f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of application of the security policy"
+      },
+      {
+        "vuln_code": "1210",
+        "vuln_uuid": "69fc059f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Lack of a system hardening policy"
+      },
+      {
+        "vuln_code": "514",
+        "vuln_uuid": "69fc1991-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for protecting the workstations"
+      },
+      {
+        "vuln_code": "1113",
+        "vuln_uuid": "69fc038b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on SMTP, POP3, IMAP server)"
+      },
+      {
+        "vuln_code": "45",
+        "vuln_uuid": "69fc17f4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit policy"
+      },
+      {
+        "vuln_code": "382",
+        "vuln_uuid": "69fc13a4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of critical processes by the parent organisation"
+      },
+      {
+        "vuln_code": "1057",
+        "vuln_uuid": "69fc006d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit or supervision of accesses"
+      },
+      {
+        "vuln_code": "510",
+        "vuln_uuid": "69fc1985-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No global policy for fighting against malicious code"
+      },
+      {
+        "vuln_code": "1173",
+        "vuln_uuid": "69fc04f7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No recovery plan"
+      },
+      {
+        "vuln_code": "310",
+        "vuln_uuid": "69fc116e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit of physical access control procedures"
+      },
+      {
+        "vuln_code": "1214",
+        "vuln_uuid": "69fc05bf-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Physical access authorisations are not checked regularly"
+      },
+      {
+        "vuln_code": "343",
+        "vuln_uuid": "69fc121a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of sensitive assets"
+      },
+      {
+        "vuln_code": "354",
+        "vuln_uuid": "69fc131a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy"
+      },
+      {
+        "vuln_code": "463",
+        "vuln_uuid": "69fc188a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance contracts"
+      },
+      {
+        "vuln_code": "578",
+        "vuln_uuid": "69fc1b89-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Personnel receive no communication or information concerning authorisation procedures"
+      },
+      {
+        "vuln_code": "632",
+        "vuln_uuid": "69fc1d5d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No management support for application of the security policy"
+      },
+      {
+        "vuln_code": "1105",
+        "vuln_uuid": "69fc0264-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No anti-virus filtering system"
+      },
+      {
+        "vuln_code": "1029",
+        "vuln_uuid": "69fbff3c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system is connected to external networks"
+      },
+      {
+        "vuln_code": "1062",
+        "vuln_uuid": "69fc00a3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "341",
+        "vuln_uuid": "69fc1210-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No security policy for protecting the information processing infrastructure in the organisation's sites"
+      },
+      {
+        "vuln_code": "1096",
+        "vuln_uuid": "69fc01fb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system allows relaying"
+      },
+      {
+        "vuln_code": "351",
+        "vuln_uuid": "69fc1305-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Procedures for managing and applying authorisation too heavy to use"
+      },
+      {
+        "vuln_code": "438",
+        "vuln_uuid": "69fc175e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for authorising access to information"
+      },
+      {
+        "vuln_code": "346",
+        "vuln_uuid": "69fc1246-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy applicable to recycling and discarding"
+      },
+      {
+        "vuln_code": "500",
+        "vuln_uuid": "69fc192e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for storing and analysing activity tracks"
+      },
+      {
+        "vuln_code": "842",
+        "vuln_uuid": "69fc23ba-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No logging of entry to the site"
+      },
+      {
+        "vuln_code": "556",
+        "vuln_uuid": "69fc1ad3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of product certification"
+      },
+      {
+        "vuln_code": "930",
+        "vuln_uuid": "69fc294f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No physical and logical protection (partitioning, etc.)"
+      },
+      {
+        "vuln_code": "1168",
+        "vuln_uuid": "69fc04e2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The need-to-know principle is not respected"
+      },
+      {
+        "vuln_code": "602",
+        "vuln_uuid": "69fc1c92-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering conditions of use of information processing infrastructures (ban on smoking, drinks and food in rooms housing IT equipment)"
+      },
+      {
+        "vuln_code": "337",
+        "vuln_uuid": "69fc11f0-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No security policy for protecting the information processing infrastructure in the organisation's sites"
+      },
+      {
+        "vuln_code": "896",
+        "vuln_uuid": "69fc280e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency power supply equipment (inverter, batteries, etc.)"
+      },
+      {
+        "vuln_code": "1076",
+        "vuln_uuid": "69fc012a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of eavesdropping on exchanges with authentication servers"
+      },
+      {
+        "vuln_code": "1166",
+        "vuln_uuid": "69fc04c4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Authorisation management is flawed"
+      },
+      {
+        "vuln_code": "461",
+        "vuln_uuid": "69fc1875-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No warning, reaction or information instructions in the event of water damage (no identification of stop cocks, etc.)"
+      },
+      {
+        "vuln_code": "1004",
+        "vuln_uuid": "69fbfe22-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Presence of protocol that has no authentication function"
+      },
+      {
+        "vuln_code": "1172",
+        "vuln_uuid": "69fc04ed-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No SLAs with third parties (internal or external)"
+      },
+      {
+        "vuln_code": "562",
+        "vuln_uuid": "69fc1afd-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No detection system of malicious programs"
+      },
+      {
+        "vuln_code": "1038",
+        "vuln_uuid": "69fbff85-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No supervision tool"
+      },
+      {
+        "vuln_code": "991",
+        "vuln_uuid": "69fc2b87-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of subjecting the relays to an excessive number of requests or intense interference (e.g. denial of service attacks such as smurfing, SYN flood etc.)"
+      },
+      {
+        "vuln_code": "390",
+        "vuln_uuid": "69fc1482-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring procedure"
+      },
+      {
+        "vuln_code": "1064",
+        "vuln_uuid": "69fc00b7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No filtering system"
+      },
+      {
+        "vuln_code": "391",
+        "vuln_uuid": "69fc148d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Change of the organisation's policy or strategy"
+      },
+      {
+        "vuln_code": "336",
+        "vuln_uuid": "69fc11e6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules imposing the use of standards"
+      },
+      {
+        "vuln_code": "1024",
+        "vuln_uuid": "69fbfefc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of installation and maintenance procedures (configuration and parameter setting records)"
+      },
+      {
+        "vuln_code": "1028",
+        "vuln_uuid": "69fbff25-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No access rules"
+      },
+      {
+        "vuln_code": "376",
+        "vuln_uuid": "69fc137a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy imposed at the organisation's sites"
+      },
+      {
+        "vuln_code": "840",
+        "vuln_uuid": "69fc238c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No procedures for checking authorisation of personnel entering the site or premises"
+      }
+    ]
+  },
+  {
+    "threat_code": "MD26",
+    "threat_uuid": "b402d599-4576-11e9-9173-0800277f0571",
+    "threat_label": "Illegal processing of data",
+    "vulnerabilities": [
+      {
+        "vuln_code": "469",
+        "vuln_uuid": "69fc18c1-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules for the use and storage of hardware and information media (protection conditions during transport, smoking ban, etc.)"
+      },
+      {
+        "vuln_code": "396",
+        "vuln_uuid": "69fc15bb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No global policy for managing and archiving tracks and other elements of proof"
+      },
+      {
+        "vuln_code": "1215",
+        "vuln_uuid": "69fc05c9-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Logical access authorisations are not checked regularly"
+      },
+      {
+        "vuln_code": "532",
+        "vuln_uuid": "69fc1a3b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for partitioning user environments to avoid unintentional assignment of rights to modify the system and application"
+      },
+      {
+        "vuln_code": "1019",
+        "vuln_uuid": "69fbfeba-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system is connected to external networks"
+      },
+      {
+        "vuln_code": "1044",
+        "vuln_uuid": "69fbffc5-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No control of access to information stored in the directory"
+      },
+      {
+        "vuln_code": "527",
+        "vuln_uuid": "69fc1a07-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering the operating environment of information processing infrastructures (temperature, humidity, etc.)"
+      },
+      {
+        "vuln_code": "520",
+        "vuln_uuid": "69fc19c5-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering conditions of use of information processing infrastructures (ban on smoking, drinks and food in rooms housing IT equipment)"
+      },
+      {
+        "vuln_code": "447",
+        "vuln_uuid": "69fc17d4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No procedure for personnel authorisation"
+      },
+      {
+        "vuln_code": "1001",
+        "vuln_uuid": "69fbfe14-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The principle of least privilege is not applied"
+      },
+      {
+        "vuln_code": "338",
+        "vuln_uuid": "69fc11fb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules for protecting the exchange of confidential information"
+      },
+      {
+        "vuln_code": "957",
+        "vuln_uuid": "69fc2a2c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The interfaces are connected to external networks"
+      },
+      {
+        "vuln_code": "956",
+        "vuln_uuid": "69fc2a22-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No network partitioning"
+      },
+      {
+        "vuln_code": "483",
+        "vuln_uuid": "69fc18e2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security responsibilities concerning authorisation management are not formalised."
+      },
+      {
+        "vuln_code": "458",
+        "vuln_uuid": "69fc1860-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance contracts for fire-fighting equipment"
+      },
+      {
+        "vuln_code": "344",
+        "vuln_uuid": "69fc1225-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of sensitive assets"
+      },
+      {
+        "vuln_code": "817",
+        "vuln_uuid": "69fc2301-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No control of access to the site or premises"
+      },
+      {
+        "vuln_code": "264",
+        "vuln_uuid": "69fc0e34-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No partitioning of equipment"
+      },
+      {
+        "vuln_code": "958",
+        "vuln_uuid": "69fc2a37-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The supports and medium are connected to external networks"
+      },
+      {
+        "vuln_code": "43",
+        "vuln_uuid": "69fc16fe-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of data integrity"
+      },
+      {
+        "vuln_code": "557",
+        "vuln_uuid": "69fc1ade-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of product origin"
+      },
+      {
+        "vuln_code": "375",
+        "vuln_uuid": "69fc1370-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No authorisation management and monitoring policy imposed at the organisation's sites"
+      },
+      {
+        "vuln_code": "225",
+        "vuln_uuid": "69fc0aed-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system is connected to external networks"
+      },
+      {
+        "vuln_code": "803",
+        "vuln_uuid": "69fc2296-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No control of access to the site or premises or possibility of intrusion via indirect access routes."
+      },
+      {
+        "vuln_code": "371",
+        "vuln_uuid": "69fc135b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No licence monitoring policy imposed at the organisation's sites"
+      },
+      {
+        "vuln_code": "374",
+        "vuln_uuid": "69fc1366-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules and procedures for personnel authorisation"
+      },
+      {
+        "vuln_code": "559",
+        "vuln_uuid": "69fc1ae8-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security policy does not include reminding all personnel of their obligations and responsibilities in civil, criminal and regulatory matters."
+      },
+      {
+        "vuln_code": "518",
+        "vuln_uuid": "69fc19a6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance and support contracts with suppliers"
+      },
+      {
+        "vuln_code": "1190",
+        "vuln_uuid": "69fc0574-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Backup media are not stored in a suitable place"
+      },
+      {
+        "vuln_code": "349",
+        "vuln_uuid": "69fc12e7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security policy is not applied"
+      },
+      {
+        "vuln_code": "1058",
+        "vuln_uuid": "69fc0083-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No management of access authorisation"
+      },
+      {
+        "vuln_code": "1027",
+        "vuln_uuid": "69fbff1b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit or supervision of accesses (for example inventory of accesses outside the organisation and types of data flow)"
+      },
+      {
+        "vuln_code": "1075",
+        "vuln_uuid": "69fc011f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No partitioning of communication networks"
+      },
+      {
+        "vuln_code": "497",
+        "vuln_uuid": "69fc190e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules for checking equipment entering/leaving the organisation"
+      },
+      {
+        "vuln_code": "1167",
+        "vuln_uuid": "69fc04d1-4591-11e9-9173-0800277f0571",
+        "vuln_label": "User authentication is not ensured"
+      },
+      {
+        "vuln_code": "571",
+        "vuln_uuid": "69fc1b55-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security policy is not applied especially in relation to processing of personal information"
+      },
+      {
+        "vuln_code": "975",
+        "vuln_uuid": "69fc2afc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No user notification"
+      },
+      {
+        "vuln_code": "928",
+        "vuln_uuid": "69fc2939-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The equipment is connected to external networks"
+      },
+      {
+        "vuln_code": "1174",
+        "vuln_uuid": "69fc0501-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Backups are not carried out in accordance with the state of the art"
+      },
+      {
+        "vuln_code": "245",
+        "vuln_uuid": "69fc0c35-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No data protection rules"
+      },
+      {
+        "vuln_code": "1056",
+        "vuln_uuid": "69fc0063-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No content monitoring"
+      },
+      {
+        "vuln_code": "529",
+        "vuln_uuid": "69fc1a11-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for checking the correct sizing of the equipment of the information processing infrastructure, including the emergency equipment"
+      },
+      {
+        "vuln_code": "345",
+        "vuln_uuid": "69fc122f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of application of the security policy"
+      },
+      {
+        "vuln_code": "1210",
+        "vuln_uuid": "69fc059f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Lack of a system hardening policy"
+      },
+      {
+        "vuln_code": "514",
+        "vuln_uuid": "69fc1991-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for protecting the workstations"
+      },
+      {
+        "vuln_code": "45",
+        "vuln_uuid": "69fc17f4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit policy"
+      },
+      {
+        "vuln_code": "382",
+        "vuln_uuid": "69fc13a4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of critical processes by the parent organisation"
+      },
+      {
+        "vuln_code": "1057",
+        "vuln_uuid": "69fc006d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit or supervision of accesses"
+      },
+      {
+        "vuln_code": "510",
+        "vuln_uuid": "69fc1985-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No global policy for fighting against malicious code"
+      },
+      {
+        "vuln_code": "1173",
+        "vuln_uuid": "69fc04f7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No recovery plan"
+      },
+      {
+        "vuln_code": "310",
+        "vuln_uuid": "69fc116e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit of physical access control procedures"
+      },
+      {
+        "vuln_code": "1214",
+        "vuln_uuid": "69fc05bf-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Physical access authorisations are not checked regularly"
+      },
+      {
+        "vuln_code": "354",
+        "vuln_uuid": "69fc131a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy"
+      },
+      {
+        "vuln_code": "463",
+        "vuln_uuid": "69fc188a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance contracts"
+      },
+      {
+        "vuln_code": "578",
+        "vuln_uuid": "69fc1b89-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Personnel receive no communication or information concerning authorisation procedures"
+      },
+      {
+        "vuln_code": "632",
+        "vuln_uuid": "69fc1d5d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No management support for application of the security policy"
+      },
+      {
+        "vuln_code": "1029",
+        "vuln_uuid": "69fbff3c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system is connected to external networks"
+      },
+      {
+        "vuln_code": "341",
+        "vuln_uuid": "69fc1210-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No security policy for protecting the information processing infrastructure in the organisation's sites"
+      },
+      {
+        "vuln_code": "351",
+        "vuln_uuid": "69fc1305-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Procedures for managing and applying authorisation too heavy to use"
+      },
+      {
+        "vuln_code": "438",
+        "vuln_uuid": "69fc175e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for authorising access to information"
+      },
+      {
+        "vuln_code": "346",
+        "vuln_uuid": "69fc1246-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy applicable to recycling and discarding"
+      },
+      {
+        "vuln_code": "500",
+        "vuln_uuid": "69fc192e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for storing and analysing activity tracks"
+      },
+      {
+        "vuln_code": "842",
+        "vuln_uuid": "69fc23ba-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No logging of entry to the site"
+      },
+      {
+        "vuln_code": "556",
+        "vuln_uuid": "69fc1ad3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of product certification"
+      },
+      {
+        "vuln_code": "930",
+        "vuln_uuid": "69fc294f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No physical and logical protection (partitioning, etc.)"
+      },
+      {
+        "vuln_code": "1168",
+        "vuln_uuid": "69fc04e2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The need-to-know principle is not respected"
+      },
+      {
+        "vuln_code": "602",
+        "vuln_uuid": "69fc1c92-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering conditions of use of information processing infrastructures (ban on smoking, drinks and food in rooms housing IT equipment)"
+      },
+      {
+        "vuln_code": "337",
+        "vuln_uuid": "69fc11f0-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No security policy for protecting the information processing infrastructure in the organisation's sites"
+      },
+      {
+        "vuln_code": "896",
+        "vuln_uuid": "69fc280e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency power supply equipment (inverter, batteries, etc.)"
+      },
+      {
+        "vuln_code": "1166",
+        "vuln_uuid": "69fc04c4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Authorisation management is flawed"
+      },
+      {
+        "vuln_code": "1172",
+        "vuln_uuid": "69fc04ed-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No SLAs with third parties (internal or external)"
+      },
+      {
+        "vuln_code": "562",
+        "vuln_uuid": "69fc1afd-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No detection system of malicious programs"
+      },
+      {
+        "vuln_code": "390",
+        "vuln_uuid": "69fc1482-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring procedure"
+      },
+      {
+        "vuln_code": "391",
+        "vuln_uuid": "69fc148d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Change of the organisation's policy or strategy"
+      },
+      {
+        "vuln_code": "336",
+        "vuln_uuid": "69fc11e6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules imposing the use of standards"
+      },
+      {
+        "vuln_code": "1024",
+        "vuln_uuid": "69fbfefc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of installation and maintenance procedures (configuration and parameter setting records)"
+      },
+      {
+        "vuln_code": "1028",
+        "vuln_uuid": "69fbff25-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No access rules"
+      },
+      {
+        "vuln_code": "376",
+        "vuln_uuid": "69fc137a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy imposed at the organisation's sites"
+      },
+      {
+        "vuln_code": "840",
+        "vuln_uuid": "69fc238c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No procedures for checking authorisation of personnel entering the site or premises"
+      }
+    ]
+  },
+  {
+    "threat_code": "MDA13",
+    "threat_uuid": "b402d5d5-4576-11e9-9173-0800277f0571",
+    "threat_label": "Malware infection",
+    "vulnerabilities": [
+      {
+        "vuln_code": "132",
+        "vuln_uuid": "69fc074f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "1050",
+        "vuln_uuid": "69fc0025-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of subjecting the system to an unlimited number of requests"
+      },
+      {
+        "vuln_code": "938",
+        "vuln_uuid": "69fc2979-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Physical or logical access to a relay allowing eavesdropping equipment to be installed"
+      },
+      {
+        "vuln_code": "984",
+        "vuln_uuid": "69fc2b3b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The network allows the system resources to be modified or adjusted"
+      },
+      {
+        "vuln_code": "967",
+        "vuln_uuid": "69fc2aa2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No authentication of equipment connected to the network"
+      },
+      {
+        "vuln_code": "1052",
+        "vuln_uuid": "69fc003a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on LDAP server)"
+      },
+      {
+        "vuln_code": "1013",
+        "vuln_uuid": "69fbfe8a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The relays identify neither the sources nor the destinations (example of impact: system vulnerable to spoofing attacks)"
+      },
+      {
+        "vuln_code": "983",
+        "vuln_uuid": "69fc2b30-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of adding software derivations"
+      },
+      {
+        "vuln_code": "1055",
+        "vuln_uuid": "69fc0058-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of the system protection levels"
+      },
+      {
+        "vuln_code": "1123",
+        "vuln_uuid": "69fc03ec-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Public access to the gateway"
+      },
+      {
+        "vuln_code": "830",
+        "vuln_uuid": "69fc2362-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Public access close to the buildings"
+      },
+      {
+        "vuln_code": "977",
+        "vuln_uuid": "69fc2b06-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No strict routing between sub-networks"
+      },
+      {
+        "vuln_code": "1068",
+        "vuln_uuid": "69fc00ec-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No anti-virus check on exchanges"
+      },
+      {
+        "vuln_code": "593",
+        "vuln_uuid": "69fc1c5d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of security needs for a project"
+      },
+      {
+        "vuln_code": "1012",
+        "vuln_uuid": "69fbfe7a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No filtering and logging on communication relays between networks"
+      },
+      {
+        "vuln_code": "988",
+        "vuln_uuid": "69fc2b67-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of incorrect configuration, installation or modification of relays"
+      },
+      {
+        "vuln_code": "1075",
+        "vuln_uuid": "69fc011f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No partitioning of communication networks"
+      },
+      {
+        "vuln_code": "961",
+        "vuln_uuid": "69fc2a56-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The relays can be accessed by everyone"
+      },
+      {
+        "vuln_code": "981",
+        "vuln_uuid": "69fc2b26-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The network makes it easy for unauthorised persons to use the resources"
+      },
+      {
+        "vuln_code": "1018",
+        "vuln_uuid": "69fbfeaa-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Circulating information in clear text"
+      },
+      {
+        "vuln_code": "1077",
+        "vuln_uuid": "69fc0134-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of eavesdropping on exchanges with application servers"
+      },
+      {
+        "vuln_code": "105",
+        "vuln_uuid": "69fc001a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The SNMP layer is activated"
+      },
+      {
+        "vuln_code": "1113",
+        "vuln_uuid": "69fc038b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on SMTP, POP3, IMAP server)"
+      },
+      {
+        "vuln_code": "343",
+        "vuln_uuid": "69fc121a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of sensitive assets"
+      },
+      {
+        "vuln_code": "1105",
+        "vuln_uuid": "69fc0264-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No anti-virus filtering system"
+      },
+      {
+        "vuln_code": "1062",
+        "vuln_uuid": "69fc00a3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "1096",
+        "vuln_uuid": "69fc01fb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system allows relaying"
+      },
+      {
+        "vuln_code": "1076",
+        "vuln_uuid": "69fc012a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of eavesdropping on exchanges with authentication servers"
+      },
+      {
+        "vuln_code": "461",
+        "vuln_uuid": "69fc1875-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No warning, reaction or information instructions in the event of water damage (no identification of stop cocks, etc.)"
+      },
+      {
+        "vuln_code": "1004",
+        "vuln_uuid": "69fbfe22-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Presence of protocol that has no authentication function"
+      },
+      {
+        "vuln_code": "1038",
+        "vuln_uuid": "69fbff85-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No supervision tool"
+      },
+      {
+        "vuln_code": "991",
+        "vuln_uuid": "69fc2b87-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of subjecting the relays to an excessive number of requests or intense interference (e.g. denial of service attacks such as smurfing, SYN flood etc.)"
+      },
+      {
+        "vuln_code": "1064",
+        "vuln_uuid": "69fc00b7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No filtering system"
+      }
+    ]
+  },
+  {
+    "threat_code": "MDA16",
+    "threat_uuid": "b402d5df-4576-11e9-9173-0800277f0571",
+    "threat_label": "Saturation of the information system",
+    "vulnerabilities": [
+      {
+        "vuln_code": "132",
+        "vuln_uuid": "69fc074f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "24",
+        "vuln_uuid": "69fc0b70-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No passing up of information for a centralised malfunction analysis"
+      },
+      {
+        "vuln_code": "1050",
+        "vuln_uuid": "69fc0025-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of subjecting the system to an unlimited number of requests"
+      },
+      {
+        "vuln_code": "938",
+        "vuln_uuid": "69fc2979-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Physical or logical access to a relay allowing eavesdropping equipment to be installed"
+      },
+      {
+        "vuln_code": "524",
+        "vuln_uuid": "69fc19fc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No reporting on malfunctions"
+      },
+      {
+        "vuln_code": "1049",
+        "vuln_uuid": "69fc0003-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. too many users for the maximum capacity of the directory)"
+      },
+      {
+        "vuln_code": "984",
+        "vuln_uuid": "69fc2b3b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The network allows the system resources to be modified or adjusted"
+      },
+      {
+        "vuln_code": "967",
+        "vuln_uuid": "69fc2aa2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No authentication of equipment connected to the network"
+      },
+      {
+        "vuln_code": "1021",
+        "vuln_uuid": "69fbfedc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete version of the messaging server"
+      },
+      {
+        "vuln_code": "859",
+        "vuln_uuid": "69fc23f9-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No sizing of the automatic fire extinction system, or incorrect sizing or inadequacy of this system."
+      },
+      {
+        "vuln_code": "1052",
+        "vuln_uuid": "69fc003a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on LDAP server)"
+      },
+      {
+        "vuln_code": "429",
+        "vuln_uuid": "69fc16f3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No clause covering response time for repair and treatment in the event of malfunction"
+      },
+      {
+        "vuln_code": "1013",
+        "vuln_uuid": "69fbfe8a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The relays identify neither the sources nor the destinations (example of impact: system vulnerable to spoofing attacks)"
+      },
+      {
+        "vuln_code": "904",
+        "vuln_uuid": "69fc2881-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency resources"
+      },
+      {
+        "vuln_code": "983",
+        "vuln_uuid": "69fc2b30-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of adding software derivations"
+      },
+      {
+        "vuln_code": "890",
+        "vuln_uuid": "69fc2701-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of telecommunication resources, resulting, for example, from daily use of resources intended for the emergency solution."
+      },
+      {
+        "vuln_code": "1055",
+        "vuln_uuid": "69fc0058-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of the system protection levels"
+      },
+      {
+        "vuln_code": "1123",
+        "vuln_uuid": "69fc03ec-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Public access to the gateway"
+      },
+      {
+        "vuln_code": "298",
+        "vuln_uuid": "69fc10dd-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Obsolete medium"
+      },
+      {
+        "vuln_code": "223",
+        "vuln_uuid": "69fc0ad8-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Obsolete hardware"
+      },
+      {
+        "vuln_code": "37",
+        "vuln_uuid": "69fc1351-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Obsolete software"
+      },
+      {
+        "vuln_code": "1084",
+        "vuln_uuid": "69fc017e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. not enough storage or file share space)"
+      },
+      {
+        "vuln_code": "725",
+        "vuln_uuid": "69fc1fce-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Existence of obsolete components in the information processing infrastructure (development in languages no longer used, etc.)"
+      },
+      {
+        "vuln_code": "830",
+        "vuln_uuid": "69fc2362-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Public access close to the buildings"
+      },
+      {
+        "vuln_code": "977",
+        "vuln_uuid": "69fc2b06-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No strict routing between sub-networks"
+      },
+      {
+        "vuln_code": "1068",
+        "vuln_uuid": "69fc00ec-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No anti-virus check on exchanges"
+      },
+      {
+        "vuln_code": "1118",
+        "vuln_uuid": "69fc03a0-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete version of the messaging server"
+      },
+      {
+        "vuln_code": "593",
+        "vuln_uuid": "69fc1c5d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of security needs for a project"
+      },
+      {
+        "vuln_code": "1012",
+        "vuln_uuid": "69fbfe7a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No filtering and logging on communication relays between networks"
+      },
+      {
+        "vuln_code": "988",
+        "vuln_uuid": "69fc2b67-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of incorrect configuration, installation or modification of relays"
+      },
+      {
+        "vuln_code": "196",
+        "vuln_uuid": "69fc083d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. insufficient reserve time on a laptop battery)."
+      },
+      {
+        "vuln_code": "1014",
+        "vuln_uuid": "69fbfe99-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing (e.g. too much data for the maximum passband)"
+      },
+      {
+        "vuln_code": "1075",
+        "vuln_uuid": "69fc011f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No partitioning of communication networks"
+      },
+      {
+        "vuln_code": "961",
+        "vuln_uuid": "69fc2a56-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The relays can be accessed by everyone"
+      },
+      {
+        "vuln_code": "981",
+        "vuln_uuid": "69fc2b26-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The network makes it easy for unauthorised persons to use the resources"
+      },
+      {
+        "vuln_code": "1018",
+        "vuln_uuid": "69fbfeaa-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Circulating information in clear text"
+      },
+      {
+        "vuln_code": "1077",
+        "vuln_uuid": "69fc0134-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of eavesdropping on exchanges with application servers"
+      },
+      {
+        "vuln_code": "456",
+        "vuln_uuid": "69fc184b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No updated display of information for calling the emergency services"
+      },
+      {
+        "vuln_code": "105",
+        "vuln_uuid": "69fc001a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The SNMP layer is activated"
+      },
+      {
+        "vuln_code": "1107",
+        "vuln_uuid": "69fc0278-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of storage spaces for received messages"
+      },
+      {
+        "vuln_code": "1113",
+        "vuln_uuid": "69fc038b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on SMTP, POP3, IMAP server)"
+      },
+      {
+        "vuln_code": "343",
+        "vuln_uuid": "69fc121a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of sensitive assets"
+      },
+      {
+        "vuln_code": "1022",
+        "vuln_uuid": "69fbfee8-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete system"
+      },
+      {
+        "vuln_code": "1124",
+        "vuln_uuid": "69fc03f6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. too many simultaneous connections)"
+      },
+      {
+        "vuln_code": "722",
+        "vuln_uuid": "69fc1fae-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No incident monitoring to foresee malfunctions (trend charts)"
+      },
+      {
+        "vuln_code": "1105",
+        "vuln_uuid": "69fc0264-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No anti-virus filtering system"
+      },
+      {
+        "vuln_code": "1062",
+        "vuln_uuid": "69fc00a3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "428",
+        "vuln_uuid": "69fc16dc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No clause covering response time for repair and replacement in the event of equipment failure"
+      },
+      {
+        "vuln_code": "1096",
+        "vuln_uuid": "69fc01fb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system allows relaying"
+      },
+      {
+        "vuln_code": "109",
+        "vuln_uuid": "69fc01a6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete version of the operating system or applications"
+      },
+      {
+        "vuln_code": "896",
+        "vuln_uuid": "69fc280e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency power supply equipment (inverter, batteries, etc.)"
+      },
+      {
+        "vuln_code": "1076",
+        "vuln_uuid": "69fc012a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of eavesdropping on exchanges with authentication servers"
+      },
+      {
+        "vuln_code": "461",
+        "vuln_uuid": "69fc1875-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No warning, reaction or information instructions in the event of water damage (no identification of stop cocks, etc.)"
+      },
+      {
+        "vuln_code": "1004",
+        "vuln_uuid": "69fbfe22-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Presence of protocol that has no authentication function"
+      },
+      {
+        "vuln_code": "1038",
+        "vuln_uuid": "69fbff85-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No supervision tool"
+      },
+      {
+        "vuln_code": "991",
+        "vuln_uuid": "69fc2b87-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of subjecting the relays to an excessive number of requests or intense interference (e.g. denial of service attacks such as smurfing, SYN flood etc.)"
+      },
+      {
+        "vuln_code": "1064",
+        "vuln_uuid": "69fc00b7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No filtering system"
+      },
+      {
+        "vuln_code": "106",
+        "vuln_uuid": "69fc0098-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No diagnostic function to prevent equipment failures"
+      },
+      {
+        "vuln_code": "1070",
+        "vuln_uuid": "69fc0101-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. too many users for the number of connections possible and the passband)"
+      },
+      {
+        "vuln_code": "777",
+        "vuln_uuid": "69fc21c4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of operating and maintenance resources"
+      }
+    ]
+  },
+  {
+    "threat_code": "MDA17",
+    "threat_uuid": "b402d5ea-4576-11e9-9173-0800277f0571",
+    "threat_label": "Abuse of rights",
+    "vulnerabilities": [
+      {
+        "vuln_code": "469",
+        "vuln_uuid": "69fc18c1-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules for the use and storage of hardware and information media (protection conditions during transport, smoking ban, etc.)"
+      },
+      {
+        "vuln_code": "396",
+        "vuln_uuid": "69fc15bb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No global policy for managing and archiving tracks and other elements of proof"
+      },
+      {
+        "vuln_code": "1215",
+        "vuln_uuid": "69fc05c9-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Logical access authorisations are not checked regularly"
+      },
+      {
+        "vuln_code": "532",
+        "vuln_uuid": "69fc1a3b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for partitioning user environments to avoid unintentional assignment of rights to modify the system and application"
+      },
+      {
+        "vuln_code": "1019",
+        "vuln_uuid": "69fbfeba-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system is connected to external networks"
+      },
+      {
+        "vuln_code": "1044",
+        "vuln_uuid": "69fbffc5-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No control of access to information stored in the directory"
+      },
+      {
+        "vuln_code": "527",
+        "vuln_uuid": "69fc1a07-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering the operating environment of information processing infrastructures (temperature, humidity, etc.)"
+      },
+      {
+        "vuln_code": "520",
+        "vuln_uuid": "69fc19c5-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering conditions of use of information processing infrastructures (ban on smoking, drinks and food in rooms housing IT equipment)"
+      },
+      {
+        "vuln_code": "447",
+        "vuln_uuid": "69fc17d4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No procedure for personnel authorisation"
+      },
+      {
+        "vuln_code": "1001",
+        "vuln_uuid": "69fbfe14-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The principle of least privilege is not applied"
+      },
+      {
+        "vuln_code": "338",
+        "vuln_uuid": "69fc11fb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules for protecting the exchange of confidential information"
+      },
+      {
+        "vuln_code": "957",
+        "vuln_uuid": "69fc2a2c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The interfaces are connected to external networks"
+      },
+      {
+        "vuln_code": "956",
+        "vuln_uuid": "69fc2a22-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No network partitioning"
+      },
+      {
+        "vuln_code": "483",
+        "vuln_uuid": "69fc18e2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security responsibilities concerning authorisation management are not formalised."
+      },
+      {
+        "vuln_code": "458",
+        "vuln_uuid": "69fc1860-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance contracts for fire-fighting equipment"
+      },
+      {
+        "vuln_code": "344",
+        "vuln_uuid": "69fc1225-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of sensitive assets"
+      },
+      {
+        "vuln_code": "817",
+        "vuln_uuid": "69fc2301-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No control of access to the site or premises"
+      },
+      {
+        "vuln_code": "264",
+        "vuln_uuid": "69fc0e34-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No partitioning of equipment"
+      },
+      {
+        "vuln_code": "958",
+        "vuln_uuid": "69fc2a37-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The supports and medium are connected to external networks"
+      },
+      {
+        "vuln_code": "43",
+        "vuln_uuid": "69fc16fe-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of data integrity"
+      },
+      {
+        "vuln_code": "557",
+        "vuln_uuid": "69fc1ade-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of product origin"
+      },
+      {
+        "vuln_code": "375",
+        "vuln_uuid": "69fc1370-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No authorisation management and monitoring policy imposed at the organisation's sites"
+      },
+      {
+        "vuln_code": "225",
+        "vuln_uuid": "69fc0aed-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system is connected to external networks"
+      },
+      {
+        "vuln_code": "803",
+        "vuln_uuid": "69fc2296-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No control of access to the site or premises or possibility of intrusion via indirect access routes."
+      },
+      {
+        "vuln_code": "371",
+        "vuln_uuid": "69fc135b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No licence monitoring policy imposed at the organisation's sites"
+      },
+      {
+        "vuln_code": "374",
+        "vuln_uuid": "69fc1366-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules and procedures for personnel authorisation"
+      },
+      {
+        "vuln_code": "559",
+        "vuln_uuid": "69fc1ae8-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security policy does not include reminding all personnel of their obligations and responsibilities in civil, criminal and regulatory matters."
+      },
+      {
+        "vuln_code": "518",
+        "vuln_uuid": "69fc19a6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance and support contracts with suppliers"
+      },
+      {
+        "vuln_code": "1190",
+        "vuln_uuid": "69fc0574-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Backup media are not stored in a suitable place"
+      },
+      {
+        "vuln_code": "349",
+        "vuln_uuid": "69fc12e7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security policy is not applied"
+      },
+      {
+        "vuln_code": "1058",
+        "vuln_uuid": "69fc0083-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No management of access authorisation"
+      },
+      {
+        "vuln_code": "1027",
+        "vuln_uuid": "69fbff1b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit or supervision of accesses (for example inventory of accesses outside the organisation and types of data flow)"
+      },
+      {
+        "vuln_code": "1075",
+        "vuln_uuid": "69fc011f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No partitioning of communication networks"
+      },
+      {
+        "vuln_code": "497",
+        "vuln_uuid": "69fc190e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules for checking equipment entering/leaving the organisation"
+      },
+      {
+        "vuln_code": "1167",
+        "vuln_uuid": "69fc04d1-4591-11e9-9173-0800277f0571",
+        "vuln_label": "User authentication is not ensured"
+      },
+      {
+        "vuln_code": "571",
+        "vuln_uuid": "69fc1b55-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security policy is not applied especially in relation to processing of personal information"
+      },
+      {
+        "vuln_code": "975",
+        "vuln_uuid": "69fc2afc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No user notification"
+      },
+      {
+        "vuln_code": "928",
+        "vuln_uuid": "69fc2939-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The equipment is connected to external networks"
+      },
+      {
+        "vuln_code": "1174",
+        "vuln_uuid": "69fc0501-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Backups are not carried out in accordance with the state of the art"
+      },
+      {
+        "vuln_code": "245",
+        "vuln_uuid": "69fc0c35-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No data protection rules"
+      },
+      {
+        "vuln_code": "1056",
+        "vuln_uuid": "69fc0063-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No content monitoring"
+      },
+      {
+        "vuln_code": "529",
+        "vuln_uuid": "69fc1a11-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for checking the correct sizing of the equipment of the information processing infrastructure, including the emergency equipment"
+      },
+      {
+        "vuln_code": "345",
+        "vuln_uuid": "69fc122f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of application of the security policy"
+      },
+      {
+        "vuln_code": "1210",
+        "vuln_uuid": "69fc059f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Lack of a system hardening policy"
+      },
+      {
+        "vuln_code": "514",
+        "vuln_uuid": "69fc1991-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for protecting the workstations"
+      },
+      {
+        "vuln_code": "45",
+        "vuln_uuid": "69fc17f4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit policy"
+      },
+      {
+        "vuln_code": "382",
+        "vuln_uuid": "69fc13a4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of critical processes by the parent organisation"
+      },
+      {
+        "vuln_code": "1057",
+        "vuln_uuid": "69fc006d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit or supervision of accesses"
+      },
+      {
+        "vuln_code": "510",
+        "vuln_uuid": "69fc1985-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No global policy for fighting against malicious code"
+      },
+      {
+        "vuln_code": "1173",
+        "vuln_uuid": "69fc04f7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No recovery plan"
+      },
+      {
+        "vuln_code": "310",
+        "vuln_uuid": "69fc116e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit of physical access control procedures"
+      },
+      {
+        "vuln_code": "1214",
+        "vuln_uuid": "69fc05bf-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Physical access authorisations are not checked regularly"
+      },
+      {
+        "vuln_code": "354",
+        "vuln_uuid": "69fc131a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy"
+      },
+      {
+        "vuln_code": "463",
+        "vuln_uuid": "69fc188a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance contracts"
+      },
+      {
+        "vuln_code": "578",
+        "vuln_uuid": "69fc1b89-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Personnel receive no communication or information concerning authorisation procedures"
+      },
+      {
+        "vuln_code": "632",
+        "vuln_uuid": "69fc1d5d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No management support for application of the security policy"
+      },
+      {
+        "vuln_code": "1029",
+        "vuln_uuid": "69fbff3c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system is connected to external networks"
+      },
+      {
+        "vuln_code": "341",
+        "vuln_uuid": "69fc1210-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No security policy for protecting the information processing infrastructure in the organisation's sites"
+      },
+      {
+        "vuln_code": "351",
+        "vuln_uuid": "69fc1305-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Procedures for managing and applying authorisation too heavy to use"
+      },
+      {
+        "vuln_code": "438",
+        "vuln_uuid": "69fc175e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for authorising access to information"
+      },
+      {
+        "vuln_code": "346",
+        "vuln_uuid": "69fc1246-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy applicable to recycling and discarding"
+      },
+      {
+        "vuln_code": "500",
+        "vuln_uuid": "69fc192e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for storing and analysing activity tracks"
+      },
+      {
+        "vuln_code": "842",
+        "vuln_uuid": "69fc23ba-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No logging of entry to the site"
+      },
+      {
+        "vuln_code": "556",
+        "vuln_uuid": "69fc1ad3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of product certification"
+      },
+      {
+        "vuln_code": "930",
+        "vuln_uuid": "69fc294f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No physical and logical protection (partitioning, etc.)"
+      },
+      {
+        "vuln_code": "1168",
+        "vuln_uuid": "69fc04e2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The need-to-know principle is not respected"
+      },
+      {
+        "vuln_code": "602",
+        "vuln_uuid": "69fc1c92-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering conditions of use of information processing infrastructures (ban on smoking, drinks and food in rooms housing IT equipment)"
+      },
+      {
+        "vuln_code": "337",
+        "vuln_uuid": "69fc11f0-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No security policy for protecting the information processing infrastructure in the organisation's sites"
+      },
+      {
+        "vuln_code": "896",
+        "vuln_uuid": "69fc280e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency power supply equipment (inverter, batteries, etc.)"
+      },
+      {
+        "vuln_code": "1166",
+        "vuln_uuid": "69fc04c4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Authorisation management is flawed"
+      },
+      {
+        "vuln_code": "1172",
+        "vuln_uuid": "69fc04ed-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No SLAs with third parties (internal or external)"
+      },
+      {
+        "vuln_code": "562",
+        "vuln_uuid": "69fc1afd-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No detection system of malicious programs"
+      },
+      {
+        "vuln_code": "390",
+        "vuln_uuid": "69fc1482-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring procedure"
+      },
+      {
+        "vuln_code": "391",
+        "vuln_uuid": "69fc148d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Change of the organisation's policy or strategy"
+      },
+      {
+        "vuln_code": "336",
+        "vuln_uuid": "69fc11e6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules imposing the use of standards"
+      },
+      {
+        "vuln_code": "1024",
+        "vuln_uuid": "69fbfefc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of installation and maintenance procedures (configuration and parameter setting records)"
+      },
+      {
+        "vuln_code": "1028",
+        "vuln_uuid": "69fbff25-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No access rules"
+      },
+      {
+        "vuln_code": "376",
+        "vuln_uuid": "69fc137a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy imposed at the organisation's sites"
+      },
+      {
+        "vuln_code": "840",
+        "vuln_uuid": "69fc238c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No procedures for checking authorisation of personnel entering the site or premises"
+      }
+    ]
+  },
+  {
+    "threat_code": "MDA20",
+    "threat_uuid": "b402d600-4576-11e9-9173-0800277f0571",
+    "threat_label": "Disclosure",
+    "vulnerabilities": [
+      {
+        "vuln_code": "132",
+        "vuln_uuid": "69fc074f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "469",
+        "vuln_uuid": "69fc18c1-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules for the use and storage of hardware and information media (protection conditions during transport, smoking ban, etc.)"
+      },
+      {
+        "vuln_code": "396",
+        "vuln_uuid": "69fc15bb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No global policy for managing and archiving tracks and other elements of proof"
+      },
+      {
+        "vuln_code": "1215",
+        "vuln_uuid": "69fc05c9-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Logical access authorisations are not checked regularly"
+      },
+      {
+        "vuln_code": "532",
+        "vuln_uuid": "69fc1a3b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for partitioning user environments to avoid unintentional assignment of rights to modify the system and application"
+      },
+      {
+        "vuln_code": "1050",
+        "vuln_uuid": "69fc0025-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of subjecting the system to an unlimited number of requests"
+      },
+      {
+        "vuln_code": "1019",
+        "vuln_uuid": "69fbfeba-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system is connected to external networks"
+      },
+      {
+        "vuln_code": "938",
+        "vuln_uuid": "69fc2979-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Physical or logical access to a relay allowing eavesdropping equipment to be installed"
+      },
+      {
+        "vuln_code": "1044",
+        "vuln_uuid": "69fbffc5-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No control of access to information stored in the directory"
+      },
+      {
+        "vuln_code": "527",
+        "vuln_uuid": "69fc1a07-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering the operating environment of information processing infrastructures (temperature, humidity, etc.)"
+      },
+      {
+        "vuln_code": "984",
+        "vuln_uuid": "69fc2b3b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The network allows the system resources to be modified or adjusted"
+      },
+      {
+        "vuln_code": "520",
+        "vuln_uuid": "69fc19c5-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering conditions of use of information processing infrastructures (ban on smoking, drinks and food in rooms housing IT equipment)"
+      },
+      {
+        "vuln_code": "967",
+        "vuln_uuid": "69fc2aa2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No authentication of equipment connected to the network"
+      },
+      {
+        "vuln_code": "447",
+        "vuln_uuid": "69fc17d4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No procedure for personnel authorisation"
+      },
+      {
+        "vuln_code": "1001",
+        "vuln_uuid": "69fbfe14-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The principle of least privilege is not applied"
+      },
+      {
+        "vuln_code": "1052",
+        "vuln_uuid": "69fc003a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on LDAP server)"
+      },
+      {
+        "vuln_code": "338",
+        "vuln_uuid": "69fc11fb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules for protecting the exchange of confidential information"
+      },
+      {
+        "vuln_code": "1013",
+        "vuln_uuid": "69fbfe8a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The relays identify neither the sources nor the destinations (example of impact: system vulnerable to spoofing attacks)"
+      },
+      {
+        "vuln_code": "957",
+        "vuln_uuid": "69fc2a2c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The interfaces are connected to external networks"
+      },
+      {
+        "vuln_code": "956",
+        "vuln_uuid": "69fc2a22-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No network partitioning"
+      },
+      {
+        "vuln_code": "983",
+        "vuln_uuid": "69fc2b30-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of adding software derivations"
+      },
+      {
+        "vuln_code": "483",
+        "vuln_uuid": "69fc18e2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security responsibilities concerning authorisation management are not formalised."
+      },
+      {
+        "vuln_code": "458",
+        "vuln_uuid": "69fc1860-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance contracts for fire-fighting equipment"
+      },
+      {
+        "vuln_code": "344",
+        "vuln_uuid": "69fc1225-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of sensitive assets"
+      },
+      {
+        "vuln_code": "817",
+        "vuln_uuid": "69fc2301-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No control of access to the site or premises"
+      },
+      {
+        "vuln_code": "1055",
+        "vuln_uuid": "69fc0058-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of the system protection levels"
+      },
+      {
+        "vuln_code": "264",
+        "vuln_uuid": "69fc0e34-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No partitioning of equipment"
+      },
+      {
+        "vuln_code": "1123",
+        "vuln_uuid": "69fc03ec-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Public access to the gateway"
+      },
+      {
+        "vuln_code": "958",
+        "vuln_uuid": "69fc2a37-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The supports and medium are connected to external networks"
+      },
+      {
+        "vuln_code": "43",
+        "vuln_uuid": "69fc16fe-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of data integrity"
+      },
+      {
+        "vuln_code": "557",
+        "vuln_uuid": "69fc1ade-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of product origin"
+      },
+      {
+        "vuln_code": "375",
+        "vuln_uuid": "69fc1370-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No authorisation management and monitoring policy imposed at the organisation's sites"
+      },
+      {
+        "vuln_code": "225",
+        "vuln_uuid": "69fc0aed-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system is connected to external networks"
+      },
+      {
+        "vuln_code": "830",
+        "vuln_uuid": "69fc2362-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Public access close to the buildings"
+      },
+      {
+        "vuln_code": "803",
+        "vuln_uuid": "69fc2296-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No control of access to the site or premises or possibility of intrusion via indirect access routes."
+      },
+      {
+        "vuln_code": "977",
+        "vuln_uuid": "69fc2b06-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No strict routing between sub-networks"
+      },
+      {
+        "vuln_code": "371",
+        "vuln_uuid": "69fc135b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No licence monitoring policy imposed at the organisation's sites"
+      },
+      {
+        "vuln_code": "374",
+        "vuln_uuid": "69fc1366-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules and procedures for personnel authorisation"
+      },
+      {
+        "vuln_code": "1068",
+        "vuln_uuid": "69fc00ec-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No anti-virus check on exchanges"
+      },
+      {
+        "vuln_code": "593",
+        "vuln_uuid": "69fc1c5d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of security needs for a project"
+      },
+      {
+        "vuln_code": "559",
+        "vuln_uuid": "69fc1ae8-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security policy does not include reminding all personnel of their obligations and responsibilities in civil, criminal and regulatory matters."
+      },
+      {
+        "vuln_code": "1012",
+        "vuln_uuid": "69fbfe7a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No filtering and logging on communication relays between networks"
+      },
+      {
+        "vuln_code": "988",
+        "vuln_uuid": "69fc2b67-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of incorrect configuration, installation or modification of relays"
+      },
+      {
+        "vuln_code": "518",
+        "vuln_uuid": "69fc19a6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance and support contracts with suppliers"
+      },
+      {
+        "vuln_code": "1190",
+        "vuln_uuid": "69fc0574-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Backup media are not stored in a suitable place"
+      },
+      {
+        "vuln_code": "349",
+        "vuln_uuid": "69fc12e7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security policy is not applied"
+      },
+      {
+        "vuln_code": "1058",
+        "vuln_uuid": "69fc0083-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No management of access authorisation"
+      },
+      {
+        "vuln_code": "1027",
+        "vuln_uuid": "69fbff1b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit or supervision of accesses (for example inventory of accesses outside the organisation and types of data flow)"
+      },
+      {
+        "vuln_code": "1075",
+        "vuln_uuid": "69fc011f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No partitioning of communication networks"
+      },
+      {
+        "vuln_code": "497",
+        "vuln_uuid": "69fc190e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules for checking equipment entering/leaving the organisation"
+      },
+      {
+        "vuln_code": "961",
+        "vuln_uuid": "69fc2a56-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The relays can be accessed by everyone"
+      },
+      {
+        "vuln_code": "981",
+        "vuln_uuid": "69fc2b26-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The network makes it easy for unauthorised persons to use the resources"
+      },
+      {
+        "vuln_code": "1018",
+        "vuln_uuid": "69fbfeaa-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Circulating information in clear text"
+      },
+      {
+        "vuln_code": "1167",
+        "vuln_uuid": "69fc04d1-4591-11e9-9173-0800277f0571",
+        "vuln_label": "User authentication is not ensured"
+      },
+      {
+        "vuln_code": "571",
+        "vuln_uuid": "69fc1b55-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The security policy is not applied especially in relation to processing of personal information"
+      },
+      {
+        "vuln_code": "1077",
+        "vuln_uuid": "69fc0134-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of eavesdropping on exchanges with application servers"
+      },
+      {
+        "vuln_code": "975",
+        "vuln_uuid": "69fc2afc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No user notification"
+      },
+      {
+        "vuln_code": "928",
+        "vuln_uuid": "69fc2939-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The equipment is connected to external networks"
+      },
+      {
+        "vuln_code": "1174",
+        "vuln_uuid": "69fc0501-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Backups are not carried out in accordance with the state of the art"
+      },
+      {
+        "vuln_code": "245",
+        "vuln_uuid": "69fc0c35-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No data protection rules"
+      },
+      {
+        "vuln_code": "1056",
+        "vuln_uuid": "69fc0063-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No content monitoring"
+      },
+      {
+        "vuln_code": "105",
+        "vuln_uuid": "69fc001a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The SNMP layer is activated"
+      },
+      {
+        "vuln_code": "529",
+        "vuln_uuid": "69fc1a11-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for checking the correct sizing of the equipment of the information processing infrastructure, including the emergency equipment"
+      },
+      {
+        "vuln_code": "345",
+        "vuln_uuid": "69fc122f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of application of the security policy"
+      },
+      {
+        "vuln_code": "1210",
+        "vuln_uuid": "69fc059f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Lack of a system hardening policy"
+      },
+      {
+        "vuln_code": "514",
+        "vuln_uuid": "69fc1991-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for protecting the workstations"
+      },
+      {
+        "vuln_code": "1113",
+        "vuln_uuid": "69fc038b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on SMTP, POP3, IMAP server)"
+      },
+      {
+        "vuln_code": "45",
+        "vuln_uuid": "69fc17f4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit policy"
+      },
+      {
+        "vuln_code": "382",
+        "vuln_uuid": "69fc13a4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of critical processes by the parent organisation"
+      },
+      {
+        "vuln_code": "1057",
+        "vuln_uuid": "69fc006d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit or supervision of accesses"
+      },
+      {
+        "vuln_code": "510",
+        "vuln_uuid": "69fc1985-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No global policy for fighting against malicious code"
+      },
+      {
+        "vuln_code": "1173",
+        "vuln_uuid": "69fc04f7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No recovery plan"
+      },
+      {
+        "vuln_code": "310",
+        "vuln_uuid": "69fc116e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No audit of physical access control procedures"
+      },
+      {
+        "vuln_code": "1214",
+        "vuln_uuid": "69fc05bf-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Physical access authorisations are not checked regularly"
+      },
+      {
+        "vuln_code": "343",
+        "vuln_uuid": "69fc121a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No identification of sensitive assets"
+      },
+      {
+        "vuln_code": "354",
+        "vuln_uuid": "69fc131a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy"
+      },
+      {
+        "vuln_code": "463",
+        "vuln_uuid": "69fc188a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance contracts"
+      },
+      {
+        "vuln_code": "578",
+        "vuln_uuid": "69fc1b89-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Personnel receive no communication or information concerning authorisation procedures"
+      },
+      {
+        "vuln_code": "632",
+        "vuln_uuid": "69fc1d5d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No management support for application of the security policy"
+      },
+      {
+        "vuln_code": "1105",
+        "vuln_uuid": "69fc0264-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No anti-virus filtering system"
+      },
+      {
+        "vuln_code": "1029",
+        "vuln_uuid": "69fbff3c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system is connected to external networks"
+      },
+      {
+        "vuln_code": "1062",
+        "vuln_uuid": "69fc00a3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "341",
+        "vuln_uuid": "69fc1210-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No security policy for protecting the information processing infrastructure in the organisation's sites"
+      },
+      {
+        "vuln_code": "1096",
+        "vuln_uuid": "69fc01fb-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The system allows relaying"
+      },
+      {
+        "vuln_code": "351",
+        "vuln_uuid": "69fc1305-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Procedures for managing and applying authorisation too heavy to use"
+      },
+      {
+        "vuln_code": "438",
+        "vuln_uuid": "69fc175e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for authorising access to information"
+      },
+      {
+        "vuln_code": "346",
+        "vuln_uuid": "69fc1246-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy applicable to recycling and discarding"
+      },
+      {
+        "vuln_code": "500",
+        "vuln_uuid": "69fc192e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No policy for storing and analysing activity tracks"
+      },
+      {
+        "vuln_code": "842",
+        "vuln_uuid": "69fc23ba-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No logging of entry to the site"
+      },
+      {
+        "vuln_code": "556",
+        "vuln_uuid": "69fc1ad3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of product certification"
+      },
+      {
+        "vuln_code": "930",
+        "vuln_uuid": "69fc294f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No physical and logical protection (partitioning, etc.)"
+      },
+      {
+        "vuln_code": "1168",
+        "vuln_uuid": "69fc04e2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The need-to-know principle is not respected"
+      },
+      {
+        "vuln_code": "602",
+        "vuln_uuid": "69fc1c92-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering conditions of use of information processing infrastructures (ban on smoking, drinks and food in rooms housing IT equipment)"
+      },
+      {
+        "vuln_code": "337",
+        "vuln_uuid": "69fc11f0-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No security policy for protecting the information processing infrastructure in the organisation's sites"
+      },
+      {
+        "vuln_code": "896",
+        "vuln_uuid": "69fc280e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency power supply equipment (inverter, batteries, etc.)"
+      },
+      {
+        "vuln_code": "1076",
+        "vuln_uuid": "69fc012a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of eavesdropping on exchanges with authentication servers"
+      },
+      {
+        "vuln_code": "1166",
+        "vuln_uuid": "69fc04c4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Authorisation management is flawed"
+      },
+      {
+        "vuln_code": "461",
+        "vuln_uuid": "69fc1875-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No warning, reaction or information instructions in the event of water damage (no identification of stop cocks, etc.)"
+      },
+      {
+        "vuln_code": "1004",
+        "vuln_uuid": "69fbfe22-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Presence of protocol that has no authentication function"
+      },
+      {
+        "vuln_code": "1172",
+        "vuln_uuid": "69fc04ed-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No SLAs with third parties (internal or external)"
+      },
+      {
+        "vuln_code": "562",
+        "vuln_uuid": "69fc1afd-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No detection system of malicious programs"
+      },
+      {
+        "vuln_code": "1038",
+        "vuln_uuid": "69fbff85-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No supervision tool"
+      },
+      {
+        "vuln_code": "991",
+        "vuln_uuid": "69fc2b87-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of subjecting the relays to an excessive number of requests or intense interference (e.g. denial of service attacks such as smurfing, SYN flood etc.)"
+      },
+      {
+        "vuln_code": "390",
+        "vuln_uuid": "69fc1482-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring procedure"
+      },
+      {
+        "vuln_code": "1064",
+        "vuln_uuid": "69fc00b7-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No filtering system"
+      },
+      {
+        "vuln_code": "391",
+        "vuln_uuid": "69fc148d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Change of the organisation's policy or strategy"
+      },
+      {
+        "vuln_code": "336",
+        "vuln_uuid": "69fc11e6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules imposing the use of standards"
+      },
+      {
+        "vuln_code": "1024",
+        "vuln_uuid": "69fbfefc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of installation and maintenance procedures (configuration and parameter setting records)"
+      },
+      {
+        "vuln_code": "1028",
+        "vuln_uuid": "69fbff25-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No access rules"
+      },
+      {
+        "vuln_code": "376",
+        "vuln_uuid": "69fc137a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy imposed at the organisation's sites"
+      },
+      {
+        "vuln_code": "840",
+        "vuln_uuid": "69fc238c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No procedures for checking authorisation of personnel entering the site or premises"
+      }
+    ]
+  },
+  {
+    "threat_code": "MDA25",
+    "threat_uuid": "b402d60a-4576-11e9-9173-0800277f0571",
+    "threat_label": "Breach of information system maintainability",
+    "vulnerabilities": [
+      {
+        "vuln_code": "132",
+        "vuln_uuid": "69fc074f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "24",
+        "vuln_uuid": "69fc0b70-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No passing up of information for a centralised malfunction analysis"
+      },
+      {
+        "vuln_code": "524",
+        "vuln_uuid": "69fc19fc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No reporting on malfunctions"
+      },
+      {
+        "vuln_code": "1049",
+        "vuln_uuid": "69fc0003-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. too many users for the maximum capacity of the directory)"
+      },
+      {
+        "vuln_code": "1021",
+        "vuln_uuid": "69fbfedc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete version of the messaging server"
+      },
+      {
+        "vuln_code": "859",
+        "vuln_uuid": "69fc23f9-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No sizing of the automatic fire extinction system, or incorrect sizing or inadequacy of this system."
+      },
+      {
+        "vuln_code": "1052",
+        "vuln_uuid": "69fc003a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on LDAP server)"
+      },
+      {
+        "vuln_code": "429",
+        "vuln_uuid": "69fc16f3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No clause covering response time for repair and treatment in the event of malfunction"
+      },
+      {
+        "vuln_code": "904",
+        "vuln_uuid": "69fc2881-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency resources"
+      },
+      {
+        "vuln_code": "890",
+        "vuln_uuid": "69fc2701-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of telecommunication resources, resulting, for example, from daily use of resources intended for the emergency solution."
+      },
+      {
+        "vuln_code": "298",
+        "vuln_uuid": "69fc10dd-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Obsolete medium"
+      },
+      {
+        "vuln_code": "223",
+        "vuln_uuid": "69fc0ad8-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Obsolete hardware"
+      },
+      {
+        "vuln_code": "37",
+        "vuln_uuid": "69fc1351-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Obsolete software"
+      },
+      {
+        "vuln_code": "1084",
+        "vuln_uuid": "69fc017e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. not enough storage or file share space)"
+      },
+      {
+        "vuln_code": "725",
+        "vuln_uuid": "69fc1fce-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Existence of obsolete components in the information processing infrastructure (development in languages no longer used, etc.)"
+      },
+      {
+        "vuln_code": "1118",
+        "vuln_uuid": "69fc03a0-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete version of the messaging server"
+      },
+      {
+        "vuln_code": "196",
+        "vuln_uuid": "69fc083d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. insufficient reserve time on a laptop battery)."
+      },
+      {
+        "vuln_code": "1014",
+        "vuln_uuid": "69fbfe99-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing (e.g. too much data for the maximum passband)"
+      },
+      {
+        "vuln_code": "456",
+        "vuln_uuid": "69fc184b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No updated display of information for calling the emergency services"
+      },
+      {
+        "vuln_code": "1107",
+        "vuln_uuid": "69fc0278-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of storage spaces for received messages"
+      },
+      {
+        "vuln_code": "1113",
+        "vuln_uuid": "69fc038b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the system being subjected to badly formed requests and data (e.g. buffer overflow, denial of service on SMTP, POP3, IMAP server)"
+      },
+      {
+        "vuln_code": "1022",
+        "vuln_uuid": "69fbfee8-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete system"
+      },
+      {
+        "vuln_code": "1124",
+        "vuln_uuid": "69fc03f6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. too many simultaneous connections)"
+      },
+      {
+        "vuln_code": "722",
+        "vuln_uuid": "69fc1fae-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No incident monitoring to foresee malfunctions (trend charts)"
+      },
+      {
+        "vuln_code": "1062",
+        "vuln_uuid": "69fc00a3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of the operating system being subjected to badly formed requests and data (e.g. buffer overflow)"
+      },
+      {
+        "vuln_code": "428",
+        "vuln_uuid": "69fc16dc-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No clause covering response time for repair and replacement in the event of equipment failure"
+      },
+      {
+        "vuln_code": "109",
+        "vuln_uuid": "69fc01a6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Use of an obsolete version of the operating system or applications"
+      },
+      {
+        "vuln_code": "896",
+        "vuln_uuid": "69fc280e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency power supply equipment (inverter, batteries, etc.)"
+      },
+      {
+        "vuln_code": "106",
+        "vuln_uuid": "69fc0098-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No diagnostic function to prevent equipment failures"
+      },
+      {
+        "vuln_code": "1070",
+        "vuln_uuid": "69fc0101-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of resources (e.g. too many users for the number of connections possible and the passband)"
+      },
+      {
+        "vuln_code": "777",
+        "vuln_uuid": "69fc21c4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of operating and maintenance resources"
+      }
+    ]
+  },
+  {
+    "threat_code": "ME11",
+    "threat_uuid": "b402d63d-4576-11e9-9173-0800277f0571",
+    "threat_label": "Fire",
+    "vulnerabilities": [
+      {
+        "vuln_code": "800",
+        "vuln_uuid": "69fc2275-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Proximity of pollution sources (noise, smoke, vapour, etc.)"
+      },
+      {
+        "vuln_code": "859",
+        "vuln_uuid": "69fc23f9-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No sizing of the automatic fire extinction system, or incorrect sizing or inadequacy of this system."
+      },
+      {
+        "vuln_code": "864",
+        "vuln_uuid": "69fc243b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Fire extinction system using water"
+      },
+      {
+        "vuln_code": "821",
+        "vuln_uuid": "69fc2337-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Presence of a fire extinction system using water"
+      },
+      {
+        "vuln_code": "33",
+        "vuln_uuid": "69fc11c4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Wireless network connections are poorly managed"
+      },
+      {
+        "vuln_code": "458",
+        "vuln_uuid": "69fc1860-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No monitoring of maintenance contracts for fire-fighting equipment"
+      },
+      {
+        "vuln_code": "858",
+        "vuln_uuid": "69fc23ef-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No precautions taken at the installation phase for fire risks specific to the equipment housed."
+      },
+      {
+        "vuln_code": "838",
+        "vuln_uuid": "69fc2381-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Failure to take into account a specific environment that increases the risks of failure (overheated atmosphere, industrial environment, etc.)"
+      },
+      {
+        "vuln_code": "522",
+        "vuln_uuid": "69fc19db-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No quick response instructions to protect equipment in the event of water damage or fire"
+      },
+      {
+        "vuln_code": "818",
+        "vuln_uuid": "69fc230b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No fire partitions"
+      },
+      {
+        "vuln_code": "1179",
+        "vuln_uuid": "69fc0536-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Premises are not secure or could be compromised by external elements"
+      },
+      {
+        "vuln_code": "457",
+        "vuln_uuid": "69fc1856-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No fire-fighting organisation (description of roles and responsibilities)"
+      },
+      {
+        "vuln_code": "316",
+        "vuln_uuid": "69fc119a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No site inspection by emergency services (fire-fighting services)"
+      },
+      {
+        "vuln_code": "10",
+        "vuln_uuid": "69fbfe01-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of installing correction programmes, updates, patches, hotfixes, etc."
+      }
+    ]
+  },
+  {
+    "threat_code": "ME12",
+    "threat_uuid": "b402d648-4576-11e9-9173-0800277f0571",
+    "threat_label": "Water damage",
+    "vulnerabilities": [
+      {
+        "vuln_code": "527",
+        "vuln_uuid": "69fc1a07-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering the operating environment of information processing infrastructures (temperature, humidity, etc.)"
+      },
+      {
+        "vuln_code": "799",
+        "vuln_uuid": "69fc225e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Site located in flood-prone area"
+      },
+      {
+        "vuln_code": "864",
+        "vuln_uuid": "69fc243b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Fire extinction system using water"
+      },
+      {
+        "vuln_code": "821",
+        "vuln_uuid": "69fc2337-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Presence of a fire extinction system using water"
+      },
+      {
+        "vuln_code": "918",
+        "vuln_uuid": "69fc28f9-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Unprotected access to water and power supply equipment"
+      },
+      {
+        "vuln_code": "860",
+        "vuln_uuid": "69fc2404-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Ceiling or external opening not watertight"
+      },
+      {
+        "vuln_code": "462",
+        "vuln_uuid": "69fc1880-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No guarantee that water detectors are operating correctly"
+      },
+      {
+        "vuln_code": "914",
+        "vuln_uuid": "69fc28e4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "System depending on a chilled water or power supplier"
+      },
+      {
+        "vuln_code": "865",
+        "vuln_uuid": "69fc244a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Water pipe close to termination equipment"
+      },
+      {
+        "vuln_code": "522",
+        "vuln_uuid": "69fc19db-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No quick response instructions to protect equipment in the event of water damage or fire"
+      },
+      {
+        "vuln_code": "1179",
+        "vuln_uuid": "69fc0536-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Premises are not secure or could be compromised by external elements"
+      },
+      {
+        "vuln_code": "909",
+        "vuln_uuid": "69fc28ad-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No water stop cock"
+      },
+      {
+        "vuln_code": "461",
+        "vuln_uuid": "69fc1875-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No warning, reaction or information instructions in the event of water damage (no identification of stop cocks, etc.)"
+      },
+      {
+        "vuln_code": "861",
+        "vuln_uuid": "69fc241a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No clear identification of water stop cocks"
+      },
+      {
+        "vuln_code": "991",
+        "vuln_uuid": "69fc2b87-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Possibility of subjecting the relays to an excessive number of requests or intense interference (e.g. denial of service attacks such as smurfing, SYN flood etc.)"
+      },
+      {
+        "vuln_code": "863",
+        "vuln_uuid": "69fc2430-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Water pipe close to equipment"
+      },
+      {
+        "vuln_code": "820",
+        "vuln_uuid": "69fc2320-4591-11e9-9173-0800277f0571",
+        "vuln_label": "External opening not watertight"
+      }
+    ]
+  },
+  {
+    "threat_code": "ME13",
+    "threat_uuid": "b402d653-4576-11e9-9173-0800277f0571",
+    "threat_label": "Major accident",
+    "vulnerabilities": [
+      {
+        "vuln_code": "823",
+        "vuln_uuid": "69fc234d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Rooms in which explosion/implosion risks have not been taken into account"
+      },
+      {
+        "vuln_code": "616",
+        "vuln_uuid": "69fc1d3e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No test of reaction and information procedures in the event of an accident"
+      },
+      {
+        "vuln_code": "898",
+        "vuln_uuid": "69fc2828-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Rooms containing acid-based batteries are not fitted with mechanical ventilation and explosion-proof electrical equipment."
+      }
+    ]
+  },
+  {
+    "threat_code": "ME14",
+    "threat_uuid": "b402d65d-4576-11e9-9173-0800277f0571",
+    "threat_label": "Pollution",
+    "vulnerabilities": [
+      {
+        "vuln_code": "800",
+        "vuln_uuid": "69fc2275-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Proximity of pollution sources (noise, smoke, vapour, etc.)"
+      },
+      {
+        "vuln_code": "587",
+        "vuln_uuid": "69fc1c30-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The organisation's activity is impaired by its industrial relations"
+      },
+      {
+        "vuln_code": "814",
+        "vuln_uuid": "69fc22e2-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Difficult industrial relations possibly resulting in transport strikes"
+      },
+      {
+        "vuln_code": "802",
+        "vuln_uuid": "69fc228a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Proximity of industrial activity or potentially hazardous site"
+      },
+      {
+        "vuln_code": "200",
+        "vuln_uuid": "69fc087f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Equipment using flammable materials (e.g. bulk printers producing dust)"
+      },
+      {
+        "vuln_code": "838",
+        "vuln_uuid": "69fc2381-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Failure to take into account a specific environment that increases the risks of failure (overheated atmosphere, industrial environment, etc.)"
+      },
+      {
+        "vuln_code": "397",
+        "vuln_uuid": "69fc15f6-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Unfavourable industrial relations"
+      },
+      {
+        "vuln_code": "1179",
+        "vuln_uuid": "69fc0536-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Premises are not secure or could be compromised by external elements"
+      },
+      {
+        "vuln_code": "710",
+        "vuln_uuid": "69fc1f41-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Conflictual industrial relations"
+      }
+    ]
+  },
+  {
+    "threat_code": "ME15",
+    "threat_uuid": "b402d668-4576-11e9-9173-0800277f0571",
+    "threat_label": "Failure of telecommunication equipment",
+    "vulnerabilities": [
+      {
+        "vuln_code": "893",
+        "vuln_uuid": "69fc272d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No labelling of cables or cable layout plan"
+      },
+      {
+        "vuln_code": "886",
+        "vuln_uuid": "69fc263f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Unprotected physical access to rooms housing electrical power supply and distribution equipment or telecommunication equipment"
+      },
+      {
+        "vuln_code": "234",
+        "vuln_uuid": "69fc0b50-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No protection of equipment against theft (anti-theft cable)"
+      },
+      {
+        "vuln_code": "890",
+        "vuln_uuid": "69fc2701-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of telecommunication resources, resulting, for example, from daily use of resources intended for the emergency solution."
+      },
+      {
+        "vuln_code": "987",
+        "vuln_uuid": "69fc2b5c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Interface with technical characteristics specific to the country (e.g. different telephone connectors between France and the United Kingdom)"
+      },
+      {
+        "vuln_code": "885",
+        "vuln_uuid": "69fc2630-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Operating problem already encountered on the telecommunication service supply"
+      },
+      {
+        "vuln_code": "887",
+        "vuln_uuid": "69fc264a-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Ancillary equipment making it easier to pick up compromising stray signals (electrical cables, pipes, etc.)"
+      },
+      {
+        "vuln_code": "315",
+        "vuln_uuid": "69fc118f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Lack of information concerning laws and regulations applicable to information processing"
+      },
+      {
+        "vuln_code": "949",
+        "vuln_uuid": "69fc29d0-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No cable layout plan"
+      },
+      {
+        "vuln_code": "378",
+        "vuln_uuid": "69fc1384-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Lack of information concerning laws and regulations applicable to information processing"
+      },
+      {
+        "vuln_code": "208",
+        "vuln_uuid": "69fc0933-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Equipment or software maintained remotely via telecommunication equipment"
+      },
+      {
+        "vuln_code": "54",
+        "vuln_uuid": "69fc1a72-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No implementation of basic security rules applicable to the operating system and software"
+      },
+      {
+        "vuln_code": "346",
+        "vuln_uuid": "69fc1246-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No information protection policy applicable to recycling and discarding"
+      },
+      {
+        "vuln_code": "884",
+        "vuln_uuid": "69fc254b-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Operating faults on the internal telephone network"
+      }
+    ]
+  },
+  {
+    "threat_code": "ME16",
+    "threat_uuid": "b402d673-4576-11e9-9173-0800277f0571",
+    "threat_label": "Loss of power supply",
+    "vulnerabilities": [
+      {
+        "vuln_code": "886",
+        "vuln_uuid": "69fc263f-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Unprotected physical access to rooms housing electrical power supply and distribution equipment or telecommunication equipment"
+      },
+      {
+        "vuln_code": "207",
+        "vuln_uuid": "69fc0929-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Equipment sensitive to electrical disturbances (voltage drops, overvoltages, transient power-cuts)"
+      },
+      {
+        "vuln_code": "897",
+        "vuln_uuid": "69fc281d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Unprotected physical access to rooms housing electrical power supply and distribution equipment"
+      },
+      {
+        "vuln_code": "918",
+        "vuln_uuid": "69fc28f9-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Unprotected access to water and power supply equipment"
+      },
+      {
+        "vuln_code": "902",
+        "vuln_uuid": "69fc286c-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No analysis of emergency power level required if equipment is added"
+      },
+      {
+        "vuln_code": "914",
+        "vuln_uuid": "69fc28e4-4591-11e9-9173-0800277f0571",
+        "vuln_label": "System depending on a chilled water or power supplier"
+      },
+      {
+        "vuln_code": "901",
+        "vuln_uuid": "69fc2861-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The medium / low voltage transformer substation is not installed on the site (with controlled supplier access)"
+      },
+      {
+        "vuln_code": "900",
+        "vuln_uuid": "69fc2848-4591-11e9-9173-0800277f0571",
+        "vuln_label": "The low voltage panel is not accessible"
+      },
+      {
+        "vuln_code": "896",
+        "vuln_uuid": "69fc280e-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Incorrect sizing of emergency power supply equipment (inverter, batteries, etc.)"
+      },
+      {
+        "vuln_code": "782",
+        "vuln_uuid": "69fc221d-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Lack of information concerning conditions of use of emergency power supply points"
+      },
+      {
+        "vuln_code": "882",
+        "vuln_uuid": "69fc2513-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Terminal communication equipment with no emergency power supply"
+      }
+    ]
+  },
+  {
+    "threat_code": "ME17",
+    "threat_uuid": "b402d67d-4576-11e9-9173-0800277f0571",
+    "threat_label": "Failure of air-conditioning",
+    "vulnerabilities": [
+      {
+        "vuln_code": "527",
+        "vuln_uuid": "69fc1a07-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No rules covering the operating environment of information processing infrastructures (temperature, humidity, etc.)"
+      },
+      {
+        "vuln_code": "287",
+        "vuln_uuid": "69fc0f17-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Archives requiring air-conditioning for their preservation"
+      },
+      {
+        "vuln_code": "250",
+        "vuln_uuid": "69fc0c63-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Equipment requiring air-conditioning in order to operate"
+      },
+      {
+        "vuln_code": "906",
+        "vuln_uuid": "69fc2897-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No maintenance of air-conditioning equipment"
+      },
+      {
+        "vuln_code": "868",
+        "vuln_uuid": "69fc2475-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No revision of air-conditioning needs when premises are modified or equipment is added."
+      },
+      {
+        "vuln_code": "464",
+        "vuln_uuid": "69fc18a1-4591-11e9-9173-0800277f0571",
+        "vuln_label": "No measures in the event of interruption of air-conditioning service"
+      },
+      {
+        "vuln_code": "912",
+        "vuln_uuid": "69fc28ce-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Ageing of air-conditioning filters"
+      },
+      {
+        "vuln_code": "907",
+        "vuln_uuid": "69fc28a3-4591-11e9-9173-0800277f0571",
+        "vuln_label": "Ageing of cooling pipes"
+      }
+    ]
+  }
+]

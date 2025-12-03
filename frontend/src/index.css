@@ -1,0 +1,7 @@
+:root {
+    --tp-carrot-orange-500: #FF8A00;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
