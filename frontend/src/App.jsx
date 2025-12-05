@@ -7,7 +7,7 @@ import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard';
-import PrintersDashboard from './pages/PrintersDashboard';
+import PrintersDashboard from './pages/PrinterDashboard.jsx';
 import Settings from './pages/Settings';
 
 import ProtectedRoute from './components/ProtectedRoute';

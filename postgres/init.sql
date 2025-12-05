@@ -63,10 +63,10 @@ CREATE TABLE IF NOT EXISTS printer_snapshots
 
 CREATE INDEX IF NOT EXISTS idx_printer_snapshots_printer_ts ON printer_snapshots (printer_id, ts DESC);
 
--- Minimal seed example to bootstrap UI when running locally
-INSERT INTO printers (id, name, type, ip_address, port, status)
-SELECT gen_random_uuid(), 'K2 Plus', 'MOONRAKER', '192.168.1.50', 7125, 'OFFLINE'
-WHERE NOT EXISTS (SELECT 1 FROM printers);
+-- -- Minimal seed example to bootstrap UI when running locally
+-- INSERT INTO printers (id, name, type, ip_address, port, status)
+-- SELECT gen_random_uuid(), 'K2 Plus', 'MOONRAKER', '192.168.1.50', 7125, 'OFFLINE'
+-- WHERE NOT EXISTS (SELECT 1 FROM printers);
 
 /* =========================
    12. SEED ADMIN CATEGORIES

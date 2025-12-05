@@ -57,7 +57,8 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <Widget title="Users Created" value={counts.userCount} color="bg-blue-600"/>
-            <Widget title="Assessments Created" value={counts.assessmentCount} color="bg-green-600"/>
+            <Widget title="Impressions Created" value={counts.assessmentCount} color="bg-green-600"/>
+            <Widget title="Printer Available" value={counts.assessmentCount} color="bg-cyan-600"/>
         </div>
     </div>);
 }
