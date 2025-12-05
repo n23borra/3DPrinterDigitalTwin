@@ -63,3 +63,6 @@ services:
       - "3000:80"
     networks:
       - default
+
+volumes:
+  postgres-data:

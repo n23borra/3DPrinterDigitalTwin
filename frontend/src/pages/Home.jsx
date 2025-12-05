@@ -27,8 +27,8 @@ export default function Home() {
 
     return (<div
         className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white flex flex-col items-center justify-center px-6">
-        <h1 className="text-5xl font-bold mb-4 text-blue-400">Welcome to CyberPanel</h1>
-        <p className="text-lg text-gray-300 mb-8">Securely manage your digital environment</p>
+        <h1 className="text-5xl font-bold mb-4 text-blue-400">Welcome to 3D Printer Digital Twin</h1>
+        <p className="text-lg text-gray-300 mb-8">Manage your 3D Printer</p>
 
         {isAuthenticated ? (<>
             <p className="mb-4 text-green-400">Logged in as <strong>{username}</strong></p>

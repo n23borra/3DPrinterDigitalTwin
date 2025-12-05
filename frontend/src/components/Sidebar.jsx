@@ -5,14 +5,7 @@ import clsx from 'clsx';
 
 const links = [
     {to: '/dashboard', label: 'Dashboard'},
-    {to: '/analyses', label: 'Assessment'},
-    {to: '/assets', label: 'Assets'},
-    {to: '/risk-select', label: 'Risk Selection'},
-    {to: '/risks', label: 'Risk Evaluation'},
-    {to: '/actions', label: 'Actions'},
     {to: '/audit', label: 'Audit Logs'},
-    {to: '/export', label: 'Export'},
-    {to: '/references', label: 'References'},
     {to: '/settings', label: 'Settings'},
 ];
 
@@ -29,14 +22,13 @@ export default function Sidebar() {
     }, []);
 
     const visibleLinks = links.filter(l => {
-        if (l.to === '/references') return role === 'SUPER_ADMIN';
         if (l.to === '/risk-select') return role !== 'USER';
         return true;
     });
 
     return (
         <aside className="w-48 bg-[#5d5d63] text-[var(--tp-carrot-orange-500)] flex flex-col px-6 py-4">
-            <h1 className="text-2xl font-bold mb-4">HRM</h1>
+            <h1 className="text-2xl font-bold mb-4">3D Printer Digital Twin</h1>
             <nav className="space-y-2 flex-1">
                 {visibleLinks.map((link) => (
                     <Link

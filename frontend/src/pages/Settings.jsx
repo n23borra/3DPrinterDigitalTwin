@@ -50,38 +50,6 @@ export default function Settings() {
             });
     }, [token]);
 
-    useEffect(() => {
-        const load = async () => {
-            try {
-                const {data: cats} = await api.get('/categories');
-                const catList = Array.isArray(cats) ? cats : [];
-                console.log('Fetched categories', catList);
-                setCategories(catList);
-                setEmails(catList.map(() => []));
-                const {data: admins} = await api.get('/category-admins');
-                console.log('Fetched category admins', admins);
-                if (Array.isArray(admins)) {
-                    const arr = catList.map(() => []);
-                    admins.forEach(a => {
-                        const idx = catList.findIndex(c => c.id === a.categoryId);
-                        if (idx !== -1) {
-                            let list = [];
-                            if (Array.isArray(a.emails)) list = a.emails;
-                            else if (typeof a.emails === 'string') {
-                                list = a.emails.split(/[;,]+/).map(e => e.trim()).filter(Boolean);
-                            }
-                            arr[idx] = list;
-                        }
-                    });
-                    setEmails(arr);
-                }
-            } catch {
-                setCategories([]);
-                setEmails([]);
-            }
-        };
-        load();
-    }, []);
 
     let username = 'User';
     if (token) {
@@ -128,27 +96,6 @@ export default function Settings() {
         }
     };
 
-    /**
-     * Persists the configured category administrators to the backend service.
-     * @returns {Promise<void>} Resolves once the save operation finishes.
-     */
-    const handleSaveAdmins = async () => {
-        setAdminMsg('');
-        try {
-            const payload = categories.map((c, idx) => ({
-                categoryId: c.id,
-                label: c.label,
-                emails: emails[idx].filter(e => e && e.trim()),
-            }));
-            console.log('Saving category admins', payload);
-            const res = await api.post('/category-admins', payload);
-            console.log('Save response', res.status);
-            setAdminMsg('Saved successfully.');
-        } catch (err) {
-            console.log('Error saving admins', err);
-            setAdminMsg('Error saving administrators.');
-        }
-    };
 
     return (
         <div>
@@ -200,30 +147,6 @@ export default function Settings() {
                         </button>
                     </form>
                 </section>
-                {role === 'SUPER_ADMIN' && (
-                    <section className="bg-white rounded-lg shadow-md p-6">
-                        <h3 className="text-xl font-semibold mb-4 text-gray-800">Category Admin</h3>
-                        {adminMsg && (
-                            <p className={adminMsg.startsWith('Error') ? 'text-red-600 mb-4' : 'text-green-600 mb-4'}>{adminMsg}</p>
-                        )}
-                        {categories.map((c, idx) => (
-                            <div className="mb-4" key={c.id}>
-                                <label className="block text-gray-700 mb-1">{c.label}</label>
-                                <TagInput
-                                    value={emails[idx]}
-                                    onChange={(list) => handleEmailsChange(idx, list)}
-                                />
-                            </div>
-                        ))}
-                        <button
-                            type="button"
-                            onClick={handleSaveAdmins}
-                            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-                        >
-                            Save
-                        </button>
-                    </section>
-                )}
             </div>
         </div>
     );
