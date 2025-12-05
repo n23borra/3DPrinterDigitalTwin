@@ -52,6 +52,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/risks/**").authenticated()
                         .requestMatchers("/api/export/**").authenticated()
                         .requestMatchers("/api/asset-deps/**").authenticated()
+                        .requestMatchers("/api/printers/**").authenticated()
                         .requestMatchers("/api/category-admins/**").authenticated()
                         .anyRequest().permitAll())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

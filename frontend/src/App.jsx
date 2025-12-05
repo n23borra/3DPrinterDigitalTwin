@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard';
+import PrintersDashboard from './pages/PrintersDashboard';
 import Settings from './pages/Settings';
 
 import ProtectedRoute from './components/ProtectedRoute';
@@ -31,6 +32,7 @@ function App() {
             <Route element={<ProtectedRoute/>}>
                 <Route element={<DashboardLayout/>}>
                     <Route path="/dashboard" element={<Dashboard/>}/>
+                    <Route path="/printers" element={<PrintersDashboard/>}/>
                     <Route path="/audit" element={<AuditLogs/>}/>
                     <Route element={<SuperAdminRoute/>}>
                     </Route>

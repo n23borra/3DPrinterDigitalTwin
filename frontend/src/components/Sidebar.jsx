@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 const links = [
     {to: '/dashboard', label: 'Dashboard'},
+    {to: '/printers', label: 'Printers'},
     {to: '/audit', label: 'Audit Logs'},
     {to: '/settings', label: 'Settings'},
 ];
