@@ -45,10 +45,27 @@ public class PrinterController {
                 .filter(p -> p.getId().equals(id))
                 .findFirst()
                 .orElseThrow();
+
         connectors.stream()
                 .filter(c -> c.supports(printer))
                 .findFirst()
                 .ifPresent(connector -> connector.sendCommand(printer, request.command()));
+
         return ResponseEntity.accepted().build();
+    }
+
+    // --------------------------------------------------------------
+    // 🔧 NEW ENDPOINT FOR TESTING MOONRAKER COMMUNICATION
+    // --------------------------------------------------------------
+    @GetMapping("/test-moonraker")
+    public PrinterState testMoonraker() throws Exception {
+        MoonrakerConfig cfg = new MoonrakerConfig();
+        MoonrakerClient client = new MoonrakerClient(cfg);
+        MoonrakerQueries queries = new MoonrakerQueries(client);
+        PrinterState state = new PrinterState();
+        PrinterDataCollector collector = new PrinterDataCollector(queries, state);
+
+        collector.refreshAll();
+        return state;
     }
 }
