@@ -47,13 +47,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.securityMatcher("/**")
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/analyses/**").authenticated()
-                        .requestMatchers("/api/assets/**").authenticated()
-                        .requestMatchers("/api/risks/**").authenticated()
-                        .requestMatchers("/api/export/**").authenticated()
-                        .requestMatchers("/api/asset-deps/**").authenticated()
                         .requestMatchers("/api/printers/**").authenticated()
-                        .requestMatchers("/api/category-admins/**").authenticated()
                         .anyRequest().permitAll())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
