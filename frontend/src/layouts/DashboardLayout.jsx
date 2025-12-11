@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 import Sidebar from '../components/Sidebar.jsx';
-import Navbar from '../components/NavBar';
 import api from '../api/api';
 
 const DashboardIcon = () => (
@@ -44,7 +43,7 @@ const menuItems = [
 ];
 
 /**
- * Layout used for dashboard sections with persistent sidebar and navbar navigation.
+ * Layout used for dashboard sections with persistent sidebar navigation.
  * @returns {JSX.Element} Dashboard shell that renders nested routes within the main content area.
  */
 export default function DashboardLayout() {
@@ -87,12 +86,9 @@ export default function DashboardLayout() {
                 onToggleDarkMode={() => setIsDarkMode((prev) => !prev)}
                 activePath={location.pathname}
             />
-            <div className="flex-1 flex flex-col">
-                <Navbar/>
-                <main className="p-6 flex-1">
-                    <Outlet/>
-                </main>
-            </div>
+            <main className="p-6 flex-1">
+                <Outlet/>
+            </main>
         </div>
     );
 }
