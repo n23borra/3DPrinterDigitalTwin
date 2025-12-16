@@ -31,18 +31,25 @@ services:
     depends_on:
       postgres:
         condition: service_healthy         # waits for Postgres to be ready
+
+    env_file:
+      - .env
+
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/twin
       SPRING_DATASOURCE_USERNAME: twin
       SPRING_DATASOURCE_PASSWORD: twin
-      JWT_SECRET: ${JWT_SECRET}
+
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required. Copy .env.example to .env}
+
       SPRING_MAIL_HOST: smtp.gmail.com
       SPRING_MAIL_PORT: 587
-      SPRING_MAIL_USERNAME: ${MAIL_USERNAME}
-      SPRING_MAIL_PASSWORD: ${MAIL_PASSWORD}
+      SPRING_MAIL_USERNAME: ${MAIL_USERNAME:-}
+      SPRING_MAIL_PASSWORD: ${MAIL_PASSWORD:-}
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
       CORS_ORIGINS: http://localhost:3000
+
     ports:
       - "8080:8080"
     networks:
