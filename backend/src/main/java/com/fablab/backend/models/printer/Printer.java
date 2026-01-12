@@ -50,6 +50,6 @@ public class Printer {
 
     private String firmware;
 
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "TEXT")
     private String metadata;
 }
