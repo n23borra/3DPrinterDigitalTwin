@@ -146,7 +146,7 @@ public class PrinterSnapshot {
     private String bedMeshProfile;
 
     // ===== RAW DATA (for debugging/analysis) =====
-    @Column(columnDefinition = "jsonb")
+    @Column(name = "raw_payload", columnDefinition = "TEXT")
     private String rawPayload;
 
     // ===== LEGACY FIELD (backwards compatibility) =====
