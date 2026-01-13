@@ -33,7 +33,15 @@ public class AdminUserService {
     public List<AdminUserDTO> listUsers(String search, String role) {
         String trimmedSearch = sanitize(search);
         User.Role parsedRole = parseRole(role, true);
-        return userRepository.searchUsers(trimmedSearch, parsedRole)
+        List<User> users;
+        if (trimmedSearch == null) {
+            users = parsedRole == null
+                    ? userRepository.findAllByOrderByUsernameAsc()
+                    : userRepository.findByRoleOrderByUsernameAsc(parsedRole);
+        } else {
+            users = userRepository.searchUsers(trimmedSearch, parsedRole);
+        }
+        return users
                 .stream()
                 .map(this::toAdminUserDto)
                 .toList();

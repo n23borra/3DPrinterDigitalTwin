@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Button from '../components/Button';
 import Loader from '../components/Loader';
 import Modal from '../components/Modal';
-import {deleteUser, fetchUsers, updateUserRole} from '../api/adminUsersApi.js';
+import {deleteUser, fetchUsers, updateUserRole} from '../api/adminUserApi.js';
 
 const ROLE_OPTIONS = ['ALL', 'USER', 'ADMIN', 'SUPER_ADMIN'];
 
@@ -19,6 +19,17 @@ export default function UserManagement() {
     const [activeUser, setActiveUser] = useState(null);
     const [actionLoadingId, setActionLoadingId] = useState(null);
 
+    const getErrorMessage = (err, fallback) => {
+        const status = err?.response?.status;
+        if (status === 401) {
+            return 'Your session has expired. Please sign in again.';
+        }
+        if (status === 403) {
+            return 'You do not have access to manage users.';
+        }
+        return err?.response?.data?.message || err?.response?.data?.error || err?.message || fallback;
+    };
+
     const loadUsers = async ({searchValue = search, roleValue = roleFilter} = {}) => {
         setLoading(true);
         setError('');
@@ -29,8 +40,7 @@ export default function UserManagement() {
             });
             setUsers(Array.isArray(data) ? data : []);
         } catch (err) {
-            const message = err?.response?.data?.message || err?.response?.data?.error || 'Unable to load users.';
-            setError(message);
+            setError(getErrorMessage(err, 'Unable to load users.'));
         } finally {
             setLoading(false);
         }
@@ -54,8 +64,7 @@ export default function UserManagement() {
             await updateUserRole(user.id, nextRole);
             await loadUsers({searchValue: search, roleValue: roleFilter});
         } catch (err) {
-            const message = err?.response?.data?.message || err?.response?.data?.error || 'Unable to update role.';
-            setError(message);
+            setError(getErrorMessage(err, 'Unable to update role.'));
         } finally {
             setActionLoadingId(null);
         }
@@ -70,8 +79,7 @@ export default function UserManagement() {
             setActiveUser(null);
             await loadUsers({searchValue: search, roleValue: roleFilter});
         } catch (err) {
-            const message = err?.response?.data?.message || err?.response?.data?.error || 'Unable to delete user.';
-            setError(message);
+            setError(getErrorMessage(err, 'Unable to delete user.'));
         } finally {
             setActionLoadingId(null);
         }

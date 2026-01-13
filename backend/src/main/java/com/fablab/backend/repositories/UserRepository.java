@@ -43,6 +43,21 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> searchUsers(@Param("search") String search, @Param("role") User.Role role);
 
     /**
+     * Lists all users ordered by username.
+     *
+     * @return list of all users ordered by username
+     */
+    List<User> findAllByOrderByUsernameAsc();
+
+    /**
+     * Lists all users for a specific role ordered by username.
+     *
+     * @param role role filter
+     * @return list of users with the given role ordered by username
+     */
+    List<User> findByRoleOrderByUsernameAsc(User.Role role);
+
+    /**
      * Counts the number of users with the specified role.
      *
      * @param role role to count
