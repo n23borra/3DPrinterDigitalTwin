@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 import Sidebar from '../components/Sidebar.jsx';
 import api from '../api/api';
@@ -28,6 +28,13 @@ const AuditIcon = () => (
     </svg>
 );
 
+const UsersIcon = () => (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M16 11a4 4 0 10-8 0 4 4 0 008 0z" />
+        <path d="M4 20a6 6 0 0116 0" />
+    </svg>
+);
+
 const SettingsIcon = () => (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
         <circle cx="12" cy="12" r="3" />
@@ -35,7 +42,7 @@ const SettingsIcon = () => (
     </svg>
 );
 
-const menuItems = [
+const baseMenuItems  = [
     {id: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: <DashboardIcon/>},
     {id: 'printers', label: 'Printers', path: '/printers', icon: <PrinterIcon/>},
     {id: 'audit', label: 'Audit Logs', path: '/audit', icon: <AuditIcon/>},
@@ -69,6 +76,19 @@ export default function DashboardLayout() {
             isMounted = false;
         };
     }, []);
+
+    const menuItems = useMemo(() => {
+        const items = [...baseMenuItems];
+        if (user?.role === 'SUPER_ADMIN') {
+            items.splice(3, 0, {
+                id: 'user-management',
+                label: 'User Management',
+                path: '/admin/users',
+                icon: <UsersIcon/>,
+            });
+        }
+        return items;
+    }, [user?.role]);
 
     const handleLogout = () => {
         localStorage.removeItem('token');
