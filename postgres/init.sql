@@ -68,6 +68,11 @@ CREATE INDEX IF NOT EXISTS idx_printer_snapshots_printer_ts ON printer_snapshots
 -- SELECT gen_random_uuid(), 'K2 Plus', 'MOONRAKER', '192.168.1.50', 7125, 'OFFLINE'
 -- WHERE NOT EXISTS (SELECT 1 FROM printers);
 
+-- Seed printer at initialization
+INSERT INTO printers (id, name, type, ip_address, port, status)
+SELECT gen_random_uuid(), 'K2 Plus', 'MOONRAKER', '10.29.232.179', 4408, 'OFFLINE'
+WHERE NOT EXISTS (SELECT 1 FROM printers WHERE name = 'K2 Plus');
+
 /* =========================
    12. SEED ADMIN CATEGORIES
    (Run after creating

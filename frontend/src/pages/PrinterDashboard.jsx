@@ -175,11 +175,8 @@ useEffect(() => {
                                 </h4>
                                 <div className="space-y-4">
                                     <div>
-                                        <div className="flex justify-between items-baseline mb-1">
+                                        <div className="mb-1">
                                             <span className="text-sm text-gray-600">Nozzle</span>
-                                            <span className="text-xs text-gray-400">
-                                                Target: {selectedSnapshot.targetNozzle?.toFixed(1) || '0.0'}°C
-                                            </span>
                                         </div>
                                         <div className="text-2xl font-bold text-orange-600">
                                             {selectedSnapshot.nozzleTemp?.toFixed(1) || '--'}°C
@@ -195,11 +192,8 @@ useEffect(() => {
                                     </div>
 
                                     <div>
-                                        <div className="flex justify-between items-baseline mb-1">
+                                        <div className="mb-1">
                                             <span className="text-sm text-gray-600">Bed</span>
-                                            <span className="text-xs text-gray-400">
-                                                Target: {selectedSnapshot.targetBed?.toFixed(1) || '0.0'}°C
-                                            </span>
                                         </div>
                                         <div className="text-2xl font-bold text-red-600">
                                             {selectedSnapshot.bedTemp?.toFixed(1) || '--'}°C
