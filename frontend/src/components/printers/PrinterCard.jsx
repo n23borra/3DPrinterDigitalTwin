@@ -15,7 +15,7 @@ export default function PrinterCard({printer, snapshot, onSelect, isActive}) {
                 'w-full text-left rounded-lg border p-4 shadow-sm transition hover:shadow-md',
                 isActive ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'
             )}
-            onClick={() => onSelect(isActive ? null : printer)}
+            onClick={() => onSelect(isActive ? null : printer.id)}
         >
             <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-gray-800">{printer.name}</h3>
