@@ -1,7 +1,21 @@
+# Environment (never commit)
 .env
-!frontend/.env
+
+# IDE
 .idea/
-node_modules/
-# Build outputs
-backend/target/
+.vscode/
+
+# Node
+**/node_modules/
 frontend/dist/
+frontend/dist-ssr/
+
+# Java / Maven
+backend/target/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

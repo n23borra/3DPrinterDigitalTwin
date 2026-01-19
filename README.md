@@ -2,9 +2,21 @@
 Repository du projet de jumeau numérique pour les imprimantes 3D du FabLab (Creality K2 Plus en priorité, extensible à d'autres modèles).
 
 ## Contenu
-- `docs/architecture.md` : vue d'architecture détaillée (backend Java/Spring Boot, frontend React + Vite, PostgreSQL) et bonnes pratiques.
-- (Futur) `backend/` : application Spring Boot (connecteurs imprimantes, API REST, stockage PostgreSQL).
-- (Futur) `frontend/` : application React/Vite (dashboard, historique, maintenance, administration).
+Chaque répertoire important possède son propre `README.md` qui décrit les fichiers qu'il contient et leur rôle.
+
+## Structure du dépôt
+- `docs/` : documentation projet (voir `docs/README.md`).
+    - `docs/architecture.md` : vue d'architecture détaillée (backend Java/Spring Boot, frontend React + Vite, PostgreSQL) et bonnes pratiques.
+    - `docs/SETUP.md` : procédure d'installation détaillée.
+- `backend/` : application Spring Boot (voir `backend/README.md`).
+- `frontend/` : application React/Vite (voir `frontend/README.md`).
+- `postgres/` : scripts d'initialisation PostgreSQL (voir `postgres/README.md`).
+- `scripts/` : scripts utilitaires (voir `scripts/README.md`).
+
+## Pistes d'amélioration
+- **Gestion des logs** : journaliser les modifications fonctionnelles (qui a fait quoi, quand) plutôt que les connexions.
+- **Export automatique des logs** : exporter de façon régulière (hebdomadaire et mensuelle) avec filtres par date, au format CSV.
+- **Installation** : optimiser et simplifier l'installation pour les nouveaux utilisateurs (documentation et automatisation).
 
 ## Démarrage rapide (esquisse)
 1. Installer PostgreSQL ou utiliser un conteneur Docker (`docker compose up -d db` si un fichier compose est fourni ultérieurement).

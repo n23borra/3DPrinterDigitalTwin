@@ -16,4 +16,11 @@ public interface AuditLogRepository extends JpaRepository<AuditLog, Long> {
      * @return ordered list of matching audit events
      */
     List<AuditLog> findAllByUserId(Long userId);
+
+    /**
+     * Deletes all log entries produced by the specified user.
+     *
+     * @param userId identifier of the user whose actions are deleted
+     */
+    void deleteByUserId(Long userId);
 }

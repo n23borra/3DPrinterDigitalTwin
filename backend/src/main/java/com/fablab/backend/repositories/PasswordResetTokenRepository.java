@@ -26,4 +26,11 @@ public interface PasswordResetTokenRepository extends JpaRepository<PasswordRese
      * @param user owner of the tokens to remove
      */
     void deleteByUser(User user);
+
+    /**
+     * Deletes all tokens belonging to the given user id.
+     *
+     * @param userId identifier of the token owner
+     */
+    void deleteByUser_Id(Long userId);
 }
