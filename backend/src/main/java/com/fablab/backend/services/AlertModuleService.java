@@ -9,9 +9,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.fablab.backend.models.Alert;
 import com.fablab.backend.models.User;
+import com.fablab.backend.repositories.AlertRepository;
 import com.fablab.backend.repositories.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,6 +46,7 @@ public class AlertModuleService {
     private static final int PORT = 4408;
     private final UserRepository userRepository;
     private final AuditLogService auditService;
+    private final AlertRepository alertRepository;
 
     private static final HttpClient client = HttpClient.newHttpClient();
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -58,10 +63,26 @@ public class AlertModuleService {
     }
 
 
-    public void startAlertModule() throws Exception {        
-        String username = "superadmin";
-        User user = userRepository.findByUsername(username).orElseThrow();
-        auditService.logAction(user.getId(), "STARTING ALERT LOG", "");
+    public void startAlertModule() throws Exception {
+        // Try to get the currently authenticated user
+        Long userId = null;
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof org.springframework.security.core.userdetails.UserDetails) {
+            String username = auth.getName();
+            User user = userRepository.findByUsername(username).orElse(null);
+            if (user != null) {
+                userId = user.getId();
+            }
+        }
+        
+        // Make userId final for lambda expressions
+        final Long finalUserId = userId;
+        
+        // If a user is authenticated, log the startup; otherwise create a system alert (userId=null)
+        if (finalUserId != null) {
+            auditService.logAction(finalUserId, "STARTING ALERT LOG", "");
+        }
 
         // initial fetch
         status = query(
@@ -85,28 +106,28 @@ public class AlertModuleService {
         // start a background monitor for heatbed errors (reads the shared static `status`)
         double prevTemp = Double.NaN;
         Thread heatbedMonitor = new Thread(() -> {
-            monitorHeatbedErrors(prevTemp);
+            monitorHeatbedErrors(prevTemp, finalUserId);
         });
         heatbedMonitor.setDaemon(true);
         heatbedMonitor.start();
 
         // start a separate monitor for unfinished-print / power-loss-recovery (CM0115)
         Thread powerLossMonitor = new Thread(() -> {
-            monitorPowerLossRecoveryError();
+            monitorPowerLossRecoveryError(finalUserId);
         });
         powerLossMonitor.setDaemon(true);
         powerLossMonitor.start();
 
         // start axis homing anomaly monitor (X/Y/Z)
         Thread axisHomingMonitor = new Thread(() -> {
-            monitorAxisHomingErrors();
+            monitorAxisHomingErrors(finalUserId);
         });
         axisHomingMonitor.setDaemon(true);
         axisHomingMonitor.start();
         
         // start axis coordinate-range anomaly monitor (X/Y/Z)
         Thread axisCoordMonitor = new Thread(() -> {
-            monitorAxisCoordinateRangeErrors();
+            monitorAxisCoordinateRangeErrors(finalUserId);
         });
         axisCoordMonitor.setDaemon(true);
         axisCoordMonitor.start();
@@ -130,7 +151,9 @@ public class AlertModuleService {
                 "&output_pin%20fan2" +
                 "&heater_fan%20hotend_fan=rpm"
             );
-            auditService.logAction(user.getId(), "NEW_ALERT_LOG", "No alerts for now");
+            if (finalUserId != null) {
+                auditService.logAction(finalUserId, "NEW_ALERT_LOG", "No alerts for now");
+            }
             Thread.sleep(1000);
         }
     }
@@ -185,7 +208,7 @@ public class AlertModuleService {
 
     // Monitor multiple heatbed errors concurrently and report when each persists
     // for the required consecutive duration.
-    private void monitorHeatbedErrors(double initialTemp) {
+    private void monitorHeatbedErrors(double initialTemp, Long userId) {
         final long requiredConsecutiveSeconds = 60; // require 60s of the same error
         double prevTemp = initialTemp; 
         Map<String, Long> candidateStart = new HashMap<>();
@@ -251,6 +274,7 @@ public class AlertModuleService {
                         if (elapsedSec >= requiredConsecutiveSeconds && !reported.contains(key)) {
                             // report
                             System.out.println("Heatbed error detected: " + err.getErrorCode() + " - " + err.getMessage());
+                            recordAlertAndAudit(userId, err.getErrorCode(), err.getMessage(), "HEATBED", Alert.Severity.WARNING);
                             reported.add(key);
                         }
                     }
@@ -281,7 +305,7 @@ public class AlertModuleService {
     }
 
     // Separate monitor for power-loss-recovery / unfinished-print (CM0115)
-    private void monitorPowerLossRecoveryError() {
+    private void monitorPowerLossRecoveryError(Long userId) {
         final long requiredConsecutiveSeconds = 60;
         String candidateKey = null;
         long candidateStart = 0L;
@@ -321,8 +345,9 @@ public class AlertModuleService {
                     long elapsed = (now - candidateStart) / 1000;
                     if (elapsed >= requiredConsecutiveSeconds) {
                         // report once
-                        System.out.println("CM0115 – Tâche inachevée détectée pour le fichier: " + filename);
+                        System.out.println("CM0115 - Tâche inachevée détectée pour le fichier: " + filename);
                         System.out.println("Voulez-vous poursuivre l'impression ? Si l'imprimante s'est arrêtée en raison d'une coupure de courant, vous pouvez reprendre la tâche ou redémarrer l'impression.");
+                        recordAlertAndAudit(userId, "CM0115", "Tâche inachevée détectée pour le fichier: " + filename, "POWER", Alert.Severity.CRITICAL);
                         // reset so we don't spam every second; require reappearance to report again
                         candidateKey = null;
                         candidateStart = 0L;
@@ -342,7 +367,7 @@ public class AlertModuleService {
     }
 
     // Monitor axis homing anomalies for X/Y/Z (CX2573/CY2577/CZ2581)
-    private void monitorAxisHomingErrors() {
+    private void monitorAxisHomingErrors(Long userId) {
         final long requiredConsecutiveSeconds = 60;
 
         Map<String, Long> candidateStart = new HashMap<>();
@@ -406,6 +431,7 @@ public class AlertModuleService {
                             String baseMsg = err.getMessage();
                             String desc = ERROR_DESCRIPTIONS.get(code);
                             System.out.println(code + " - " + baseMsg + ":");
+                            recordAlertAndAudit(userId, code, baseMsg, "AXIS", Alert.Severity.WARNING);
                             if (desc != null) System.out.println(desc);
                             reported.add(key);
                         }
@@ -433,7 +459,7 @@ public class AlertModuleService {
     }
 
     // Monitor axis coordinate-range anomalies for X/Y/Z (CX2585/CY2586/CZ2587)
-    private void monitorAxisCoordinateRangeErrors() {
+    private void monitorAxisCoordinateRangeErrors(Long userId) {
         final long requiredConsecutiveSeconds = 60;
 
         Map<String, Long> candidateStart = new HashMap<>();
@@ -489,6 +515,7 @@ public class AlertModuleService {
                             String baseMsg = err.getMessage();
                             String desc = ERROR_DESCRIPTIONS.get(code);
                             System.out.println(code + " - " + baseMsg + ":");
+                            recordAlertAndAudit(userId, code, baseMsg, "AXIS", Alert.Severity.WARNING);
                             if (desc != null) System.out.println(desc);
                             reported.add(key);
                         }
@@ -512,6 +539,40 @@ public class AlertModuleService {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+        }
+    }
+
+    /**
+     * Helper method to record both an audit log entry and create an Alert.
+     * Called when an error is detected and persisted.
+     *
+     * @param userId the user ID (system admin)
+     * @param errorCode the error/alert code (e.g., CB2565, CM0115)
+     * @param message the alert message/description
+     * @param category optional category (e.g., HEATBED, AXIS, POWER)
+     * @param severity alert severity level
+     */
+    private void recordAlertAndAudit(Long userId, String errorCode, String message, String category, Alert.Severity severity) {
+        try {
+            // Log to audit trail
+            auditService.logAction(userId, "ALERT_" + errorCode, message);
+
+            // Create an Alert entry
+            Alert alert = Alert.builder()
+                    .userId(userId)
+                    .title(errorCode + " - " + message)
+                    .details(message)
+                    .category(category)
+                    .severity(severity)
+                    .priority(severity == Alert.Severity.CRITICAL ? Alert.Priority.HIGH : Alert.Priority.MEDIUM)
+                    .resolved(false)
+                    .build();
+            alertRepository.save(alert);
+
+            System.out.println("Alert recorded: " + errorCode + " for user " + userId);
+        } catch (Exception e) {
+            System.err.println("Failed to record alert: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

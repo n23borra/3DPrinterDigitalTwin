@@ -16,6 +16,7 @@ import PrivilegedRoute from './components/PrivilegedRoute';
 import DashboardLayout from './layouts/DashboardLayout';
 
 import AuditLogs from './pages/AuditLogs';
+import Alerts from './pages/Alerts';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
                 <Route element={<DashboardLayout/>}>
                     <Route path="/dashboard" element={<Dashboard/>}/>
                     <Route path="/printers" element={<PrintersDashboard/>}/>
+                    <Route path="/alerts" element={<Alerts/>}/>
                     <Route path="/audit" element={<AuditLogs/>}/>
                     <Route element={<SuperAdminRoute/>}>
                     </Route>

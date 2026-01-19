@@ -28,6 +28,14 @@ const AuditIcon = () => (
     </svg>
 );
 
+const AlertIcon = () => (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M12 2L2 20h20L12 2z" />
+        <path d="M12 9v4" />
+        <circle cx="12" cy="17" r="0.5" fill="currentColor" />
+    </svg>
+);
+
 const SettingsIcon = () => (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
         <circle cx="12" cy="12" r="3" />
@@ -38,6 +46,7 @@ const SettingsIcon = () => (
 const menuItems = [
     {id: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: <DashboardIcon/>},
     {id: 'printers', label: 'Printers', path: '/printers', icon: <PrinterIcon/>},
+    {id: 'alerts', label: 'Alerts', path: '/alerts', icon: <AlertIcon/>},
     {id: 'audit', label: 'Audit Logs', path: '/audit', icon: <AuditIcon/>},
     {id: 'settings', label: 'Settings', path: '/settings', icon: <SettingsIcon/>},
 ];
