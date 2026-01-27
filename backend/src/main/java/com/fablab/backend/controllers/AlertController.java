@@ -47,7 +47,7 @@ public class AlertController {
         }
         return auth.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .anyMatch(authority -> authority.equals("ROLE_ADMIN") || authority.equals("ROLE_SUPERADMIN"));
+                .anyMatch(authority -> authority.equals("ROLE_ADMIN") || authority.equals("ROLE_SUPERADMIN") || authority.equals("ROLE_SUPER_ADMIN"));
     }
 
     /**

@@ -13,6 +13,10 @@ export default function Alerts() {
     const [userId, setUserId] = useState(null);
     const [userRoles, setUserRoles] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [search, setSearch] = useState('');
+    const [severityFilter, setSeverityFilter] = useState('ALL');
+    const [priorityFilter, setPriorityFilter] = useState('ALL');
+    const [statusFilter, setStatusFilter] = useState('ALL');
     const [formData, setFormData] = useState({
         title: '',
         details: '',
@@ -20,6 +24,8 @@ export default function Alerts() {
         priority: 'MEDIUM',
         category: ''
     });
+
+    const allowedRoles = ['ADMIN', 'SUPER_ADMIN'];
 
     useEffect(() => {
         const load = async () => {
@@ -40,7 +46,31 @@ export default function Alerts() {
     }, []);
 
     const isAdmin = () => {
-        return userRoles.some(role => role === 'ADMIN' || role === 'SUPERADMIN');
+        return userRoles.some(role => allowedRoles.includes(role));
+    };
+
+    const getFilteredAlerts = () => {
+        return alerts.filter((alert) => {
+            // Search filter
+            const searchLower = search.toLowerCase();
+            const matchesSearch = !search || 
+                alert.title.toLowerCase().includes(searchLower) ||
+                (alert.details && alert.details.toLowerCase().includes(searchLower)) ||
+                (alert.category && alert.category.toLowerCase().includes(searchLower));
+
+            // Severity filter
+            const matchesSeverity = severityFilter === 'ALL' || alert.severity === severityFilter;
+
+            // Priority filter
+            const matchesPriority = priorityFilter === 'ALL' || alert.priority === priorityFilter;
+
+            // Status filter
+            const matchesStatus = statusFilter === 'ALL' || 
+                (statusFilter === 'RESOLVED' && alert.resolved) ||
+                (statusFilter === 'UNRESOLVED' && !alert.resolved);
+
+            return matchesSearch && matchesSeverity && matchesPriority && matchesStatus;
+        });
     };
 
     const refreshAlerts = async () => {
@@ -205,9 +235,11 @@ export default function Alerts() {
 
             {alerts.length === 0 ? (
                 <p className="text-gray-500">No alerts</p>
+            ) : getFilteredAlerts().length === 0 ? (
+                <p className="text-gray-500">No alerts match the filters</p>
             ) : (
                 <ul className="bg-white rounded shadow divide-y">
-                    {alerts.map((alert) => (
+                    {getFilteredAlerts().map((alert) => (
                         <li key={alert.id} className={`p-4 ${alert.resolved ? 'opacity-60' : ''}`}>
                             <div className="flex items-start justify-between">
                                 <div className="flex-1">
