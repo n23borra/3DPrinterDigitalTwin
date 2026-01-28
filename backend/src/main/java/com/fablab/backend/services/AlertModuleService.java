@@ -90,6 +90,7 @@ public class AlertModuleService {
             "?print_stats" +
             "&heater_bed" +
             "&extruder" +
+            "&toolhead" +
             "&stepper_x" +
             "&stepper_y" +
             "&stepper_z" +
@@ -99,7 +100,9 @@ public class AlertModuleService {
             "&output_pin%20fan0" +
             "&output_pin%20fan1" +
             "&output_pin%20fan2" +
-            "&heater_fan%20hotend_fan=rpm"
+            "&heater_fan%20hotend_fan=rpm" +
+            "&z_tilt" +
+            "&bed_mesh" 
         );
 
 
@@ -132,6 +135,18 @@ public class AlertModuleService {
         axisCoordMonitor.setDaemon(true);
         axisCoordMonitor.start();
 
+        Thread fansMonitor = new Thread(() -> {
+            checkFans(finalUserId);
+        });
+        fansMonitor.setDaemon(true);
+        fansMonitor.start();
+
+        Thread extruderMonitor = new Thread(() -> {
+            checkExtruder(finalUserId);
+        });
+        extruderMonitor.setDaemon(true);
+        extruderMonitor.start();
+
 
         // continuous polling loop: fetch status every second and analyze
         while (true) {
@@ -140,6 +155,7 @@ public class AlertModuleService {
                 "?print_stats" +
                 "&heater_bed" +
                 "&extruder" +
+                "&toolhead" +
                 "&stepper_x" +
                 "&stepper_y" +
                 "&stepper_z" +
@@ -149,7 +165,9 @@ public class AlertModuleService {
                 "&output_pin%20fan0" +
                 "&output_pin%20fan1" +
                 "&output_pin%20fan2" +
-                "&heater_fan%20hotend_fan=rpm"
+                "&heater_fan%20hotend_fan=rpm" +
+                "&z_tilt" +
+                "&bed_mesh"
             );
             if (finalUserId != null) {
                 auditService.logAction(finalUserId, "NEW_ALERT_LOG", "No alerts for now");
@@ -174,6 +192,12 @@ public class AlertModuleService {
 
     private JsonNode getHeatBedData() throws Exception {
        return status.at("/heater_bed");
+    }
+    private JsonNode getPrintStats() throws Exception {
+        return status.at("/print_stats");
+    }
+    private JsonNode getToolhead() throws Exception {
+        return status.at("/toolhead");
     }
     private JsonNode getExtruderData() throws Exception{
         return status.at("/extruder");
@@ -205,6 +229,13 @@ public class AlertModuleService {
     private JsonNode getFan2Data() throws Exception{
         return status.at("/output_pin fan2");
     }
+     private JsonNode getZTilt() throws Exception{
+        return status.at("/z_tilt");
+    }
+    private JsonNode getBedMesh() throws Exception{
+        return status.at("/bed_mesh");
+    }
+
 
     // Monitor multiple heatbed errors concurrently and report when each persists
     // for the required consecutive duration.
@@ -314,17 +345,17 @@ public class AlertModuleService {
             try {
                 Thread.sleep(1000);
 
-                JsonNode s = status;
+                JsonNode s = getPrintStats();
                 if (s == null || s.isMissingNode()) {
                     candidateKey = null;
                     candidateStart = 0L;
                     continue;
                 }
 
-                String state = s.at("/print_stats/state").asText("unknown");
-                String filename = s.at("/print_stats/filename").asText(null);
-                double progress = s.at("/print_stats/progress").asDouble(-1);
-                double printTime = s.at("/print_stats/print_duration").asDouble(0);
+                String state = s.at("/state").asText("unknown");
+                String filename = s.at("/filename").asText(null);
+                double progress = s.at("/progress").asDouble(-1);
+                double printTime = s.at("/print_duration").asDouble(0);
 
                 boolean hasFile = filename != null && !filename.isEmpty();
                 boolean hasProgress = progress > 0 && progress < 100;
@@ -391,8 +422,8 @@ public class AlertModuleService {
                 Map<String, PrinterError> detected = new HashMap<>();
 
                 // X axis
-                JsonNode sxLast = s.at("/stepper_x/last_error");
-                JsonNode ex = s.at("/endstop_x");
+                JsonNode sxLast = getStepperXData().at("/last_error");
+                JsonNode ex = getEndstopXData();
                 boolean exTriggered = !ex.isMissingNode() && ex.at("/triggered").asBoolean(false);
                 if ((!sxLast.isMissingNode() && !sxLast.isNull()) || !exTriggered) {
                     PrinterError e = new PrinterError("CX2573", "Anomalie du repérage de l'axe X", "stepper_x");
@@ -400,8 +431,8 @@ public class AlertModuleService {
                 }
 
                 // Y axis
-                JsonNode syLast = s.at("/stepper_y/last_error");
-                JsonNode ey = s.at("/endstop_y");
+                JsonNode syLast = getStepperYData().at("/last_error");
+                JsonNode ey = getEndstopYData();
                 boolean eyTriggered = !ey.isMissingNode() && ey.at("/triggered").asBoolean(false);
                 if ((!syLast.isMissingNode() && !syLast.isNull()) || !eyTriggered) {
                     PrinterError e = new PrinterError("CY2577", "Anomalie du repérage de l'axe Y", "stepper_y");
@@ -409,8 +440,8 @@ public class AlertModuleService {
                 }
 
                 // Z axis
-                JsonNode szLast = s.at("/stepper_z/last_error");
-                JsonNode ez = s.at("/endstop_z");
+                JsonNode szLast = getStepperZData().at("/last_error");
+                JsonNode ez = getEndstopZData();
                 boolean ezTriggered = !ez.isMissingNode() && ez.at("/triggered").asBoolean(false);
                 if ((!szLast.isMissingNode() && !szLast.isNull()) || !ezTriggered) {
                     PrinterError e = new PrinterError("CZ2581", "Anomalie du repérage de l'axe Z", "stepper_z");
@@ -432,7 +463,8 @@ public class AlertModuleService {
                             String desc = ERROR_DESCRIPTIONS.get(code);
                             System.out.println(code + " - " + baseMsg + ":");
                             recordAlertAndAudit(userId, code, baseMsg, "AXIS", Alert.Severity.WARNING);
-                            if (desc != null) System.out.println(desc);
+                            if (desc != null) 
+                                System.out.println(desc);
                             reported.add(key);
                         }
                     }
@@ -441,7 +473,8 @@ public class AlertModuleService {
                 // Clear candidates no longer detected
                 Set<String> toRemove = new HashSet<>();
                 for (String key : candidateStart.keySet()) {
-                    if (!detected.containsKey(key)) toRemove.add(key);
+                    if (!detected.containsKey(key)) 
+                        toRemove.add(key);
                 }
                 for (String k : toRemove) {
                     candidateStart.remove(k);
@@ -483,19 +516,19 @@ public class AlertModuleService {
                 Map<String, PrinterError> detected = new HashMap<>();
 
                 // Detect coordinate-range anomalies primarily via stepper last_error or explicit 'out_of_range' flags if present
-                JsonNode sxLast = s.at("/stepper_x/last_error");
+                JsonNode sxLast = getStepperXData().at("/last_error");
                 if (!sxLast.isMissingNode() && !sxLast.isNull()) {
                     PrinterError e = new PrinterError("CX2585", "Coordonnées d'impression de l'axe X hors plage", "stepper_x");
                     detected.put(e.getErrorCode() + "|" + e.getMessage(), e);
                 }
 
-                JsonNode syLast = s.at("/stepper_y/last_error");
+                JsonNode syLast = getStepperYData().at("/last_error");
                 if (!syLast.isMissingNode() && !syLast.isNull()) {
                     PrinterError e = new PrinterError("CY2586", "Les coordonnées d'impression de l'axe Y sont en dehors de la plage", "stepper_y");
                     detected.put(e.getErrorCode() + "|" + e.getMessage(), e);
                 }
 
-                JsonNode szLast = s.at("/stepper_z/last_error");
+                JsonNode szLast = getStepperZData().at("/last_error");
                 if (!szLast.isMissingNode() && !szLast.isNull()) {
                     PrinterError e = new PrinterError("CZ2587", "Les coordonnées d'impression de l'axe Z sont en dehors de la plage", "stepper_z");
                     detected.put(e.getErrorCode() + "|" + e.getMessage(), e);
@@ -516,7 +549,272 @@ public class AlertModuleService {
                             String desc = ERROR_DESCRIPTIONS.get(code);
                             System.out.println(code + " - " + baseMsg + ":");
                             recordAlertAndAudit(userId, code, baseMsg, "AXIS", Alert.Severity.WARNING);
-                            if (desc != null) System.out.println(desc);
+                            if (desc != null) 
+                                System.out.println(desc);
+                            reported.add(key);
+                        }
+                    }
+                }
+
+                // Clear candidates no longer detected
+                Set<String> toRemove = new HashSet<>();
+                for (String key : candidateStart.keySet()) {
+                    if (!detected.containsKey(key)) toRemove.add(key);
+                }
+                for (String k : toRemove) {
+                    candidateStart.remove(k);
+                    candidateError.remove(k);
+                    reported.remove(k);
+                }
+
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+                return;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private PrinterError checkBedLeveling(Long userId) {
+
+        try{
+
+            JsonNode zTilt = getZTilt();
+
+            if (zTilt.isMissingNode() || !zTilt.at("/applied").asBoolean(false)) {
+                String code = "ZT0001";
+                String baseMsg = "Plateau non ajusté horizontalement : Z_TILT_ADJUST non appliqué";
+                recordAlertAndAudit(userId, code, baseMsg, "LEVELING", Alert.Severity.INFO);
+                return new PrinterError(
+                    code,
+                    baseMsg,
+                    "z_tilt"
+                );
+            }
+
+            JsonNode matrix = getBedMesh().at("/probed_matrix");
+
+            if (!matrix.isArray()) {
+                String code = "BM0000";
+                String baseMsg = "Bed mesh absent ou invalide";
+                recordAlertAndAudit(userId, code, baseMsg, "LEVELING", Alert.Severity.WARNING);
+                return new PrinterError(
+                    code,
+                    baseMsg,
+                    "bed_mesh"
+                );
+            }
+
+            double min = Double.MAX_VALUE;
+            double max = Double.MIN_VALUE;
+
+            for (JsonNode row : matrix) {
+                for (JsonNode value : row) {
+                    double v = value.asDouble();
+                    min = Math.min(min, v);
+                    max = Math.max(max, v);
+                }
+            }
+
+            double delta = max - min;
+
+            double MAX_ACCEPTABLE_DELTA_MM = 0.6;
+
+            if (delta > MAX_ACCEPTABLE_DELTA_MM) {
+                String code = "BM0001";
+                String baseMsg = String.format("Plateau trop bosselé malgré z_tilt (Δ=%.2f mm > %.2f mm)", delta, MAX_ACCEPTABLE_DELTA_MM);
+                recordAlertAndAudit(userId, code, baseMsg, "LEVELING", Alert.Severity.WARNING);
+                return new PrinterError(
+                    code,
+                    baseMsg,
+                    "bed_mesh"
+                );
+            }
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+            return new PrinterError("00000", "", "");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return new PrinterError("00000", "", "");
+    }
+
+    private void checkFans(Long userId) {
+
+        final long requiredConsecutiveSeconds = 15;
+
+        Map<String, Long> candidateStart = new HashMap<>();
+        Map<String, PrinterError> candidateError = new HashMap<>();
+        Set<String> reported = new HashSet<>();
+
+        while (true) {
+            try {
+                Thread.sleep(1000);
+
+                JsonNode s = status;
+                long now = System.currentTimeMillis();
+
+                if (s == null || s.isMissingNode()) {
+                    candidateStart.clear();
+                    candidateError.clear();
+                    reported.clear();
+                    continue;
+                }
+
+                Map<String, PrinterError> detected = new HashMap<>();
+                String[] fans = {
+                    "heater_fan hotend_fan",
+                    "output_pin fan0",
+                    "output_pin fan1",
+                    "output_pin fan2"
+                };
+
+                for (String fanName : fans) {
+                    JsonNode fan = s.get(fanName);
+                    if (fan == null || fan.isMissingNode()) 
+                        continue;
+
+                    double speed = fan.at("/speed").asDouble(0.0);
+                    int rpm = fan.at("/rpm").asInt(-1);
+
+                    if (speed > 0.3 && rpm == 0) {
+                        String code = "FN0001";
+                        String baseMsg = "Ventilateur " + fanName + " commandé mais RPM = 0 (bloqué ou débranché)";
+                        PrinterError e = new PrinterError(
+                            code,
+                            baseMsg,
+                            fanName
+                        );
+                        detected.put(e.getErrorCode() + "|" + e.getMessage(), e);
+
+                    }
+
+                    // Ventilo à fond mais RPM trop bas
+                    if (speed > 0.9 && rpm > 0 && rpm < 1000) {
+                        String code = "FN0002";
+                        String baseMsg = "Ventilateur " + fanName + " à fond mais RPM anormalement bas (" + rpm + ")";
+                        PrinterError e = new PrinterError(
+                            code,
+                            baseMsg,
+                            fanName
+                        );
+                        detected.put(e.getErrorCode() + "|" + e.getMessage(), e);
+                    }
+                }
+
+                // Update candidates and reporting
+                for (Map.Entry<String, PrinterError> ent : detected.entrySet()) {
+                    String key = ent.getKey();
+                    PrinterError err = ent.getValue();
+                    if (!candidateStart.containsKey(key)) {
+                        candidateStart.put(key, now);
+                        candidateError.put(key, err);
+                    } else {
+                        long elapsedSec = (now - candidateStart.get(key)) / 1000;
+                        if (elapsedSec >= requiredConsecutiveSeconds && !reported.contains(key)) {
+                            String code = err.getErrorCode();
+                            String baseMsg = err.getMessage();
+                            String desc = ERROR_DESCRIPTIONS.get(code);
+                            System.out.println(code + " - " + baseMsg + ":");
+                            recordAlertAndAudit(userId, code, baseMsg, "FAN", Alert.Severity.WARNING);
+                            if (desc != null) 
+                                System.out.println(desc);
+                            reported.add(key);
+                        }
+                    }
+                }
+
+                // Clear candidates no longer detected
+                Set<String> toRemove = new HashSet<>();
+                for (String key : candidateStart.keySet()) {
+                    if (!detected.containsKey(key)) toRemove.add(key);
+                }
+                for (String k : toRemove) {
+                    candidateStart.remove(k);
+                    candidateError.remove(k);
+                    reported.remove(k);
+                }
+
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+                return;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private void checkExtruder(Long userId) {
+
+        final long requiredConsecutiveSeconds = 15;
+
+        Map<String, Long> candidateStart = new HashMap<>();
+        Map<String, PrinterError> candidateError = new HashMap<>();
+        Set<String> reported = new HashSet<>();
+
+        while (true) {
+            try {
+                Thread.sleep(1000);
+
+                JsonNode s = status;
+                long now = System.currentTimeMillis();
+
+                if (s == null || s.isMissingNode()) {
+                    candidateStart.clear();
+                    candidateError.clear();
+                    reported.clear();
+                    continue;
+                }
+
+                Map<String, PrinterError> detected = new HashMap<>();
+        
+                JsonNode extruder = getExtruderData();
+
+                if (extruder != null && !extruder.isMissingNode()) {
+                    double temp = extruder.at("/temperature").asDouble();
+                    double target = extruder.at("/target").asDouble();
+                    double power = extruder.at("/power").asDouble();
+
+                    // Chauffe demandée mais température ne monte pas
+                    if (target > 0 && power > 0.8 && temp < target - 15) {
+                        PrinterError e = new PrinterError(
+                            "EX0001",
+                            "Extrudeur chauffe mais température trop basse (cartouche ou thermistance)",
+                            "extruder"
+                        );
+                        detected.put(e.getErrorCode() + "|" + e.getMessage(), e);
+                    }
+
+                    // Température absurde → thermistance HS
+                    if (temp < -10 || temp > 320) {
+                        PrinterError e =  new PrinterError(
+                            "EX0002",
+                            "Température extrudeur incohérente (sonde en court-circuit ou ouverte)",
+                            "extruder"
+                        );
+                        detected.put(e.getErrorCode() + "|" + e.getMessage(), e);
+                    }
+                }
+
+            // Update candidates and reporting
+                for (Map.Entry<String, PrinterError> ent : detected.entrySet()) {
+                    String key = ent.getKey();
+                    PrinterError err = ent.getValue();
+                    if (!candidateStart.containsKey(key)) {
+                        candidateStart.put(key, now);
+                        candidateError.put(key, err);
+                    } else {
+                        long elapsedSec = (now - candidateStart.get(key)) / 1000;
+                        if (elapsedSec >= requiredConsecutiveSeconds && !reported.contains(key)) {
+                            String code = err.getErrorCode();
+                            String baseMsg = err.getMessage();
+                            String desc = ERROR_DESCRIPTIONS.get(code);
+                            System.out.println(code + " - " + baseMsg + ":");
+                            recordAlertAndAudit(userId, code, baseMsg, "EXTRUDER AND TOOLHEAD", Alert.Severity.WARNING);
+                            if (desc != null) 
+                                System.out.println(desc);
                             reported.add(key);
                         }
                     }

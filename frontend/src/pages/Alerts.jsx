@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import Button from '../components/Button';
 import api from '../api/api';
 import Loader from '../components/Loader';
 import Modal from '../components/Modal';
+
+const SEVERITY_OPTIONS = ['ALL', 'INFO', 'WARNING', 'CRITICAL'];
+const PRIORITY_OPTIONS = ['ALL', 'LOW', 'MEDIUM', 'HIGH'];
+const STATUS_OPTIONS = ['ALL', 'UNRESOLVED', 'RESOLVED'];
 
 /**
  * Shows the list of alerts for the authenticated user with management capabilities.
@@ -11,7 +16,7 @@ export default function Alerts() {
     const [alerts, setAlerts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [userId, setUserId] = useState(null);
-    const [userRoles, setUserRoles] = useState([]);
+    const [userRole, setUserRole] = useState('USER');
     const [showModal, setShowModal] = useState(false);
     const [search, setSearch] = useState('');
     const [severityFilter, setSeverityFilter] = useState('ALL');
@@ -32,7 +37,7 @@ export default function Alerts() {
             try {
                 const { data: user } = await api.get('/me');
                 setUserId(user.id);
-                setUserRoles(user.roles || []);
+                setUserRole(user.role || 'USER');
                 const { data } = await api.get('/alerts');
                 setAlerts(Array.isArray(data) ? data : []);
             } catch (e) {
@@ -46,7 +51,7 @@ export default function Alerts() {
     }, []);
 
     const isAdmin = () => {
-        return userRoles.some(role => allowedRoles.includes(role));
+        return allowedRoles.includes(userRole);
     };
 
     const getFilteredAlerts = () => {
@@ -155,6 +160,16 @@ export default function Alerts() {
 
     if (loading) return <Loader />;
 
+    function Tooltip({ text }) {
+    return (
+        <div className="relative group inline-block">
+            <span className="cursor-help text-gray-400 font-bold">?</span>
+            <div className="absolute z-10 hidden group-hover:block bg-gray-800 text-white text-xs rounded px-2 py-1 w-48 -top-2 left-5">
+                {text}
+            </div>
+        </div>
+    );
+}
     return (
         <div>
             <div className="flex items-center justify-between mb-4">
@@ -196,15 +211,34 @@ export default function Alerts() {
                             className="w-full border rounded px-2 py-1 mb-3"
                         />
                         <div className="flex gap-3 mb-3">
+                            <Tooltip
+                                text={
+                                    <>
+                                    <strong>INFO</strong>: Informational only<br />
+                                    <strong>WARNING</strong>: Needs attention<br />
+                                    <strong>CRITICAL</strong>: Immediate action required
+                                    </>
+                                }
+                            />
                             <select
                                 value={formData.severity}
                                 onChange={(e) => setFormData({ ...formData, severity: e.target.value })}
                                 className="flex-1 border rounded px-2 py-1"
+                                title={`INFO: Information only\nWARNING: Attention needed\nCRITICAL: Immediate action required`}
                             >
                                 <option>INFO</option>
                                 <option>WARNING</option>
                                 <option>CRITICAL</option>
                             </select>
+                            <Tooltip
+                                text={
+                                    <>
+                                    <strong>LOW</strong>: Can be handled later<br />
+                                    <strong>MEDIUM</strong>: Should be handled soon<br />
+                                    <strong>HIGH</strong>: Needs immediate attention
+                                    </>
+                                }
+                            />
                             <select
                                 value={formData.priority}
                                 onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
@@ -232,6 +266,77 @@ export default function Alerts() {
                     </div>
                 </Modal>
             )}
+
+            <form onSubmit={getFilteredAlerts} className="flex flex-col gap-4 bg-white p-4 rounded shadow md:flex-row md:items-end">
+                <div className="flex-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="alert-search">
+                        Search
+                    </label>
+                    <input
+                        id="alert-search"
+                        type="text"
+                        className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Search by name"
+                        value={search}
+                        onChange={(event) => setSearch(event.target.value)}
+                    />
+                </div>
+                <div className="w-full md:w-56">
+                    <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="severity-filter">
+                        Severity
+                    </label>
+                    <select
+                        id="severity-filter"
+                        className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        value={severityFilter}
+                        onChange={(event) => setSeverityFilter(event.target.value)}
+                    >
+                        {SEVERITY_OPTIONS.map((severity) => (
+                            <option key={severity} value={severity}>
+                                {severity === 'ALL' ? 'All' : severity}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className="w-full md:w-56">
+                    <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="priority-filter">
+                        Priority
+                    </label>
+                    <select
+                        id="priority-filter"
+                        className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        value={priorityFilter}
+                        onChange={(event) => setPriorityFilter(event.target.value)}
+                    >
+                        {PRIORITY_OPTIONS.map((priority) => (
+                            <option key={priority} value={priority}>
+                                {priority === 'ALL' ? 'All' : priority}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className="w-full md:w-56">
+                    <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="status-filter">
+                        Status
+                    </label>
+                    <select
+                        id="status-filter"
+                        className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        value={statusFilter}
+                        onChange={(event) => setStatusFilter(event.target.value)}
+                    >
+                        {STATUS_OPTIONS.map((status) => (
+                            <option key={status} value={status}>
+                                {status === 'ALL' ? 'All' : status}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <Button type="submit" className="w-full md:w-auto">
+                    Search
+                </Button>
+            </form>
+
 
             {alerts.length === 0 ? (
                 <p className="text-gray-500">No alerts</p>
