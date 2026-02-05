@@ -62,6 +62,11 @@ public class PrinterService {
                 .progress(raw.getProgress())
                 .zHeight(raw.getZHeight())
                 .state(raw.getState())
+                .bedMeshProfile(raw.getBedMeshProfile())
+                .bedMeshMin(raw.getBedMeshMin())
+                .bedMeshMax(raw.getBedMeshMax())
+                .bedMeshMatrix(raw.getBedMeshMatrix())
+                .zTiltApplied(raw.getZTiltApplied())
                 .rawPayload(raw.getRawPayload())
                 .build();
         return snapshotRepository.save(snapshot);

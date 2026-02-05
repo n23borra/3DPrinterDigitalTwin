@@ -145,6 +145,19 @@ public class PrinterSnapshot {
     @Column(name = "bed_mesh_profile")
     private String bedMeshProfile;
 
+    @Column(name = "bed_mesh_min")
+    private String bedMeshMin;
+
+    @Column(name = "bed_mesh_max")
+    private String bedMeshMax;
+
+    @Column(name = "bed_mesh_matrix", columnDefinition = "TEXT")
+    private String bedMeshMatrix;
+
+    // ===== Z-TILT =====
+    @Column(name = "z_tilt_applied")
+    private Boolean zTiltApplied;
+
     // ===== RAW DATA (for debugging/analysis) =====
     @Column(name = "raw_payload", columnDefinition = "TEXT")
     private String rawPayload;

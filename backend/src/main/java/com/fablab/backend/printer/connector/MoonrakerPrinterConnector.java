@@ -67,6 +67,12 @@ public class MoonrakerPrinterConnector implements PrinterConnector {
             
             // Fetch system info (low priority - 10s intervals)
             fetchSystemInfo(baseUrl, apiKey, builder);
+
+            // Fetch bed mesh (static data - only changes on recalibration)
+            fetchBedMesh(baseUrl, apiKey, builder);
+
+            // Fetch Z-tilt status
+            fetchZTilt(baseUrl, apiKey, builder);
             
             log.debug("Successfully fetched state from printer {}", printer.getName());
             
@@ -328,6 +334,49 @@ public class MoonrakerPrinterConnector implements PrinterConnector {
             
         } catch (Exception e) {
             log.trace("Could not fetch system info: {}", e.getMessage());
+        }
+    }
+
+    /**
+     * Fetch bed mesh data (probed Z-offset matrix and mesh bounds).
+     * This data is static — it only changes when BED_MESH_CALIBRATE is run.
+     */
+    private void fetchBedMesh(String baseUrl, String apiKey,
+                              RawPrinterState.RawPrinterStateBuilder builder) {
+        try {
+            String response = client.get(baseUrl, apiKey, "/printer/objects/query?bed_mesh");
+
+            builder.bedMeshProfile(extract(response, "\"profile_name\"\\s*:\\s*\"([^\"]+)\""));
+
+            // Extract mesh_min and mesh_max arrays as JSON strings
+            builder.bedMeshMin(extract(response, "\"mesh_min\"\\s*:\\s*(\\[[0-9.,\\s]+\\])"));
+            builder.bedMeshMax(extract(response, "\"mesh_max\"\\s*:\\s*(\\[[0-9.,\\s]+\\])"));
+
+            // Extract probed_matrix — the raw 9x9 Z-offset grid
+            // Match from "probed_matrix": to the closing ]]
+            Matcher m = Pattern.compile("\"probed_matrix\"\\s*:\\s*(\\[\\[.+?\\]\\])").matcher(response);
+            if (m.find()) {
+                builder.bedMeshMatrix(m.group(1));
+            }
+
+        } catch (Exception e) {
+            log.trace("Could not fetch bed mesh: {}", e.getMessage());
+        }
+    }
+
+    /**
+     * Fetch Z-tilt adjustment status.
+     */
+    private void fetchZTilt(String baseUrl, String apiKey,
+                            RawPrinterState.RawPrinterStateBuilder builder) {
+        try {
+            String response = client.get(baseUrl, apiKey, "/printer/objects/query?z_tilt");
+            String applied = extract(response, "\"applied\"\\s*:\\s*(true|false)");
+            if (applied != null) {
+                builder.zTiltApplied("true".equals(applied));
+            }
+        } catch (Exception e) {
+            log.trace("Could not fetch z_tilt: {}", e.getMessage());
         }
     }
 
