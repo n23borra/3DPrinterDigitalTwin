@@ -1,6 +1,7 @@
 package com.fablab.backend.services.printer;
 
 import com.fablab.backend.dto.PrinterCommandType;
+import com.fablab.backend.models.User;
 import com.fablab.backend.models.printer.Printer;
 import com.fablab.backend.models.printer.PrinterSnapshot;
 import com.fablab.backend.models.printer.PrinterStatus;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -77,11 +79,92 @@ public class PrinterService {
                 .orElseThrow();
     }
 
-    public void sendCommand(UUID printerId, PrinterCommandType type, String payload) {
+    /**
+     * G-code commands that can affect the printer hardware in dangerous ways.
+     * Blocked for regular users — only ADMIN and SUPER_ADMIN may send these.
+     */
+    private static final Set<String> DANGEROUS_GCODES = Set.of(
+            "M104",                    // set nozzle temperature
+            "M109",                    // set nozzle temp and wait
+            "M140",                    // set bed temperature
+            "M190",                    // set bed temp and wait
+            "M141",                    // set chamber temperature
+            "M191",                    // set chamber temp and wait
+            "SET_HEATER_TEMPERATURE",  // Klipper heater command
+            "FORCE_MOVE",              // bypass kinematics — can crash axes
+            "RESTART",                 // restart Klipper host
+            "FIRMWARE_RESTART",        // restart firmware
+            "SAVE_CONFIG"              // overwrite config and restart
+    );
+
+    public void sendCommand(UUID printerId, PrinterCommandType type, String payload, User.Role role) {
         Printer printer = getPrinter(printerId);
+
+        // --- Validate action commands against printer status ---
+        validatePrinterStatus(type, printer);
+
+        // --- Validate dangerous G-code against user role ---
+        if (type == PrinterCommandType.GCODE) {
+            validateGcode(payload, role);
+        }
+
         PrinterConnector connector = connectorRegistry.resolve(printer.getType());
         connector.sendCommand(printer, type, payload);
-        log.info("Sent {} command to printer {}", type, printer.getName());
+        log.info("Sent {} command to printer {} (role={})", type, printer.getName(), role);
+    }
+
+    /**
+     * Checks that the printer is in the right state for the requested action.
+     * EMERGENCY_STOP, FIRMWARE_RESTART and MACHINE_REBOOT are always allowed.
+     */
+    private void validatePrinterStatus(PrinterCommandType type, Printer printer) {
+        PrinterStatus status = printer.getStatus();
+
+        switch (type) {
+            case PRINT_START -> {
+                if (status != PrinterStatus.IDLE) {
+                    throw new IllegalStateException(
+                            "Cannot start print: printer is " + status + " (must be IDLE)");
+                }
+            }
+            case PRINT_PAUSE -> {
+                if (status != PrinterStatus.PRINTING) {
+                    throw new IllegalStateException(
+                            "Cannot pause: printer is " + status + " (must be PRINTING)");
+                }
+            }
+            case PRINT_RESUME -> {
+                if (status != PrinterStatus.PAUSED) {
+                    throw new IllegalStateException(
+                            "Cannot resume: printer is " + status + " (must be PAUSED)");
+                }
+            }
+            case PRINT_CANCEL -> {
+                if (status != PrinterStatus.PRINTING && status != PrinterStatus.PAUSED) {
+                    throw new IllegalStateException(
+                            "Cannot cancel: printer is " + status + " (must be PRINTING or PAUSED)");
+                }
+            }
+            default -> { /* GCODE, EMERGENCY_STOP, FIRMWARE_RESTART, MACHINE_REBOOT — no status check */ }
+        }
+    }
+
+    /**
+     * Blocks dangerous G-code commands for regular users.
+     * Extracts the first word of the G-code string and checks against the blocklist.
+     */
+    private void validateGcode(String payload, User.Role role) {
+        if (payload == null || payload.isBlank()) {
+            return;
+        }
+
+        // The G-code command is the first word (e.g. "M104 S200" → "M104")
+        String command = payload.trim().split("\\s+")[0].toUpperCase();
+
+        if (DANGEROUS_GCODES.contains(command) && role == User.Role.USER) {
+            throw new SecurityException(
+                    "Command '" + command + "' is restricted to ADMIN and SUPER_ADMIN users");
+        }
     }
 
     private PrinterStatus resolveStatus(String rawState) {
