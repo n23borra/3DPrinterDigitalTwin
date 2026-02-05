@@ -180,6 +180,9 @@ useEffect(() => {
                                         </div>
                                         <div className="text-2xl font-bold text-orange-600">
                                             {selectedSnapshot.nozzleTemp?.toFixed(1) || '--'}°C
+                                            <span className="text-sm font-normal text-gray-500 ml-2">
+                                                → {selectedSnapshot.targetNozzle ? `${selectedSnapshot.targetNozzle.toFixed(0)}°C` : '--'}
+                                            </span>
                                         </div>
                                         <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                                             <div
@@ -197,6 +200,9 @@ useEffect(() => {
                                         </div>
                                         <div className="text-2xl font-bold text-red-600">
                                             {selectedSnapshot.bedTemp?.toFixed(1) || '--'}°C
+                                            <span className="text-sm font-normal text-gray-500 ml-2">
+                                                → {selectedSnapshot.targetBed ? `${selectedSnapshot.targetBed.toFixed(0)}°C` : '--'}
+                                            </span>
                                         </div>
                                         <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                                             <div
