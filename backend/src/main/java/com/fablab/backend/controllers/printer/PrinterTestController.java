@@ -52,4 +52,30 @@ public class PrinterTestController {
     public ResponseEntity<?> listPrinters() {
         return ResponseEntity.ok(printerRepository.findAll());
     }
+
+    /**
+     * Send a command to a printer (for testing, no auth).
+     *
+     * Usage examples:
+     *   POST /api/test/printers/{id}/command?type=GCODE&payload=G28
+     *   POST /api/test/printers/{id}/command?type=EMERGENCY_STOP
+     *   POST /api/test/printers/{id}/command?type=PRINT_PAUSE
+     */
+    @PostMapping("/{id}/command")
+    public ResponseEntity<?> testCommand(
+            @PathVariable UUID id,
+            @RequestParam PrinterCommandType type,
+            @RequestParam(required = false) String payload) {
+        try {
+            Printer printer = printerRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Printer not found"));
+
+            PrinterConnector connector = connectorRegistry.resolve(printer.getType());
+            connector.sendCommand(printer, type, payload);
+
+            return ResponseEntity.ok("Command sent: " + type + (payload != null ? " [" + payload + "]" : ""));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+        }
+    }
 }
