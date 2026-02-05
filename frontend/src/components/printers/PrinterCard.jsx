@@ -15,7 +15,7 @@ export default function PrinterCard({printer, snapshot, onSelect, isActive}) {
                 'w-full text-left rounded-lg border p-4 shadow-sm transition hover:shadow-md',
                 isActive ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'
             )}
-            onClick={() => onSelect(printer)}
+            onClick={() => onSelect(isActive ? null : printer.id)}
         >
             <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-gray-800">{printer.name}</h3>
@@ -28,11 +28,11 @@ export default function PrinterCard({printer, snapshot, onSelect, isActive}) {
                 <div className="grid grid-cols-2 gap-3 mt-3 text-sm text-gray-700">
                     <div>
                         <p className="font-semibold">Nozzle</p>
-                        <p>{snapshot.nozzleTemp ?? '--'}°C / {snapshot.targetNozzle ?? '--'}°C</p>
+                        <p>{snapshot.nozzleTemp ?? '--'}°C</p>
                     </div>
                     <div>
                         <p className="font-semibold">Bed</p>
-                        <p>{snapshot.bedTemp ?? '--'}°C / {snapshot.targetBed ?? '--'}°C</p>
+                        <p>{snapshot.bedTemp ?? '--'}°C</p>
                     </div>
                     <div>
                         <p className="font-semibold">Progress</p>

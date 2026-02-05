@@ -39,6 +39,9 @@ public class Printer {
     @Column
     private Integer port;
 
+    @Column(name = "api_key")
+    private String apiKey;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PrinterStatus status = PrinterStatus.OFFLINE;
@@ -47,6 +50,6 @@ public class Printer {
 
     private String firmware;
 
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "TEXT")
     private String metadata;
 }
