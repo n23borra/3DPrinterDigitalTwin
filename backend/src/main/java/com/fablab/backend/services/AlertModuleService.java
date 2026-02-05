@@ -42,7 +42,7 @@ public class AlertModuleService {
         public String getComponent(){return component;};
     }
 
-    private static final String IP = "10.29.232.69";
+    private static final String IP = "10.29.232.179";
     private static final int PORT = 4408;
     private final UserRepository userRepository;
     private final AuditLogService auditService;
@@ -104,6 +104,7 @@ public class AlertModuleService {
             "&z_tilt" +
             "&bed_mesh" 
         );
+        System.out.println("Initial status : "+status);
 
 
         // start a background monitor for heatbed errors (reads the shared static `status`)
@@ -240,7 +241,7 @@ public class AlertModuleService {
     // Monitor multiple heatbed errors concurrently and report when each persists
     // for the required consecutive duration.
     private void monitorHeatbedErrors(double initialTemp, Long userId) {
-        final long requiredConsecutiveSeconds = 60; // require 60s of the same error
+        final long requiredConsecutiveSeconds = 10; // require 10s of the same error
         double prevTemp = initialTemp; 
         Map<String, Long> candidateStart = new HashMap<>();
         Map<String, PrinterError> candidateError = new HashMap<>();
@@ -337,7 +338,7 @@ public class AlertModuleService {
 
     // Separate monitor for power-loss-recovery / unfinished-print (CM0115)
     private void monitorPowerLossRecoveryError(Long userId) {
-        final long requiredConsecutiveSeconds = 60;
+        final long requiredConsecutiveSeconds = 10;
         String candidateKey = null;
         long candidateStart = 0L;
 
@@ -399,7 +400,7 @@ public class AlertModuleService {
 
     // Monitor axis homing anomalies for X/Y/Z (CX2573/CY2577/CZ2581)
     private void monitorAxisHomingErrors(Long userId) {
-        final long requiredConsecutiveSeconds = 60;
+        final long requiredConsecutiveSeconds = 10;
 
         Map<String, Long> candidateStart = new HashMap<>();
         Map<String, PrinterError> candidateError = new HashMap<>();
@@ -423,27 +424,22 @@ public class AlertModuleService {
 
                 // X axis
                 JsonNode sxLast = getStepperXData().at("/last_error");
-                JsonNode ex = getEndstopXData();
-                boolean exTriggered = !ex.isMissingNode() && ex.at("/triggered").asBoolean(false);
-                if ((!sxLast.isMissingNode() && !sxLast.isNull()) || !exTriggered) {
+                boolean sxLastExist = !sxLast.isMissingNode() && !sxLast.isNull() && !sxLast.isEmpty();
+                if (sxLastExist) {
                     PrinterError e = new PrinterError("CX2573", "Anomalie du repérage de l'axe X", "stepper_x");
                     detected.put(e.getErrorCode() + "|" + e.getMessage(), e);
                 }
 
                 // Y axis
                 JsonNode syLast = getStepperYData().at("/last_error");
-                JsonNode ey = getEndstopYData();
-                boolean eyTriggered = !ey.isMissingNode() && ey.at("/triggered").asBoolean(false);
-                if ((!syLast.isMissingNode() && !syLast.isNull()) || !eyTriggered) {
+                if (!syLast.isMissingNode() && !syLast.isNull()) {
                     PrinterError e = new PrinterError("CY2577", "Anomalie du repérage de l'axe Y", "stepper_y");
                     detected.put(e.getErrorCode() + "|" + e.getMessage(), e);
                 }
 
                 // Z axis
                 JsonNode szLast = getStepperZData().at("/last_error");
-                JsonNode ez = getEndstopZData();
-                boolean ezTriggered = !ez.isMissingNode() && ez.at("/triggered").asBoolean(false);
-                if ((!szLast.isMissingNode() && !szLast.isNull()) || !ezTriggered) {
+                if (!szLast.isMissingNode() && !szLast.isNull()) {
                     PrinterError e = new PrinterError("CZ2581", "Anomalie du repérage de l'axe Z", "stepper_z");
                     detected.put(e.getErrorCode() + "|" + e.getMessage(), e);
                 }
@@ -493,7 +489,7 @@ public class AlertModuleService {
 
     // Monitor axis coordinate-range anomalies for X/Y/Z (CX2585/CY2586/CZ2587)
     private void monitorAxisCoordinateRangeErrors(Long userId) {
-        final long requiredConsecutiveSeconds = 60;
+        final long requiredConsecutiveSeconds = 10;
 
         Map<String, Long> candidateStart = new HashMap<>();
         Map<String, PrinterError> candidateError = new HashMap<>();
