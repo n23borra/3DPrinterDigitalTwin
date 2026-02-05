@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Low-level HTTP client for Moonraker API communication.
- * Handles HTTP GET requests with API key authentication.
+ * Handles HTTP GET and POST requests with API key authentication.
  */
 @Component
 public class MoonrakerClient {
@@ -62,6 +62,53 @@ public class MoonrakerClient {
                 throw new Exception("HTTP " + status + ": " + errorBody);
             }
             
+        } finally {
+            conn.disconnect();
+        }
+    }
+
+    /**
+     * Execute a POST request to the Moonraker API (no request body).
+     * Most Moonraker action endpoints (emergency stop, pause, reboot, etc.)
+     * are triggered via POST with an empty body.
+     *
+     * @param baseUrl  Base URL (e.g., "http://192.168.1.100:7125")
+     * @param apiKey   API key for authentication
+     * @param endpoint API endpoint (e.g., "/printer/emergency_stop")
+     * @return Raw JSON response as String
+     * @throws Exception if request fails
+     */
+    public String post(String baseUrl, String apiKey, String endpoint) throws Exception {
+        String fullUrl = baseUrl + endpoint;
+        log.debug("POST request to: {}", fullUrl);
+
+        URL url = new URL(fullUrl);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+        try {
+            conn.setRequestMethod("POST");
+            conn.setConnectTimeout(CONNECT_TIMEOUT_MS);
+            conn.setReadTimeout(READ_TIMEOUT_MS);
+            conn.setDoOutput(true);
+
+            if (apiKey != null && !apiKey.isEmpty()) {
+                conn.setRequestProperty("X-Api-Key", apiKey);
+            }
+
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setRequestProperty("Content-Length", "0");
+            conn.setRequestProperty("User-Agent", "FabLab-DigitalTwin/1.0");
+
+            int status = conn.getResponseCode();
+
+            if (status >= 200 && status < 300) {
+                return readResponse(conn.getInputStream());
+            } else {
+                String errorBody = readResponse(conn.getErrorStream());
+                log.warn("HTTP {} from {}: {}", status, fullUrl, errorBody);
+                throw new Exception("HTTP " + status + ": " + errorBody);
+            }
+
         } finally {
             conn.disconnect();
         }
