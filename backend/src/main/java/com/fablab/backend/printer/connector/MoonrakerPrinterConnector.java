@@ -1,5 +1,6 @@
 package com.fablab.backend.printer.connector;
 
+import com.fablab.backend.dto.PrinterCommandType;
 import com.fablab.backend.models.printer.Printer;
 import com.fablab.backend.models.printer.PrinterType;
 import org.slf4j.Logger;
@@ -79,17 +80,36 @@ public class MoonrakerPrinterConnector implements PrinterConnector {
     }
 
     @Override
-    public void sendCommand(Printer printer, String gcodeOrAction) {
+    public void sendCommand(Printer printer, PrinterCommandType type, String payload) {
+        String baseUrl = buildBaseUrl(printer);
+        String apiKey = printer.getApiKey();
+
         try {
-            String baseUrl = buildBaseUrl(printer);
-            String endpoint = "/printer/gcode/script?script=" + 
-                    java.net.URLEncoder.encode(gcodeOrAction, "UTF-8");
-            client.get(baseUrl, printer.getApiKey(), endpoint);
-            log.info("Sent command '{}' to printer {}", gcodeOrAction, printer.getName());
+            switch (type) {
+                case GCODE -> {
+                    if (payload == null || payload.isBlank()) {
+                        throw new IllegalArgumentException("GCODE command requires a payload");
+                    }
+                    String endpoint = "/printer/gcode/script?script=" +
+                            java.net.URLEncoder.encode(payload, "UTF-8");
+                    client.post(baseUrl, apiKey, endpoint);
+                }
+                case PRINT_START    -> client.post(baseUrl, apiKey, "/printer/print/start");
+                case PRINT_PAUSE    -> client.post(baseUrl, apiKey, "/printer/print/pause");
+                case PRINT_RESUME   -> client.post(baseUrl, apiKey, "/printer/print/resume");
+                case PRINT_CANCEL   -> client.post(baseUrl, apiKey, "/printer/print/cancel");
+                case EMERGENCY_STOP -> client.post(baseUrl, apiKey, "/printer/emergency_stop");
+                case FIRMWARE_RESTART -> client.post(baseUrl, apiKey, "/printer/firmware_restart");
+                case MACHINE_REBOOT -> client.post(baseUrl, apiKey, "/machine/reboot");
+            }
+            log.info("Sent {} command to printer {}{}", type,
+                    printer.getName(), payload != null ? " [" + payload + "]" : "");
+        } catch (IllegalArgumentException e) {
+            throw e;
         } catch (Exception e) {
-            log.error("Failed to send command to printer {}: {}", 
-                    printer.getName(), e.getMessage());
-            throw new RuntimeException("Unable to send command", e);
+            log.error("Failed to send {} command to printer {}: {}",
+                    type, printer.getName(), e.getMessage());
+            throw new RuntimeException("Unable to send command: " + type, e);
         }
     }
 

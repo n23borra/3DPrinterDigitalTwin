@@ -1,5 +1,6 @@
 package com.fablab.backend.controllers.printer;
 
+import com.fablab.backend.dto.PrinterCommandType;
 import com.fablab.backend.printer.connector.ConnectorRegistry;
 import com.fablab.backend.printer.connector.PrinterConnector;
 import com.fablab.backend.printer.connector.RawPrinterState;

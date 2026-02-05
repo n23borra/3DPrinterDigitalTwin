@@ -1,5 +1,6 @@
 package com.fablab.backend.services.printer;
 
+import com.fablab.backend.dto.PrinterCommandType;
 import com.fablab.backend.models.printer.Printer;
 import com.fablab.backend.models.printer.PrinterSnapshot;
 import com.fablab.backend.models.printer.PrinterStatus;
@@ -76,11 +77,11 @@ public class PrinterService {
                 .orElseThrow();
     }
 
-    public void sendCommand(UUID printerId, String command) {
+    public void sendCommand(UUID printerId, PrinterCommandType type, String payload) {
         Printer printer = getPrinter(printerId);
         PrinterConnector connector = connectorRegistry.resolve(printer.getType());
-        connector.sendCommand(printer, command);
-        log.info("Sent command {} to printer {}", command, printer.getName());
+        connector.sendCommand(printer, type, payload);
+        log.info("Sent {} command to printer {}", type, printer.getName());
     }
 
     private PrinterStatus resolveStatus(String rawState) {

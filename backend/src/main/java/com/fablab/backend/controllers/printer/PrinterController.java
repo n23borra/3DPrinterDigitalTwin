@@ -42,7 +42,7 @@ public class PrinterController {
 
     @PostMapping("/{id}/command")
     public ResponseEntity<Void> sendCommand(@PathVariable UUID id, @Validated @RequestBody PrinterCommandRequest request) {
-        printerService.sendCommand(id, request.getCommand());
+        printerService.sendCommand(id, request.getType(), request.getCommand());
         return ResponseEntity.accepted().build();
     }
 }
