@@ -20,6 +20,7 @@ public class MoonrakerClient {
     private static final Logger log = LoggerFactory.getLogger(MoonrakerClient.class);
     private static final int CONNECT_TIMEOUT_MS = 5000;
     private static final int READ_TIMEOUT_MS = 10000;
+    private static final int COMMAND_READ_TIMEOUT_MS = 60000; // 60s for commands like G28
 
     /**
      * Execute a GET request to the Moonraker API.
@@ -88,7 +89,7 @@ public class MoonrakerClient {
         try {
             conn.setRequestMethod("POST");
             conn.setConnectTimeout(CONNECT_TIMEOUT_MS);
-            conn.setReadTimeout(READ_TIMEOUT_MS);
+            conn.setReadTimeout(COMMAND_READ_TIMEOUT_MS);
             conn.setDoOutput(true);
 
             if (apiKey != null && !apiKey.isEmpty()) {
