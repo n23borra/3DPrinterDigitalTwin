@@ -23,6 +23,7 @@ import com.fablab.backend.models.Alert;
 import com.fablab.backend.models.User;
 import com.fablab.backend.repositories.AlertRepository;
 import com.fablab.backend.repositories.UserRepository;
+import com.fablab.backend.services.AlertModuleService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +35,7 @@ public class AlertController {
     private final AlertRepository alertRepository;
     private final UserRepository userRepo;
     private final JavaMailSender mailSender;
+    private final AlertModuleService alertService;
 
     /**
      * Checks if the current authenticated user has admin or superadmin role.
@@ -208,5 +210,20 @@ public class AlertController {
         }
         alertRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/bed_level")
+    public void checkBedLeveling(){
+        Alert alert = Alert.builder()
+                    .userId(null)
+                    .title("BED_LEVEL")
+                    .details(alertService.checkBedLeveling(null).toString())
+                    .category("LEVELING")
+                    .severity(Alert.Severity.INFO)
+                    .priority(Alert.Priority.MEDIUM)
+                    .resolved(false)
+                    .build();
+            alertRepository.save(alert);
+        System.out.println(alertService.checkBedLeveling(null));
     }
 }

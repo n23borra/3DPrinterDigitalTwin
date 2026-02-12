@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AlertModuleService {
 
-    private static class PrinterError {
+    public static class PrinterError {
         private final String errorCode;
         private final String message;
         private final String component;
@@ -40,6 +40,11 @@ public class AlertModuleService {
         public String getErrorCode(){return errorCode;};
         public String getMessage(){return message;};
         public String getComponent(){return component;};
+
+        @Override
+        public String toString(){
+            return component +" "+errorCode +" : "+message;
+        }
     }
 
     private static final String IP = "10.29.232.179";
@@ -124,7 +129,7 @@ public class AlertModuleService {
 
         // start axis homing anomaly monitor (X/Y/Z)
         Thread axisHomingMonitor = new Thread(() -> {
-            monitorAxisHomingErrors(finalUserId);
+            monitorMotion(finalUserId);
         });
         axisHomingMonitor.setDaemon(true);
         axisHomingMonitor.start();
@@ -399,12 +404,16 @@ public class AlertModuleService {
     }
 
     // Monitor axis homing anomalies for X/Y/Z (CX2573/CY2577/CZ2581)
-    private void monitorAxisHomingErrors(Long userId) {
-        final long requiredConsecutiveSeconds = 10;
+    public void monitorMotion(Long userId) {
+        final long requiredConsecutiveSeconds = 1;
 
         Map<String, Long> candidateStart = new HashMap<>();
         Map<String, PrinterError> candidateError = new HashMap<>();
         Set<String> reported = new HashSet<>();
+
+        double[] lastPos = new double[]{0,0,0,0};
+        double[] currentPos = new double[]{0,0,0,0};
+        double dist = 0;
 
         while (true) {
             try {
@@ -422,27 +431,40 @@ public class AlertModuleService {
 
                 Map<String, PrinterError> detected = new HashMap<>();
 
-                // X axis
-                JsonNode sxLast = getStepperXData().at("/last_error");
-                boolean sxLastExist = !sxLast.isMissingNode() && !sxLast.isNull() && !sxLast.isEmpty();
-                if (sxLastExist) {
-                    PrinterError e = new PrinterError("CX2573", "Anomalie du repérage de l'axe X", "stepper_x");
-                    detected.put(e.getErrorCode() + "|" + e.getMessage(), e);
+
+                JsonNode motion = s.at("/motion_report");
+                // Positions et vitesses
+                JsonNode pos = motion.at("/live_position");       // [X, Y, Z, E]
+
+                try {
+                    lastPos = currentPos;
+                    currentPos = new double[]{pos.get(0).asDouble(), pos.get(1).asDouble(), pos.get(2).asDouble(), pos.get(3).asDouble()};
+                    dist = Math.sqrt(Math.pow(currentPos[0]-lastPos[0],2)+Math.pow(currentPos[1]-lastPos[1],2)+Math.pow(currentPos[2]-lastPos[2],2));
+                } catch (Exception e) {
+                }
+                
+                double velocity = motion.at("/live_velocity").asDouble();
+                double extruderVelocity = motion.at("/live_extruder_velocity").asDouble();
+
+                if(velocity > 0.1){
+                    if(dist < 0.1){
+                        String msg = "Blocage de la buse détecté. Position actuelle : " + pos.toString();
+                        System.out.println(msg);
+                        PrinterError e = new PrinterError("CM3000", msg, "motion_report");
+                        detected.put(e.getErrorCode() + "|" + e.getMessage(), e);
+                    }
                 }
 
-                // Y axis
-                JsonNode syLast = getStepperYData().at("/last_error");
-                if (!syLast.isMissingNode() && !syLast.isNull()) {
-                    PrinterError e = new PrinterError("CY2577", "Anomalie du repérage de l'axe Y", "stepper_y");
-                    detected.put(e.getErrorCode() + "|" + e.getMessage(), e);
-                }
+                if(extruderVelocity > 0.1){
+                    if(Math.abs(currentPos[3]-lastPos[3]) < 0.1){
+                        String msg = "Blocage de l'extrudeur détecté. Position actuelle : " + pos.toString();
+                        System.out.println(msg);
+                        PrinterError e = new PrinterError("CM3001", msg, "motion_report");
+                        detected.put(e.getErrorCode() + "|" + e.getMessage(), e);
+                    }
+                }                
 
-                // Z axis
-                JsonNode szLast = getStepperZData().at("/last_error");
-                if (!szLast.isMissingNode() && !szLast.isNull()) {
-                    PrinterError e = new PrinterError("CZ2581", "Anomalie du repérage de l'axe Z", "stepper_z");
-                    detected.put(e.getErrorCode() + "|" + e.getMessage(), e);
-                }
+
 
                 // Update candidates and reporting
                 for (Map.Entry<String, PrinterError> ent : detected.entrySet()) {
@@ -572,7 +594,7 @@ public class AlertModuleService {
         }
     }
 
-    private PrinterError checkBedLeveling(Long userId) {
+    public PrinterError checkBedLeveling(Long userId) {
 
         try{
 

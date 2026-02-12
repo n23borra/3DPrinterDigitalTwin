@@ -1,4 +1,28 @@
 services:
+
+  # ──────────────────────────────────────────────
+  # TimescaleDB (PostgreSQL time-series)
+  # ──────────────────────────────────────────────
+  timescaledb:
+    image: timescale/timescaledb:2.14.2-pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: timeseries
+      POSTGRES_USER: twin
+      POSTGRES_PASSWORD: twin
+    volumes:
+      - ./timescaledb:/docker-entrypoint-initdb.d:ro
+      - timescaledb-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d timeseries -U twin" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5433:5432"   # optionnel (utile pour pgAdmin / psql)
+    networks:
+      - default
+
   # ──────────────────────────────────────────────
   # PostgreSQL database
   # ──────────────────────────────────────────────
@@ -31,6 +55,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy         # waits for Postgres to be ready
+      timescaledb:
+        condition: service_healthy
 
     env_file:
       - .env
@@ -39,6 +65,10 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/twin
       SPRING_DATASOURCE_USERNAME: twin
       SPRING_DATASOURCE_PASSWORD: twin
+
+      TIMESCALE_DATASOURCE_URL: jdbc:postgresql://timescaledb:5432/timeseries
+      TIMESCALE_DATASOURCE_USERNAME: twin
+      TIMESCALE_DATASOURCE_PASSWORD: twin
 
       JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required. Copy .env.example to .env}
 
@@ -70,3 +100,4 @@ services:
 
 volumes:
   postgres-data:
+  timescaledb-data:
