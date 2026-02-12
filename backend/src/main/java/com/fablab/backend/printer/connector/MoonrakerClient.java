@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
+import java.io.OutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -12,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Low-level HTTP client for Moonraker API communication.
- * Handles HTTP GET requests with API key authentication.
+ * Handles HTTP requests with API key authentication.
  */
 @Component
 public class MoonrakerClient {
@@ -34,37 +35,76 @@ public class MoonrakerClient {
         String fullUrl = baseUrl + endpoint;
         log.debug("GET request to: {}", fullUrl);
 
-        URL url = new URL(fullUrl);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        HttpURLConnection conn = openConnection(fullUrl, apiKey);
 
         try {
-            // Configure request
             conn.setRequestMethod("GET");
-            conn.setConnectTimeout(CONNECT_TIMEOUT_MS);
-            conn.setReadTimeout(READ_TIMEOUT_MS);
-            
-            // Add API key header if provided
-            if (apiKey != null && !apiKey.isEmpty()) {
-                conn.setRequestProperty("X-Api-Key", apiKey);
-            }
-            
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setRequestProperty("User-Agent", "FabLab-DigitalTwin/1.0");
+            int status = conn.getResponseCode();
 
-            // Get response
+            if (status >= 200 && status < 300) {
+                return readResponse(conn.getInputStream());
+            }
+
+            String errorBody = readResponse(conn.getErrorStream());
+            log.warn("HTTP {} from {}: {}", status, fullUrl, errorBody);
+            throw new Exception("HTTP " + status + ": " + errorBody);
+        } finally {
+            conn.disconnect();
+        }
+    }
+
+    /**
+     * Execute a POST request to the Moonraker API.
+     *
+     * @param baseUrl base URL of the printer
+     * @param apiKey API key for authentication
+     * @param endpoint endpoint path (e.g. /printer/gcode/script)
+     * @param bodyJson JSON body payload
+     * @return raw JSON response as String
+     * @throws Exception if request fails
+     */
+    public String postJson(String baseUrl, String apiKey, String endpoint, String bodyJson) throws Exception {
+        String fullUrl = baseUrl + endpoint;
+        log.debug("POST request to: {}", fullUrl);
+
+        HttpURLConnection conn = openConnection(fullUrl, apiKey);
+
+        try {
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setRequestProperty("Content-Type", "application/json");
+
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(bodyJson.getBytes(StandardCharsets.UTF_8));
+            }
+
             int status = conn.getResponseCode();
             
             if (status >= 200 && status < 300) {
                 return readResponse(conn.getInputStream());
-            } else {
-                String errorBody = readResponse(conn.getErrorStream());
-                log.warn("HTTP {} from {}: {}", status, fullUrl, errorBody);
-                throw new Exception("HTTP " + status + ": " + errorBody);
             }
-            
+
+            String errorBody = readResponse(conn.getErrorStream());
+            log.warn("HTTP {} from {}: {}", status, fullUrl, errorBody);
+            throw new Exception("HTTP " + status + ": " + errorBody);
         } finally {
             conn.disconnect();
         }
+    }
+
+    private HttpURLConnection openConnection(String fullUrl, String apiKey) throws Exception {
+        URL url = new URL(fullUrl);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setConnectTimeout(CONNECT_TIMEOUT_MS);
+        conn.setReadTimeout(READ_TIMEOUT_MS);
+
+        if (apiKey != null && !apiKey.isEmpty()) {
+            conn.setRequestProperty("X-Api-Key", apiKey);
+        }
+
+        conn.setRequestProperty("Accept", "application/json");
+        conn.setRequestProperty("User-Agent", "FabLab-DigitalTwin/1.0");
+        return conn;
     }
 
     /**

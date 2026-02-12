@@ -20,6 +20,17 @@ const PrinterIcon = () => (
     </svg>
 );
 
+const CommandsIcon = () => (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M4 7h16" />
+        <path d="M4 12h16" />
+        <path d="M4 17h16" />
+        <circle cx="8" cy="7" r="1" fill="currentColor" />
+        <circle cx="16" cy="12" r="1" fill="currentColor" />
+        <circle cx="10" cy="17" r="1" fill="currentColor" />
+    </svg>
+);
+
 const AuditIcon = () => (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
         <path d="M6 4h9l3 3v11a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" />
@@ -79,8 +90,18 @@ export default function DashboardLayout() {
 
     const menuItems = useMemo(() => {
         const items = [...baseMenuItems];
-        if (user?.role === 'SUPER_ADMIN') {
+
+        if (['ADMIN', 'SUPER_ADMIN'].includes(user?.role)) {
             items.splice(3, 0, {
+                id: 'commands',
+                label: 'Commands',
+                path: '/commands',
+                icon: <CommandsIcon/>,
+            });
+        }
+
+        if (user?.role === 'SUPER_ADMIN') {
+            items.splice(4, 0, {
                 id: 'user-management',
                 label: 'User Management',
                 path: '/admin/users',
