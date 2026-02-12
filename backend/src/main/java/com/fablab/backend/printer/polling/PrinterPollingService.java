@@ -1,5 +1,13 @@
 package com.fablab.backend.printer.polling;
 
+import java.time.Instant;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
 import com.fablab.backend.models.printer.Printer;
 import com.fablab.backend.models.printer.PrinterSnapshot;
 import com.fablab.backend.printer.connector.ConnectorRegistry;
@@ -7,13 +15,6 @@ import com.fablab.backend.printer.connector.PrinterConnector;
 import com.fablab.backend.printer.connector.RawPrinterState;
 import com.fablab.backend.repositories.printer.PrinterRepository;
 import com.fablab.backend.repositories.printer.PrinterSnapshotRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-
-import java.time.Instant;
-import java.util.List;
 
 /**
  * Background service that polls printers at intelligent intervals

@@ -1,9 +1,11 @@
 package com.fablab.backend.services;
 
+import org.springframework.stereotype.Service;
+
 import com.fablab.backend.models.AuditLog;
 import com.fablab.backend.repositories.AuditLogRepository;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

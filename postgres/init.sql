@@ -46,22 +46,6 @@ CREATE TABLE IF NOT EXISTS printers
     metadata       JSONB
 );
 
-CREATE TABLE IF NOT EXISTS printer_snapshots
-(
-    id            BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    printer_id    UUID REFERENCES printers (id) ON DELETE CASCADE,
-    ts            TIMESTAMPTZ NOT NULL DEFAULT now(),
-    bed_temp      NUMERIC,
-    nozzle_temp   NUMERIC,
-    target_bed    NUMERIC,
-    target_nozzle NUMERIC,
-    progress      NUMERIC,
-    z_height      NUMERIC,
-    state         VARCHAR(50),
-    raw_payload   JSONB
-);
-
-CREATE INDEX IF NOT EXISTS idx_printer_snapshots_printer_ts ON printer_snapshots (printer_id, ts DESC);
 
 -- -- Minimal seed example to bootstrap UI when running locally
 -- INSERT INTO printers (id, name, type, ip_address, port, status)
