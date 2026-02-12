@@ -46,6 +46,13 @@ CREATE TABLE IF NOT EXISTS printers
     metadata       JSONB
 );
 
+CREATE TABLE IF NOT EXISTS alerts
+(
+   id             UUID PRIMARY KEY,
+   user_id        BIGINT, 
+   title          VARCHAR(50)    NOT NULL,
+   
+)
 
 -- -- Minimal seed example to bootstrap UI when running locally
 -- INSERT INTO printers (id, name, type, ip_address, port, status)
