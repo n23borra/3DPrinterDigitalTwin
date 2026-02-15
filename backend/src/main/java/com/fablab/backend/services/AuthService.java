@@ -1,13 +1,5 @@
 package com.fablab.backend.services;
 
-import com.fablab.backend.dto.LoginRequest;
-import com.fablab.backend.dto.PasswordUpdateRequest;
-import com.fablab.backend.dto.RegisterRequest;
-import com.fablab.backend.dto.TokenResponse;
-import com.fablab.backend.models.User;
-import com.fablab.backend.repositories.UserRepository;
-import com.fablab.backend.security.JwtTokenProvider;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +7,16 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.fablab.backend.dto.LoginRequest;
+import com.fablab.backend.dto.PasswordUpdateRequest;
+import com.fablab.backend.dto.RegisterRequest;
+import com.fablab.backend.dto.TokenResponse;
+import com.fablab.backend.models.User;
+import com.fablab.backend.repositories.UserRepository;
+import com.fablab.backend.security.JwtTokenProvider;
+
+import lombok.RequiredArgsConstructor;
 
 
 @Service
@@ -26,6 +28,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
     private final AuditLogService auditService;
+    private final AlertModuleService alertModuleService;
 
 
     private static final Logger log = LoggerFactory.getLogger(AuthService.class);

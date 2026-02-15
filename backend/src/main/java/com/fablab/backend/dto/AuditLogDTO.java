@@ -1,8 +1,8 @@
 package com.fablab.backend.dto;
 
-import com.fablab.backend.models.AuditLog;
-
 import java.time.Instant;
+
+import com.fablab.backend.models.AuditLog;
 
 /**
  * DTO exposing audit log entries for display in the UI.

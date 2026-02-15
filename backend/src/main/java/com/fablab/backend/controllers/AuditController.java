@@ -1,14 +1,19 @@
 package com.fablab.backend.controllers;
 
-import com.fablab.backend.dto.AuditLogDTO;
-import com.fablab.backend.repositories.AuditLogRepository;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.fablab.backend.dto.AuditLogDTO;
+import com.fablab.backend.repositories.AuditLogRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/audit")
@@ -16,6 +21,8 @@ import java.util.List;
 public class AuditController {
 
     private final AuditLogRepository auditRepo;
+
+    public static record CreateAuditRequest(Long userId, String action, String details) {}
 
     /**
      * Retrieves audit events recorded for the specified user.
@@ -29,5 +36,15 @@ public class AuditController {
                 .stream()
                 .map(AuditLogDTO::from)
                 .toList();
+    }
+
+    @PostMapping
+    public ResponseEntity<AuditLogDTO> create(@RequestBody CreateAuditRequest req) {
+        var log = new com.fablab.backend.models.AuditLog();
+        log.setUserId(req.userId());
+        log.setAction(req.action());
+        log.setDetails(req.details());
+        var saved = auditRepo.save(log);
+        return ResponseEntity.ok(AuditLogDTO.from(saved));
     }
 }

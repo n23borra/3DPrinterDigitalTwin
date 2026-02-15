@@ -18,6 +18,7 @@ import DashboardLayout from './layouts/DashboardLayout';
 
 import AuditLogs from './pages/AuditLogs';
 import UserManagement from './pages/UserManagement';
+import Alerts from './pages/Alerts';
 
 function App() {
     return (<Router>
@@ -34,6 +35,7 @@ function App() {
                 <Route element={<DashboardLayout/>}>
                     <Route path="/dashboard" element={<Dashboard/>}/>
                     <Route path="/printers" element={<PrintersDashboard/>}/>
+                    <Route path="/alerts" element={<Alerts/>}/>
                     <Route path="/audit" element={<AuditLogs/>}/>
                     <Route element={<PrivilegedRoute/>}>
                         <Route path="/commands" element={<CommandsPage/>}/>
