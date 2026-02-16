@@ -48,11 +48,17 @@ CREATE TABLE IF NOT EXISTS printers
 
 CREATE TABLE IF NOT EXISTS alerts
 (
-   id             UUID PRIMARY KEY,
+   id             BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
    user_id        BIGINT, 
    title          VARCHAR(50)    NOT NULL,
-   
-)
+   details        VARCHAR(150),
+   ts             TIMESTAMPTZ    NOT NULL DEFAULT now(),
+   resolved       boolean        NOT NULL,
+   severity       VARCHAR(20),
+   priority       VARCHAR(20),
+   category       VARCHAR(50),
+   assigned_to    BIGINT
+);
 
 -- -- Minimal seed example to bootstrap UI when running locally
 -- INSERT INTO printers (id, name, type, ip_address, port, status)

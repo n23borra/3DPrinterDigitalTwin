@@ -88,6 +88,9 @@ export default function Alerts() {
     };
 
     const handleCreateAlert = async () => {
+        if(!isAdmin()){
+            formData.details = "USER_ALERT: "+formData.details;
+        }
         console.log('handleCreateAlert called, formData:', formData);
         if (!formData.title.trim()) {
             alert('Alert title is required');

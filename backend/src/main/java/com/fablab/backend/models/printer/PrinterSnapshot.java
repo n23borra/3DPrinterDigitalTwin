@@ -49,6 +49,13 @@ public class PrinterSnapshot {
     @Column(name = "chamber_temp")
     private Double chamberTemp;
 
+    // ===== POWER =====
+    @Column(name = "bed_pow")
+    private Double bedPow;
+
+    @Column(name = "nozzle_pow")
+    private Double nozzlePow;
+
     // ===== TOOLHEAD POSITION (Critical for digital twin animation) =====
     @Column(name = "pos_x")
     private Double posX;
@@ -76,6 +83,9 @@ public class PrinterSnapshot {
     @Column(name = "live_velocity")
     private Double liveVelocity;
 
+    @Column(name = "live_extruder_velocity")
+    private Double liveExtruderVelocity;
+
     @Column(name = "live_position_x")
     private Double livePositionX;
 
@@ -84,6 +94,9 @@ public class PrinterSnapshot {
 
     @Column(name = "live_position_z")
     private Double livePositionZ;
+
+    @Column(name = "live_position_e")
+    private Double livePositionE;
 
     // ===== PRINT STATS =====
     @Column(name = "state")
@@ -144,6 +157,10 @@ public class PrinterSnapshot {
     // ===== BED MESH =====
     @Column(name = "bed_mesh_profile")
     private String bedMeshProfile;
+
+    // ===== Z TILT =====
+    @Column(name = "z_tilt")
+    private Boolean zTilt;
 
     // ===== RAW DATA (for debugging/analysis) =====
     @Column(name = "raw_payload", columnDefinition = "TEXT")
