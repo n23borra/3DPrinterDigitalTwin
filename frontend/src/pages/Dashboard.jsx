@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode';
-import api from '../api/api';
+import {fetchDashboardCounts} from '../api/dashboardApi';
 
 /**
  * Dashboard landing page showing a welcome message and key system metrics.
- * @returns {JSX.Element} Overview cards summarising users and assessments.
+ * @returns {JSX.Element} Overview cards summarising users, alerts and available printers.
  */
 export default function Dashboard() {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
-    const [counts, setCounts] = useState({userCount: 0, assessmentCount: 0});
+    const [counts, setCounts] = useState({userCount: 0, alertCount: 0, printerAvailableCount: 0});
     let username = 'User';
 
     useEffect(() => {
@@ -20,13 +20,11 @@ export default function Dashboard() {
         }
         const fetchCounts = async () => {
             try {
-                const [usersResponse, analysesResponse] = await Promise.all([
-                    api.get('/users'),
-                    api.get('/analyses'),
-                ]);
+                const response = await fetchDashboardCounts();
                 setCounts({
-                    userCount: Array.isArray(usersResponse.data) ? usersResponse.data.length : 0,
-                    assessmentCount: Array.isArray(analysesResponse.data) ? analysesResponse.data.length : 0,
+                    userCount: response.data?.userCount ?? 0,
+                    alertCount: response.data?.alertCount ?? 0,
+                    printerAvailableCount: response.data?.printerAvailableCount ?? 0,
                 });
             } catch (error) {
                 if (error.response?.status === 401) {
@@ -57,8 +55,8 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <Widget title="Users Created" value={counts.userCount} color="bg-blue-600"/>
-            <Widget title="Impressions Created" value={counts.assessmentCount} color="bg-green-600"/>
-            <Widget title="Printer Available" value={counts.assessmentCount} color="bg-cyan-600"/>
+            <Widget title="Alerts" value={counts.alertCount} color="bg-green-600"/>
+            <Widget title="Printer Available" value={counts.printerAvailableCount} color="bg-cyan-600"/>
         </div>
     </div>);
 }
