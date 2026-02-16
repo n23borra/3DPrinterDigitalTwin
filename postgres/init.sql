@@ -73,6 +73,14 @@ INSERT INTO printers (id, name, type, ip_address, port, status)
 SELECT gen_random_uuid(), 'K2 Plus', 'MOONRAKER', '10.29.232.179', 4408, 'OFFLINE'
 WHERE NOT EXISTS (SELECT 1 FROM printers WHERE name = 'K2 Plus');
 
+INSERT INTO printers (id, name, type, ip_address, port, status)
+SELECT gen_random_uuid(), 'Fake Printer', 'MOONRAKER', '127.0.0.1', 7125, 'OFFLINE'
+WHERE NOT EXISTS (SELECT 1 FROM printers WHERE name = 'Fake Printer');
+
+INSERT INTO printers (id, name, type, ip_address, port, status)
+SELECT gen_random_uuid(), 'K1 Max', 'MOONRAKER', '0.0.0.0', 0, 'OFFLINE'
+WHERE NOT EXISTS (SELECT 1 FROM printers WHERE name = 'K1 Max');
+
 /* =========================
    12. SEED ADMIN CATEGORIES
    (Run after creating
