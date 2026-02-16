@@ -410,11 +410,11 @@ useEffect(() => {
 
                     {/* Raw Data Debug */}
                     {selectedSnapshot && (
-                        <details className="mt-6 bg-white rounded-lg shadow p-5">
+                        <details className="mt-6 bg-white rounded-lg shadow p-5 min-w-0">
                             <summary className="cursor-pointer text-sm font-semibold text-gray-700">
                                 Show Raw Data (Debug)
                             </summary>
-                            <pre className="mt-4 p-4 bg-gray-50 rounded text-xs overflow-auto">
+                            <pre className="mt-4 p-4 bg-gray-50 rounded text-xs overflow-auto max-w-full whitespace-pre-wrap break-words">
                                 {JSON.stringify(selectedSnapshot, null, 2)}
                             </pre>
                         </details>
