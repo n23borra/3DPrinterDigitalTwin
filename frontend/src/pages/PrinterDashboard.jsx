@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { fetchPrinters, fetchPrinterHistory, fetchPrinterState, sendPrinterCommand } from '../api/printerApi';
-import PrinterCard from '../components/printers/PrinterCard';
 import PrinterHistoryTable from '../components/printers/PrinterHistoryTable';
 
 const QUICK_COMMANDS = [
@@ -124,17 +123,23 @@ useEffect(() => {
                 </div>
             </header>
 
-            {/* Printer Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                {printers.map((printer) => (
-                    <PrinterCard
-                        key={printer.id}
-                        printer={printer}
-                        snapshot={snapshots[printer.id]}
-                        onSelect={setSelectedId}
-                        isActive={printer.id === selectedId}
-                    />
-                ))}
+            {/* Printer Selector */}
+            <div className="w-full md:w-56 mb-8">
+                <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="printer-select">
+                    Printer
+                </label>
+                <select
+                    id="printer-select"
+                    className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={selectedId ?? ''}
+                    onChange={(e) => setSelectedId(Number(e.target.value))}
+                >
+                    {printers.map((printer) => (
+                        <option key={printer.id} value={printer.id}>
+                            {printer.name} — {printer.ipAddress}
+                        </option>
+                    ))}
+                </select>
             </div>
 
             {/* Selected Printer Details */}
