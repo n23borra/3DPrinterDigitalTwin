@@ -17,6 +17,7 @@ export default function PrintersDashboard() {
     const [selectedId, setSelectedId] = useState(null);
     const [loading, setLoading] = useState(false);
     const [autoRefresh, setAutoRefresh] = useState(true);
+    const [staleData, setStaleData] = useState({});
 
     // Fetch printers list on mount
 useEffect(() => {
@@ -39,30 +40,45 @@ useEffect(() => {
     // Fetch state and history for selected printer
     useEffect(() => {
         if (!selectedId) return;
+        let cancelled = false;
 
-        const fetchData = async () => {
-            setLoading(true);
+        const fetchData = async (isAutoRefresh = false) => {
+            if (!isAutoRefresh) setLoading(true);
             try {
-                const [stateRes, historyRes] = await Promise.all([
-                    fetchPrinterState(selectedId),
-                    fetchPrinterHistory(selectedId, { limit: 50 }),
-                ]);
-                setSnapshots((prev) => ({ ...prev, [selectedId]: stateRes.data }));
-                setHistory(historyRes.data);
+                const stateRes = await fetchPrinterState(selectedId);
+                if (!cancelled) {
+                    if (stateRes.data) {
+                        setSnapshots((prev) => ({ ...prev, [selectedId]: stateRes.data }));
+                        setStaleData((prev) => ({ ...prev, [selectedId]: null }));
+                    } else if (!staleData[selectedId]) {
+                        setStaleData((prev) => ({ ...prev, [selectedId]: new Date() }));
+                    }
+                }
             } catch (error) {
-                console.error('Failed to fetch printer data:', error);
-            } finally {
-                setLoading(false);
+                console.error('Failed to fetch printer state:', error);
+                if (!cancelled && !staleData[selectedId]) {
+                    setStaleData((prev) => ({ ...prev, [selectedId]: new Date() }));
+                }
             }
+            try {
+                const historyRes = await fetchPrinterHistory(selectedId, { limit: 50 });
+                if (!cancelled && historyRes.data) {
+                    setHistory(historyRes.data);
+                }
+            } catch (error) {
+                console.error('Failed to fetch printer history:', error);
+            }
+            if (!isAutoRefresh && !cancelled) setLoading(false);
         };
 
-        fetchData();
+        fetchData(false);
 
         // Auto-refresh every 2 seconds if enabled
         if (autoRefresh) {
-            const interval = setInterval(fetchData, 2000);
-            return () => clearInterval(interval);
+            const interval = setInterval(() => fetchData(true), 2000);
+            return () => { cancelled = true; clearInterval(interval); };
         }
+        return () => { cancelled = true; };
     }, [selectedId, autoRefresh]);
 
     const selectedPrinter = useMemo(
@@ -85,6 +101,8 @@ useEffect(() => {
         selectedSnapshot.state !== null
     );
 
+    const isStale = selectedId && !!staleData[selectedId];
+
     return (
         <div>
             <header className="mb-6">
@@ -101,7 +119,7 @@ useEffect(() => {
                                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                         }`}
                     >
-                        {autoRefresh ? '🔄 Auto-refresh ON' : '⏸️ Auto-refresh OFF'}
+                        {autoRefresh ? 'Auto-refresh ON' : 'Auto-refresh OFF'}
                     </button>
                 </div>
             </header>
@@ -134,9 +152,11 @@ useEffect(() => {
                             <div className="flex items-center gap-3">
                                 {loading && <span className="text-sm text-blue-600">Refreshing…</span>}
                                 <div className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                                    hasData ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                    isStale ? 'bg-orange-100 text-orange-800'
+                                        : hasData ? 'bg-green-100 text-green-800'
+                                        : 'bg-red-100 text-red-800'
                                 }`}>
-                                    {hasData ? '🟢 Connected' : '🔴 Offline'}
+                                    {isStale ? 'Connection lost' : hasData ? 'Connected' : 'Offline'}
                                 </div>
                             </div>
                         </div>
@@ -155,6 +175,21 @@ useEffect(() => {
                             ))}
                         </div>
                     </section>
+
+                    {/* Stale data warning */}
+                    {isStale && hasData && (
+                        <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6 flex items-center gap-3">
+                            <span className="text-orange-600 text-lg">&#9888;</span>
+                            <div>
+                                <p className="text-sm font-semibold text-orange-800">
+                                    Printer disconnected — showing last known data
+                                </p>
+                                <p className="text-xs text-orange-600">
+                                    Since {staleData[selectedId].toLocaleTimeString()}
+                                </p>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Comprehensive Data Display */}
                     {!hasData ? (
