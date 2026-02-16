@@ -1,6 +1,8 @@
 package com.fablab.backend.controllers.printer;
 
 import com.fablab.backend.dto.CreatePrinterRequest;
+import com.fablab.backend.dto.PrinterCommandType;
+import com.fablab.backend.models.User;
 import com.fablab.backend.printer.connector.ConnectorRegistry;
 import com.fablab.backend.printer.connector.PrinterConnector;
 import com.fablab.backend.printer.connector.RawPrinterState;
@@ -56,6 +58,38 @@ public class PrinterTestController {
     @GetMapping
     public ResponseEntity<?> listPrinters() {
         return ResponseEntity.ok(printerRepository.findAll());
+    }
+
+    /**
+     * Send a command to a printer (for testing, no auth).
+     *
+     * Usage examples:
+     *   POST /api/test/printers/{id}/command?type=GCODE&payload=G28
+     *   POST /api/test/printers/{id}/command?type=EMERGENCY_STOP
+     *   POST /api/test/printers/{id}/command?type=PRINT_PAUSE
+     */
+    /**
+     * Send a command to a printer (for testing, no auth).
+     * Uses SUPER_ADMIN role so all commands are allowed during testing.
+     * Runs through PrinterService so validation (printer status checks) still applies.
+     *
+     * Usage examples:
+     *   POST /api/test/printers/{id}/command?type=GCODE&payload=G28
+     *   POST /api/test/printers/{id}/command?type=EMERGENCY_STOP
+     */
+    @PostMapping("/{id}/command")
+    public ResponseEntity<?> testCommand(
+            @PathVariable UUID id,
+            @RequestParam PrinterCommandType type,
+            @RequestParam(required = false) String payload) {
+        try {
+            printerService.sendCommand(id, type, payload, User.Role.SUPER_ADMIN);
+            return ResponseEntity.ok("Command sent: " + type + (payload != null ? " [" + payload + "]" : ""));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body("Blocked: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+        }
     }
 
     @PostMapping

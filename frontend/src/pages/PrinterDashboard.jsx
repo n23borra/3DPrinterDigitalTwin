@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
     createPrinter,
     fetchPrinters,
@@ -24,6 +24,9 @@ export default function PrintersDashboard() {
     const [selectedId, setSelectedId] = useState(null);
     const [loading, setLoading] = useState(false);
     const [autoRefresh, setAutoRefresh] = useState(true);
+    const [staleData, setStaleData] = useState({});
+    const failCountRef = useRef(0);
+    const MAX_RETRIES = 3;
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [isCreatingPrinter, setIsCreatingPrinter] = useState(false);
     const [createError, setCreateError] = useState('');
@@ -67,34 +70,70 @@ export default function PrintersDashboard() {
         loadPrinters();
     }, [loadPrinters]);
 
-    // Fetch state and history for selected printer
+    // Check if a snapshot has any meaningful data (not just null fields)
+    const hasRealData = (data) =>
+        data && (data.nozzleTemp != null || data.bedTemp != null || data.state != null);
+
+    // Core fetch logic shared by auto-refresh and manual actions
+    const fetchData = useCallback(async (printerId, { isAutoRefresh = false, onDone } = {}) => {
+        if (!printerId) return;
+        if (!isAutoRefresh) setLoading(true);
+        let gotData = false;
+        try {
+            const stateRes = await fetchPrinterState(printerId);
+            if (hasRealData(stateRes.data)) {
+                setSnapshots((prev) => ({ ...prev, [printerId]: stateRes.data }));
+                setStaleData((prev) => ({ ...prev, [printerId]: null }));
+                gotData = true;
+            } else {
+                setStaleData((prev) => prev[printerId] ? prev : ({ ...prev, [printerId]: new Date() }));
+            }
+        } catch (error) {
+            console.error('Failed to fetch printer state:', error);
+            setStaleData((prev) => prev[printerId] ? prev : ({ ...prev, [printerId]: new Date() }));
+        }
+        try {
+            const historyRes = await fetchPrinterHistory(printerId, { limit: 50 });
+            if (historyRes.data) {
+                setHistory(historyRes.data);
+            }
+        } catch (error) {
+            console.error('Failed to fetch printer history:', error);
+        }
+        if (!isAutoRefresh) setLoading(false);
+        if (onDone) onDone(gotData);
+    }, []);
+
+    // Auto-refresh with retry limit: stops after MAX_RETRIES consecutive failures
     useEffect(() => {
         if (!selectedId) return;
+        let cancelled = false;
+        failCountRef.current = 0;
 
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const [stateRes, historyRes] = await Promise.all([
-                    fetchPrinterState(selectedId),
-                    fetchPrinterHistory(selectedId, { limit: 50 }),
-                ]);
-                setSnapshots((prev) => ({ ...prev, [selectedId]: stateRes.data }));
-                setHistory(historyRes.data);
-            } catch (error) {
-                console.error('Failed to fetch printer data:', error);
-            } finally {
-                setLoading(false);
+        // Initial fetch
+        fetchData(selectedId, {
+            isAutoRefresh: false,
+            onDone: (ok) => { failCountRef.current = ok ? 0 : 1; },
+        });
+
+        if (!autoRefresh) return () => { cancelled = true; };
+
+        const interval = setInterval(() => {
+            if (cancelled) return;
+            if (failCountRef.current >= MAX_RETRIES) {
+                clearInterval(interval);
+                return;
             }
-        };
+            fetchData(selectedId, {
+                isAutoRefresh: true,
+                onDone: (ok) => {
+                    failCountRef.current = ok ? 0 : failCountRef.current + 1;
+                },
+            });
+        }, 2000);
 
-        fetchData();
-
-        // Auto-refresh every 2 seconds if enabled
-        if (autoRefresh) {
-            const interval = setInterval(fetchData, 2000);
-            return () => clearInterval(interval);
-        }
-    }, [selectedId, autoRefresh]);
+        return () => { cancelled = true; clearInterval(interval); };
+    }, [selectedId, autoRefresh, fetchData]);
 
     const selectedPrinter = useMemo(
         () => printers.find((p) => p.id === selectedId),
@@ -103,11 +142,25 @@ export default function PrintersDashboard() {
 
     const selectedSnapshot = snapshots[selectedId];
 
+    // Manual action: send command, re-fetch, and reset retry counter to resume auto-refresh
     const handleCommand = async (command) => {
         if (!selectedId) return;
         await sendPrinterCommand(selectedId, command);
-        const state = await fetchPrinterState(selectedId);
-        setSnapshots((prev) => ({ ...prev, [selectedId]: state.data }));
+        failCountRef.current = 0;
+        fetchData(selectedId, {
+            onDone: (ok) => {
+                failCountRef.current = ok ? 0 : 1;
+                // Re-trigger the auto-refresh effect so the interval restarts
+                if (ok) setAutoRefresh((v) => v);
+            },
+        });
+    };
+
+    // Manual retry for disconnected printers
+    const handleRetry = () => {
+        failCountRef.current = 0;
+        setAutoRefresh((v) => !v);
+        setTimeout(() => setAutoRefresh((v) => !v), 0);
     };
 
     const hasData = selectedSnapshot && (
@@ -115,6 +168,8 @@ export default function PrintersDashboard() {
         selectedSnapshot.bedTemp !== null ||
         selectedSnapshot.state !== null
     );
+
+    const isStale = selectedId && !!staleData[selectedId];
 
     const handleCreateInputChange = (event) => {
         const { name, value } = event.target;
@@ -182,6 +237,31 @@ export default function PrintersDashboard() {
                             {autoRefresh ? '🔄 Auto-refresh ON' : '⏸️ Auto-refresh OFF'}
                         </button>
                     </div>
+                    {/* Printer Selector */}
+                    <div className="w-56">
+                        <select
+                            id="printer-select"
+                            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value={selectedId ?? ''}
+                            onChange={(e) => setSelectedId(e.target.value)}
+                        >
+                            {printers.map((printer) => (
+                                <option key={printer.id} value={printer.id}>
+                                    {printer.name} — {printer.ipAddress}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <button
+                        onClick={() => setAutoRefresh(!autoRefresh)}
+                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                            autoRefresh
+                                ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        }`}
+                    >
+                        {autoRefresh ? 'Auto-refresh ON' : 'Auto-refresh OFF'}
+                    </button>
                 </div>
             </header>
 
@@ -304,9 +384,11 @@ export default function PrintersDashboard() {
                             <div className="flex items-center gap-3">
                                 {loading && <span className="text-sm text-blue-600">Refreshing…</span>}
                                 <div className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                                    hasData ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                    isStale ? 'bg-orange-100 text-orange-800'
+                                        : hasData ? 'bg-green-100 text-green-800'
+                                        : 'bg-red-100 text-red-800'
                                 }`}>
-                                    {hasData ? '🟢 Connected' : '🔴 Offline'}
+                                    {isStale ? 'Connection lost' : hasData ? 'Connected' : 'Offline'}
                                 </div>
                             </div>
                         </div>
@@ -325,6 +407,29 @@ export default function PrintersDashboard() {
                             ))}
                         </div>
                     </section>
+
+                    {/* Stale data warning */}
+                    {isStale && hasData && (
+                        <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <span className="text-orange-600 text-lg">&#9888;</span>
+                                <div>
+                                    <p className="text-sm font-semibold text-orange-800">
+                                        Printer disconnected — showing last known data
+                                    </p>
+                                    <p className="text-xs text-orange-600">
+                                        Since {staleData[selectedId].toLocaleTimeString()}
+                                    </p>
+                                </div>
+                            </div>
+                            <button
+                                onClick={handleRetry}
+                                className="px-3 py-1.5 rounded bg-orange-600 text-white text-sm hover:bg-orange-700"
+                            >
+                                Retry
+                            </button>
+                        </div>
+                    )}
 
                     {/* Comprehensive Data Display */}
                     {!hasData ? (
@@ -350,6 +455,9 @@ export default function PrintersDashboard() {
                                         </div>
                                         <div className="text-2xl font-bold text-orange-600">
                                             {selectedSnapshot.nozzleTemp?.toFixed(1) || '--'}°C
+                                            <span className="text-sm font-normal text-gray-500 ml-2">
+                                                → {selectedSnapshot.targetNozzle ? `${selectedSnapshot.targetNozzle.toFixed(0)}°C` : '--'}
+                                            </span>
                                         </div>
                                         <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                                             <div
@@ -367,6 +475,9 @@ export default function PrintersDashboard() {
                                         </div>
                                         <div className="text-2xl font-bold text-red-600">
                                             {selectedSnapshot.bedTemp?.toFixed(1) || '--'}°C
+                                            <span className="text-sm font-normal text-gray-500 ml-2">
+                                                → {selectedSnapshot.targetBed ? `${selectedSnapshot.targetBed.toFixed(0)}°C` : '--'}
+                                            </span>
                                         </div>
                                         <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                                             <div
@@ -538,11 +649,11 @@ export default function PrintersDashboard() {
 
                     {/* Raw Data Debug */}
                     {selectedSnapshot && (
-                        <details className="mt-6 bg-white rounded-lg shadow p-5">
+                        <details className="mt-6 bg-white rounded-lg shadow p-5 min-w-0">
                             <summary className="cursor-pointer text-sm font-semibold text-gray-700">
-                                🔍 Show Raw Data (Debug)
+                                Show Raw Data (Debug)
                             </summary>
-                            <pre className="mt-4 p-4 bg-gray-50 rounded text-xs overflow-auto">
+                            <pre className="mt-4 p-4 bg-gray-50 rounded text-xs overflow-auto max-w-full whitespace-pre-wrap break-words">
                                 {JSON.stringify(selectedSnapshot, null, 2)}
                             </pre>
                         </details>

@@ -1,5 +1,6 @@
 package com.fablab.backend.printer.connector;
 
+import com.fablab.backend.dto.PrinterCommandType;
 import com.fablab.backend.models.printer.Printer;
 import com.fablab.backend.models.printer.PrinterType;
 import org.slf4j.Logger;
@@ -66,6 +67,12 @@ public class MoonrakerPrinterConnector implements PrinterConnector {
             
             // Fetch system info (low priority - 10s intervals)
             fetchSystemInfo(baseUrl, apiKey, builder);
+
+            // Fetch bed mesh (static data - only changes on recalibration)
+            fetchBedMesh(baseUrl, apiKey, builder);
+
+            // Fetch Z-tilt status
+            fetchZTilt(baseUrl, apiKey, builder);
             
             log.debug("Successfully fetched state from printer {}", printer.getName());
             
@@ -79,17 +86,36 @@ public class MoonrakerPrinterConnector implements PrinterConnector {
     }
 
     @Override
-    public void sendCommand(Printer printer, String gcodeOrAction) {
+    public void sendCommand(Printer printer, PrinterCommandType type, String payload) {
+        String baseUrl = buildBaseUrl(printer);
+        String apiKey = printer.getApiKey();
+
         try {
-            String baseUrl = buildBaseUrl(printer);
-            String endpoint = "/printer/gcode/script?script=" + 
-                    java.net.URLEncoder.encode(gcodeOrAction, "UTF-8");
-            client.get(baseUrl, printer.getApiKey(), endpoint);
-            log.info("Sent command '{}' to printer {}", gcodeOrAction, printer.getName());
+            switch (type) {
+                case GCODE -> {
+                    if (payload == null || payload.isBlank()) {
+                        throw new IllegalArgumentException("GCODE command requires a payload");
+                    }
+                    String endpoint = "/printer/gcode/script?script=" +
+                            java.net.URLEncoder.encode(payload, "UTF-8");
+                    client.post(baseUrl, apiKey, endpoint);
+                }
+                case PRINT_START    -> client.post(baseUrl, apiKey, "/printer/print/start");
+                case PRINT_PAUSE    -> client.post(baseUrl, apiKey, "/printer/print/pause");
+                case PRINT_RESUME   -> client.post(baseUrl, apiKey, "/printer/print/resume");
+                case PRINT_CANCEL   -> client.post(baseUrl, apiKey, "/printer/print/cancel");
+                case EMERGENCY_STOP -> client.post(baseUrl, apiKey, "/printer/emergency_stop");
+                case FIRMWARE_RESTART -> client.post(baseUrl, apiKey, "/printer/firmware_restart");
+                case MACHINE_REBOOT -> client.post(baseUrl, apiKey, "/machine/reboot");
+            }
+            log.info("Sent {} command to printer {}{}", type,
+                    printer.getName(), payload != null ? " [" + payload + "]" : "");
+        } catch (IllegalArgumentException e) {
+            throw e;
         } catch (Exception e) {
-            log.error("Failed to send command to printer {}: {}", 
-                    printer.getName(), e.getMessage());
-            throw new RuntimeException("Unable to send command", e);
+            log.error("Failed to send {} command to printer {}: {}",
+                    type, printer.getName(), e.getMessage());
+            throw new RuntimeException("Unable to send command: " + type, e);
         }
     }
 
@@ -308,6 +334,49 @@ public class MoonrakerPrinterConnector implements PrinterConnector {
             
         } catch (Exception e) {
             log.trace("Could not fetch system info: {}", e.getMessage());
+        }
+    }
+
+    /**
+     * Fetch bed mesh data (probed Z-offset matrix and mesh bounds).
+     * This data is static — it only changes when BED_MESH_CALIBRATE is run.
+     */
+    private void fetchBedMesh(String baseUrl, String apiKey,
+                              RawPrinterState.RawPrinterStateBuilder builder) {
+        try {
+            String response = client.get(baseUrl, apiKey, "/printer/objects/query?bed_mesh");
+
+            builder.bedMeshProfile(extract(response, "\"profile_name\"\\s*:\\s*\"([^\"]+)\""));
+
+            // Extract mesh_min and mesh_max arrays as JSON strings
+            builder.bedMeshMin(extract(response, "\"mesh_min\"\\s*:\\s*(\\[[0-9.,\\s]+\\])"));
+            builder.bedMeshMax(extract(response, "\"mesh_max\"\\s*:\\s*(\\[[0-9.,\\s]+\\])"));
+
+            // Extract probed_matrix — the raw 9x9 Z-offset grid
+            // Match from "probed_matrix": to the closing ]]
+            Matcher m = Pattern.compile("\"probed_matrix\"\\s*:\\s*(\\[\\[.+?\\]\\])").matcher(response);
+            if (m.find()) {
+                builder.bedMeshMatrix(m.group(1));
+            }
+
+        } catch (Exception e) {
+            log.trace("Could not fetch bed mesh: {}", e.getMessage());
+        }
+    }
+
+    /**
+     * Fetch Z-tilt adjustment status.
+     */
+    private void fetchZTilt(String baseUrl, String apiKey,
+                            RawPrinterState.RawPrinterStateBuilder builder) {
+        try {
+            String response = client.get(baseUrl, apiKey, "/printer/objects/query?z_tilt");
+            String applied = extract(response, "\"applied\"\\s*:\\s*(true|false)");
+            if (applied != null) {
+                builder.zTiltApplied("true".equals(applied));
+            }
+        } catch (Exception e) {
+            log.trace("Could not fetch z_tilt: {}", e.getMessage());
         }
     }
 
