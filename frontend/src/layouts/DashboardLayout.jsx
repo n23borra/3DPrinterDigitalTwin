@@ -54,6 +54,13 @@ const AlertIcon = () => (
     </svg>
 );
 
+const MaintenanceIcon = () => (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M14.7 6.3a1 1 0 010 1.4l-2.2 2.2a5 5 0 006.6 6.6l2.2-2.2a1 1 0 011.4 0l1.1 1.1a1 1 0 010 1.4l-1.8 1.8a7 7 0 01-9.9 0L9 15.9a7 7 0 010-9.9l1.8-1.8a1 1 0 011.4 0l2.5 2.1z" />
+        <circle cx="7" cy="17" r="2" />
+    </svg>
+);
+
 const SettingsIcon = () => (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
         <circle cx="12" cy="12" r="3" />
@@ -64,6 +71,7 @@ const SettingsIcon = () => (
 const baseMenuItems  = [
     {id: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: <DashboardIcon/>},
     {id: 'printers', label: 'Printers', path: '/printers', icon: <PrinterIcon/>},
+    {id: 'maintenance', label: 'Maintenance', path: '/maintenance', icon: <MaintenanceIcon/>},
     {id: 'alerts', label: 'Alerts', path: '/alerts', icon: <AlertIcon/>},
     {id: 'audit', label: 'Audit Logs', path: '/audit', icon: <AuditIcon/>},
     {id: 'settings', label: 'Settings', path: '/settings', icon: <SettingsIcon/>},
