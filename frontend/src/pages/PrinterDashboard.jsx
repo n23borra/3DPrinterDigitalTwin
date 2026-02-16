@@ -110,6 +110,21 @@ useEffect(() => {
                         <h2 className="text-2xl font-semibold text-gray-800">Printers</h2>
                         <p className="text-gray-500">Monitor temperatures, progress and push basic commands.</p>
                     </div>
+                    {/* Printer Selector */}
+                    <div className="w-56">
+                        <select
+                            id="printer-select"
+                            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value={selectedId ?? ''}
+                            onChange={(e) => setSelectedId(Number(e.target.value))}
+                        >
+                            {printers.map((printer) => (
+                                <option key={printer.id} value={printer.id}>
+                                    {printer.name} — {printer.ipAddress}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                     <button
                         onClick={() => setAutoRefresh(!autoRefresh)}
                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
@@ -122,25 +137,6 @@ useEffect(() => {
                     </button>
                 </div>
             </header>
-
-            {/* Printer Selector */}
-            <div className="w-full md:w-56 mb-8">
-                <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="printer-select">
-                    Printer
-                </label>
-                <select
-                    id="printer-select"
-                    className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={selectedId ?? ''}
-                    onChange={(e) => setSelectedId(Number(e.target.value))}
-                >
-                    {printers.map((printer) => (
-                        <option key={printer.id} value={printer.id}>
-                            {printer.name} — {printer.ipAddress}
-                        </option>
-                    ))}
-                </select>
-            </div>
 
             {/* Selected Printer Details */}
             {selectedPrinter && (
