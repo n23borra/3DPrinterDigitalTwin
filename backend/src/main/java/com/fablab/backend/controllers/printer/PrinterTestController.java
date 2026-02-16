@@ -1,12 +1,15 @@
 package com.fablab.backend.controllers.printer;
 
+import com.fablab.backend.dto.CreatePrinterRequest;
 import com.fablab.backend.printer.connector.ConnectorRegistry;
 import com.fablab.backend.printer.connector.PrinterConnector;
 import com.fablab.backend.printer.connector.RawPrinterState;
 import com.fablab.backend.models.printer.Printer;
 import com.fablab.backend.repositories.printer.PrinterRepository;
+import com.fablab.backend.services.printer.PrinterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -24,6 +27,9 @@ public class PrinterTestController {
 
     @Autowired
     private ConnectorRegistry connectorRegistry;
+
+    @Autowired
+    private PrinterService printerService;
 
     /**
      * Test endpoint to fetch raw printer state without authentication
@@ -50,5 +56,17 @@ public class PrinterTestController {
     @GetMapping
     public ResponseEntity<?> listPrinters() {
         return ResponseEntity.ok(printerRepository.findAll());
+    }
+
+    @PostMapping
+    public ResponseEntity<?> createPrinter(@Validated @RequestBody CreatePrinterRequest request) {
+        Printer printer = printerService.createPrinter(
+                request.getName(),
+                request.getType(),
+                request.getIpAddress(),
+                request.getPort(),
+                request.getApiKey()
+        );
+        return ResponseEntity.ok(printer);
     }
 }

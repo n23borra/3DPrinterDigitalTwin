@@ -1,7 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { fetchPrinters, fetchPrinterHistory, fetchPrinterState, sendPrinterCommand } from '../api/printerApi';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+    createPrinter,
+    fetchPrinters,
+    fetchPrinterHistory,
+    fetchPrinterState,
+    sendPrinterCommand,
+} from '../api/printerApi';
 import PrinterCard from '../components/printers/PrinterCard';
 import PrinterHistoryTable from '../components/printers/PrinterHistoryTable';
+import Modal from '../components/Modal';
 
 const QUICK_COMMANDS = [
     { label: 'Home axes', command: 'G28' },
@@ -17,24 +24,48 @@ export default function PrintersDashboard() {
     const [selectedId, setSelectedId] = useState(null);
     const [loading, setLoading] = useState(false);
     const [autoRefresh, setAutoRefresh] = useState(true);
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [isCreatingPrinter, setIsCreatingPrinter] = useState(false);
+    const [createError, setCreateError] = useState('');
+    const [newPrinter, setNewPrinter] = useState({
+        name: '',
+        type: 'MOONRAKER',
+        ipAddress: '',
+        port: '7125',
+        apiKey: '',
+    });
 
-    // Fetch printers list on mount
-useEffect(() => {
-    const loadPrinters = async () => {
+    const loadPrinters = useCallback(async (preferredPrinterId = null) => {
         try {
             const res = await fetchPrinters();
-            console.log('Fetched printers:', res.data); // Debug log
-            setPrinters(res.data || []);
-            if (res.data && res.data.length > 0) {
-                setSelectedId(res.data[0].id);
+            const printerList = res.data || [];
+            setPrinters(printerList);
+
+            if (printerList.length === 0) {
+                setSelectedId(null);
+                return;
             }
+
+            if (preferredPrinterId && printerList.some((printer) => printer.id === preferredPrinterId)) {
+                setSelectedId(preferredPrinterId);
+                return;
+            }
+
+            if (selectedId && printerList.some((printer) => printer.id === selectedId)) {
+                return;
+            }
+
+            setSelectedId(printerList[0].id);
         } catch (error) {
             console.error('Error loading printers:', error);
             setPrinters([]);
         }
-    };
-    loadPrinters();
-}, []);
+    }, [selectedId]);
+
+    // Fetch printers list on mount
+    useEffect(() => {
+        loadPrinters();
+    }, [loadPrinters]);
 
     // Fetch state and history for selected printer
     useEffect(() => {
@@ -85,6 +116,46 @@ useEffect(() => {
         selectedSnapshot.state !== null
     );
 
+    const handleCreateInputChange = (event) => {
+        const { name, value } = event.target;
+        setNewPrinter((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const resetCreateForm = () => {
+        setNewPrinter({
+            name: '',
+            type: 'MOONRAKER',
+            ipAddress: '',
+            port: '7125',
+            apiKey: '',
+        });
+        setCreateError('');
+    };
+
+    const handleCreatePrinter = async (event) => {
+        event.preventDefault();
+        setIsCreatingPrinter(true);
+        setCreateError('');
+
+        try {
+            const payload = {
+                ...newPrinter,
+                port: newPrinter.port ? Number(newPrinter.port) : null,
+            };
+
+            const response = await createPrinter(payload);
+            const createdPrinterId = response?.data?.id;
+
+            await loadPrinters(createdPrinterId);
+            setIsCreateModalOpen(false);
+            resetCreateForm();
+        } catch (error) {
+            setCreateError(error.message || 'Unable to create printer.');
+        } finally {
+            setIsCreatingPrinter(false);
+        }
+    };
+
     return (
         <div>
             <header className="mb-6">
@@ -93,18 +164,117 @@ useEffect(() => {
                         <h2 className="text-2xl font-semibold text-gray-800">Printers</h2>
                         <p className="text-gray-500">Monitor temperatures, progress and push basic commands.</p>
                     </div>
-                    <button
-                        onClick={() => setAutoRefresh(!autoRefresh)}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                            autoRefresh
-                                ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                        }`}
-                    >
-                        {autoRefresh ? '🔄 Auto-refresh ON' : '⏸️ Auto-refresh OFF'}
-                    </button>
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => setIsCreateModalOpen(true)}
+                            className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-700"
+                        >
+                            + Add printer
+                        </button>
+                        <button
+                            onClick={() => setAutoRefresh(!autoRefresh)}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                autoRefresh
+                                    ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                        >
+                            {autoRefresh ? '🔄 Auto-refresh ON' : '⏸️ Auto-refresh OFF'}
+                        </button>
+                    </div>
                 </div>
             </header>
+
+            <Modal open={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} className="w-full max-w-lg">
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">Create a new printer</h3>
+                <form className="space-y-4" onSubmit={handleCreatePrinter}>
+                    <div>
+                        <label className="block text-sm text-gray-700 mb-1" htmlFor="name">Name</label>
+                        <input
+                            id="name"
+                            name="name"
+                            value={newPrinter.name}
+                            onChange={handleCreateInputChange}
+                            required
+                            className="w-full border border-gray-300 rounded px-3 py-2"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm text-gray-700 mb-1" htmlFor="type">Type</label>
+                        <select
+                            id="type"
+                            name="type"
+                            value={newPrinter.type}
+                            onChange={handleCreateInputChange}
+                            className="w-full border border-gray-300 rounded px-3 py-2"
+                        >
+                            <option value="MOONRAKER">MOONRAKER</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm text-gray-700 mb-1" htmlFor="ipAddress">IP address</label>
+                        <input
+                            id="ipAddress"
+                            name="ipAddress"
+                            value={newPrinter.ipAddress}
+                            onChange={handleCreateInputChange}
+                            required
+                            className="w-full border border-gray-300 rounded px-3 py-2"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm text-gray-700 mb-1" htmlFor="port">Port</label>
+                        <input
+                            id="port"
+                            name="port"
+                            type="number"
+                            min="1"
+                            max="65535"
+                            value={newPrinter.port}
+                            onChange={handleCreateInputChange}
+                            className="w-full border border-gray-300 rounded px-3 py-2"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm text-gray-700 mb-1" htmlFor="apiKey">API key (optional)</label>
+                        <input
+                            id="apiKey"
+                            name="apiKey"
+                            value={newPrinter.apiKey}
+                            onChange={handleCreateInputChange}
+                            className="w-full border border-gray-300 rounded px-3 py-2"
+                        />
+                    </div>
+
+                    {createError && (
+                        <p className="text-sm text-red-600">{createError}</p>
+                    )}
+
+                    <div className="flex justify-end gap-2 pt-2">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setIsCreateModalOpen(false);
+                                resetCreateForm();
+                            }}
+                            className="px-4 py-2 rounded bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            disabled={isCreatingPrinter}
+                            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 disabled:bg-blue-300"
+                        >
+                            {isCreatingPrinter ? 'Creating...' : 'Create printer'}
+                        </button>
+                    </div>
+                </form>
+            </Modal>
 
             {/* Printer Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">

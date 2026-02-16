@@ -1,6 +1,7 @@
 package com.fablab.backend.controllers.printer;
 
 import com.fablab.backend.dto.PrinterCommandRequest;
+import com.fablab.backend.dto.CreatePrinterRequest;
 import com.fablab.backend.models.printer.Printer;
 import com.fablab.backend.models.printer.PrinterSnapshot;
 import com.fablab.backend.services.printer.PrinterService;
@@ -24,6 +25,18 @@ public class PrinterController {
     @GetMapping
     public ResponseEntity<List<Printer>> listPrinters() {
         return ResponseEntity.ok(printerService.listPrinters());
+    }
+
+    @PostMapping
+    public ResponseEntity<Printer> createPrinter(@Validated @RequestBody CreatePrinterRequest request) {
+        Printer printer = printerService.createPrinter(
+                request.getName(),
+                request.getType(),
+                request.getIpAddress(),
+                request.getPort(),
+                request.getApiKey()
+        );
+        return ResponseEntity.ok(printer);
     }
 
     @GetMapping("/{id}/state")

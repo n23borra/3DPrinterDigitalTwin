@@ -3,6 +3,7 @@ package com.fablab.backend.services.printer;
 import com.fablab.backend.models.printer.Printer;
 import com.fablab.backend.models.printer.PrinterSnapshot;
 import com.fablab.backend.models.printer.PrinterStatus;
+import com.fablab.backend.models.printer.PrinterType;
 import com.fablab.backend.printer.connector.ConnectorRegistry;
 import com.fablab.backend.printer.connector.PrinterConnector;
 import com.fablab.backend.printer.connector.RawPrinterState;
@@ -37,6 +38,19 @@ public class PrinterService {
 
     public Printer getPrinter(UUID id) {
         return printerRepository.findById(id).orElseThrow();
+    }
+
+    @Transactional
+    public Printer createPrinter(String name, PrinterType type, String ipAddress, Integer port, String apiKey) {
+        Printer printer = Printer.builder()
+                .name(name)
+                .type(type)
+                .ipAddress(ipAddress)
+                .port(port)
+                .apiKey(apiKey)
+                .status(PrinterStatus.OFFLINE)
+                .build();
+        return printerRepository.save(printer);
     }
 
     @Transactional

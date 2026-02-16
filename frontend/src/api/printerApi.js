@@ -48,3 +48,25 @@ export const sendPrinterCommand = (id, command) => {
     console.warn('Command endpoint not implemented yet');
     return Promise.resolve({ data: { success: true } });
 };
+
+export const createPrinter = async (payload) => {
+    if (USE_TEST_ENDPOINTS) {
+        const response = await fetch('http://localhost:8080/api/test/printers', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || 'Failed to create printer');
+        }
+
+        const data = await response.json();
+        return { data };
+    }
+
+    return api.post('/api/printers', payload);
+};
