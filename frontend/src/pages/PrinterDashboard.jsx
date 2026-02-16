@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { fetchPrinters, fetchPrinterHistory, fetchPrinterState, sendPrinterCommand } from '../api/printerApi';
 import PrinterHistoryTable from '../components/printers/PrinterHistoryTable';
 
@@ -17,6 +17,8 @@ export default function PrintersDashboard() {
     const [loading, setLoading] = useState(false);
     const [autoRefresh, setAutoRefresh] = useState(true);
     const [staleData, setStaleData] = useState({});
+    const failCountRef = useRef(0);
+    const MAX_RETRIES = 3;
 
     // Fetch printers list on mount
 useEffect(() => {
@@ -36,49 +38,70 @@ useEffect(() => {
     loadPrinters();
 }, []);
 
-    // Fetch state and history for selected printer
+    // Check if a snapshot has any meaningful data (not just null fields)
+    const hasRealData = (data) =>
+        data && (data.nozzleTemp != null || data.bedTemp != null || data.state != null);
+
+    // Core fetch logic shared by auto-refresh and manual actions
+    const fetchData = useCallback(async (printerId, { isAutoRefresh = false, onDone } = {}) => {
+        if (!printerId) return;
+        if (!isAutoRefresh) setLoading(true);
+        let gotData = false;
+        try {
+            const stateRes = await fetchPrinterState(printerId);
+            if (hasRealData(stateRes.data)) {
+                setSnapshots((prev) => ({ ...prev, [printerId]: stateRes.data }));
+                setStaleData((prev) => ({ ...prev, [printerId]: null }));
+                gotData = true;
+            } else {
+                setStaleData((prev) => prev[printerId] ? prev : ({ ...prev, [printerId]: new Date() }));
+            }
+        } catch (error) {
+            console.error('Failed to fetch printer state:', error);
+            setStaleData((prev) => prev[printerId] ? prev : ({ ...prev, [printerId]: new Date() }));
+        }
+        try {
+            const historyRes = await fetchPrinterHistory(printerId, { limit: 50 });
+            if (historyRes.data) {
+                setHistory(historyRes.data);
+            }
+        } catch (error) {
+            console.error('Failed to fetch printer history:', error);
+        }
+        if (!isAutoRefresh) setLoading(false);
+        if (onDone) onDone(gotData);
+    }, []);
+
+    // Auto-refresh with retry limit: stops after MAX_RETRIES consecutive failures
     useEffect(() => {
         if (!selectedId) return;
         let cancelled = false;
+        failCountRef.current = 0;
 
-        const fetchData = async (isAutoRefresh = false) => {
-            if (!isAutoRefresh) setLoading(true);
-            try {
-                const stateRes = await fetchPrinterState(selectedId);
-                if (!cancelled) {
-                    if (stateRes.data) {
-                        setSnapshots((prev) => ({ ...prev, [selectedId]: stateRes.data }));
-                        setStaleData((prev) => ({ ...prev, [selectedId]: null }));
-                    } else if (!staleData[selectedId]) {
-                        setStaleData((prev) => ({ ...prev, [selectedId]: new Date() }));
-                    }
-                }
-            } catch (error) {
-                console.error('Failed to fetch printer state:', error);
-                if (!cancelled && !staleData[selectedId]) {
-                    setStaleData((prev) => ({ ...prev, [selectedId]: new Date() }));
-                }
+        // Initial fetch
+        fetchData(selectedId, {
+            isAutoRefresh: false,
+            onDone: (ok) => { failCountRef.current = ok ? 0 : 1; },
+        });
+
+        if (!autoRefresh) return () => { cancelled = true; };
+
+        const interval = setInterval(() => {
+            if (cancelled) return;
+            if (failCountRef.current >= MAX_RETRIES) {
+                clearInterval(interval);
+                return;
             }
-            try {
-                const historyRes = await fetchPrinterHistory(selectedId, { limit: 50 });
-                if (!cancelled && historyRes.data) {
-                    setHistory(historyRes.data);
-                }
-            } catch (error) {
-                console.error('Failed to fetch printer history:', error);
-            }
-            if (!isAutoRefresh && !cancelled) setLoading(false);
-        };
+            fetchData(selectedId, {
+                isAutoRefresh: true,
+                onDone: (ok) => {
+                    failCountRef.current = ok ? 0 : failCountRef.current + 1;
+                },
+            });
+        }, 2000);
 
-        fetchData(false);
-
-        // Auto-refresh every 2 seconds if enabled
-        if (autoRefresh) {
-            const interval = setInterval(() => fetchData(true), 2000);
-            return () => { cancelled = true; clearInterval(interval); };
-        }
-        return () => { cancelled = true; };
-    }, [selectedId, autoRefresh]);
+        return () => { cancelled = true; clearInterval(interval); };
+    }, [selectedId, autoRefresh, fetchData]);
 
     const selectedPrinter = useMemo(
         () => printers.find((p) => p.id === selectedId),
@@ -87,11 +110,25 @@ useEffect(() => {
 
     const selectedSnapshot = snapshots[selectedId];
 
+    // Manual action: send command, re-fetch, and reset retry counter to resume auto-refresh
     const handleCommand = async (command) => {
         if (!selectedId) return;
         await sendPrinterCommand(selectedId, command);
-        const state = await fetchPrinterState(selectedId);
-        setSnapshots((prev) => ({ ...prev, [selectedId]: state.data }));
+        failCountRef.current = 0;
+        fetchData(selectedId, {
+            onDone: (ok) => {
+                failCountRef.current = ok ? 0 : 1;
+                // Re-trigger the auto-refresh effect so the interval restarts
+                if (ok) setAutoRefresh((v) => v);
+            },
+        });
+    };
+
+    // Manual retry for disconnected printers
+    const handleRetry = () => {
+        failCountRef.current = 0;
+        setAutoRefresh((v) => !v);
+        setTimeout(() => setAutoRefresh((v) => !v), 0);
     };
 
     const hasData = selectedSnapshot && (
@@ -179,16 +216,24 @@ useEffect(() => {
 
                     {/* Stale data warning */}
                     {isStale && hasData && (
-                        <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6 flex items-center gap-3">
-                            <span className="text-orange-600 text-lg">&#9888;</span>
-                            <div>
-                                <p className="text-sm font-semibold text-orange-800">
-                                    Printer disconnected — showing last known data
-                                </p>
-                                <p className="text-xs text-orange-600">
-                                    Since {staleData[selectedId].toLocaleTimeString()}
-                                </p>
+                        <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <span className="text-orange-600 text-lg">&#9888;</span>
+                                <div>
+                                    <p className="text-sm font-semibold text-orange-800">
+                                        Printer disconnected — showing last known data
+                                    </p>
+                                    <p className="text-xs text-orange-600">
+                                        Since {staleData[selectedId].toLocaleTimeString()}
+                                    </p>
+                                </div>
                             </div>
+                            <button
+                                onClick={handleRetry}
+                                className="px-3 py-1.5 rounded bg-orange-600 text-white text-sm hover:bg-orange-700"
+                            >
+                                Retry
+                            </button>
                         </div>
                     )}
 
