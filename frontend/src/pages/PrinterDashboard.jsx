@@ -58,7 +58,7 @@ export default function PrintersDashboard() {
                 return;
             }
 
-            setSelectedId(printerList[0].id);
+            setSelectedId(null);
         } catch (error) {
             console.error('Error loading printers:', error);
             setPrinters([]);
@@ -219,39 +219,40 @@ export default function PrintersDashboard() {
                         <h2 className="text-2xl font-semibold text-gray-800">Printers</h2>
                         <p className="text-gray-500">Monitor temperatures, progress and push basic commands.</p>
                     </div>
-                    {/* Printer Selector */}
-                    <div className="w-56">
-                        <select
-                            id="printer-select"
-                            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            value={selectedId ?? ''}
-                            onChange={(e) => setSelectedId(e.target.value)}
-                        >
-                            {printers.map((printer) => (
-                                <option key={printer.id} value={printer.id}>
-                                    {printer.name} — {printer.ipAddress}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="flex items-center gap-2">
+                    <div className="ml-auto flex items-center gap-2">
+                        {/* Printer Selector */}
+                        <div className="w-56">
+                            <select
+                                id="printer-select"
+                                className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                value={selectedId ?? ''}
+                                onChange={(e) => setSelectedId(e.target.value)}
+                            >
+                                <option value="" disabled={selectedId !== null && selectedId !== ''}>Select a Printer</option>
+                                {printers.map((printer) => (
+                                    <option key={printer.id} value={printer.id}>
+                                        {printer.name} — {printer.ipAddress}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
                         <button
                             onClick={() => setIsCreateModalOpen(true)}
                             className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-700"
                         >
                             + Add printer
                         </button>
+                        <button
+                            onClick={() => setAutoRefresh(!autoRefresh)}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                autoRefresh
+                                    ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                        >
+                            {autoRefresh ? 'Auto-refresh ON' : 'Auto-refresh OFF'}
+                        </button>
                     </div>
-                    <button
-                        onClick={() => setAutoRefresh(!autoRefresh)}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                            autoRefresh
-                                ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                        }`}
-                    >
-                        {autoRefresh ? 'Auto-refresh ON' : 'Auto-refresh OFF'}
-                    </button>
                 </div>
             </header>
 
