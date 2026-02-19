@@ -219,24 +219,6 @@ export default function PrintersDashboard() {
                         <h2 className="text-2xl font-semibold text-gray-800">Printers</h2>
                         <p className="text-gray-500">Monitor temperatures, progress and push basic commands.</p>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <button
-                            onClick={() => setIsCreateModalOpen(true)}
-                            className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-700"
-                        >
-                            + Add printer
-                        </button>
-                        <button
-                            onClick={() => setAutoRefresh(!autoRefresh)}
-                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                                autoRefresh
-                                    ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                            }`}
-                        >
-                            {autoRefresh ? '🔄 Auto-refresh ON' : '⏸️ Auto-refresh OFF'}
-                        </button>
-                    </div>
                     {/* Printer Selector */}
                     <div className="w-56">
                         <select
@@ -251,6 +233,14 @@ export default function PrintersDashboard() {
                                 </option>
                             ))}
                         </select>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => setIsCreateModalOpen(true)}
+                            className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-700"
+                        >
+                            + Add printer
+                        </button>
                     </div>
                     <button
                         onClick={() => setAutoRefresh(!autoRefresh)}
@@ -355,19 +345,6 @@ export default function PrintersDashboard() {
                     </div>
                 </form>
             </Modal>
-
-            {/* Printer Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                {printers.map((printer) => (
-                    <PrinterCard
-                        key={printer.id}
-                        printer={printer}
-                        snapshot={snapshots[printer.id]}
-                        onSelect={setSelectedId}
-                        isActive={printer.id === selectedId}
-                    />
-                ))}
-            </div>
 
             {/* Selected Printer Details */}
             {selectedPrinter && (
