@@ -6,9 +6,9 @@ import {
     fetchPrinterState,
     sendPrinterCommand,
 } from '../api/printerApi';
-import PrinterCard from '../components/printers/PrinterCard';
 import PrinterHistoryTable from '../components/printers/PrinterHistoryTable';
 import Modal from '../components/Modal';
+import Button from '../components/Button';
 
 const QUICK_COMMANDS = [
     { label: 'Home axes', command: 'G28' },
@@ -57,8 +57,6 @@ export default function PrintersDashboard() {
             if (selectedId && printerList.some((printer) => printer.id === selectedId)) {
                 return;
             }
-
-            setSelectedId(printerList[0].id);
         } catch (error) {
             console.error('Error loading printers:', error);
             setPrinters([]);
@@ -220,12 +218,23 @@ export default function PrintersDashboard() {
                         <p className="text-gray-500">Monitor temperatures, progress and push basic commands.</p>
                     </div>
                     <div className="flex items-center gap-2">
-                        <button
-                            onClick={() => setIsCreateModalOpen(true)}
-                            className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-700"
+                        {/* Printer Selector */}
+                        <select
+                            id="printer-select"
+                            className="w-56 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value={selectedId ?? ''}
+                            onChange={(e) => setSelectedId(e.target.value)}
                         >
+                            <option value="" disabled>Choose your printer</option>
+                            {printers.map((printer) => (
+                                <option key={printer.id} value={printer.id}>
+                                    {printer.name} — {printer.ipAddress}
+                                </option>
+                            ))}
+                        </select>
+                        <Button onClick={() => setIsCreateModalOpen(true)} className="rounded-lg text-sm font-medium">
                             + Add printer
-                        </button>
+                        </Button>
                         <button
                             onClick={() => setAutoRefresh(!autoRefresh)}
                             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
@@ -234,34 +243,9 @@ export default function PrintersDashboard() {
                                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                             }`}
                         >
-                            {autoRefresh ? '🔄 Auto-refresh ON' : '⏸️ Auto-refresh OFF'}
+                            {autoRefresh ? 'Auto-refresh ON' : 'Auto-refresh OFF'}
                         </button>
                     </div>
-                    {/* Printer Selector */}
-                    <div className="w-56">
-                        <select
-                            id="printer-select"
-                            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            value={selectedId ?? ''}
-                            onChange={(e) => setSelectedId(e.target.value)}
-                        >
-                            {printers.map((printer) => (
-                                <option key={printer.id} value={printer.id}>
-                                    {printer.name} — {printer.ipAddress}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <button
-                        onClick={() => setAutoRefresh(!autoRefresh)}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                            autoRefresh
-                                ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                        }`}
-                    >
-                        {autoRefresh ? 'Auto-refresh ON' : 'Auto-refresh OFF'}
-                    </button>
                 </div>
             </header>
 
@@ -345,31 +329,14 @@ export default function PrintersDashboard() {
                         >
                             Cancel
                         </button>
-                        <button
-                            type="submit"
-                            disabled={isCreatingPrinter}
-                            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 disabled:bg-blue-300"
-                        >
+                        <Button type="submit" disabled={isCreatingPrinter}>
                             {isCreatingPrinter ? 'Creating...' : 'Create printer'}
-                        </button>
+                        </Button>
                     </div>
                 </form>
             </Modal>
 
-            {/* Printer Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                {printers.map((printer) => (
-                    <PrinterCard
-                        key={printer.id}
-                        printer={printer}
-                        snapshot={snapshots[printer.id]}
-                        onSelect={setSelectedId}
-                        isActive={printer.id === selectedId}
-                    />
-                ))}
-            </div>
-
-            {/* Selected Printer Details */}
+{/* Selected Printer Details */}
             {selectedPrinter && (
                 <>
                     {/* Header Section */}
@@ -396,14 +363,14 @@ export default function PrintersDashboard() {
                         {/* Quick Commands */}
                         <div className="flex flex-wrap gap-3 mt-4">
                             {QUICK_COMMANDS.map((action) => (
-                                <button
+                                <Button
                                     key={action.command}
                                     onClick={() => handleCommand(action.command)}
-                                    className="px-3 py-2 rounded bg-blue-600 text-white text-sm hover:bg-blue-700 disabled:bg-gray-400"
+                                    className="text-sm px-3 py-2"
                                     disabled={!hasData}
                                 >
                                     {action.label}
-                                </button>
+                                </Button>
                             ))}
                         </div>
                     </section>
