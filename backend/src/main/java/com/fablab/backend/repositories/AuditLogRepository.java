@@ -23,4 +23,12 @@ public interface AuditLogRepository extends JpaRepository<AuditLog, Long> {
      * @param userId identifier of the user whose actions are deleted
      */
     void deleteByUserId(Long userId);
+
+    /**
+     * Counts audit entries whose action contains the provided keyword.
+     *
+     * @param actionFragment fragment to match against action codes
+     * @return number of matching entries
+     */
+    long countByActionContainingIgnoreCase(String actionFragment);
 }

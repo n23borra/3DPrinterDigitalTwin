@@ -30,6 +30,17 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Converts business validation errors into a {@code 400 Bad Request} response.
+     *
+     * @param ex the exception raised when business constraints are violated
+     * @return a response with the validation message
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> handleIllegalArgument(IllegalArgumentException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    /**
      * Logs unexpected errors and returns a {@code 500 Internal Server Error}
      * response that surfaces the root cause message when available.
      *

@@ -1,7 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { fetchPrinters, fetchPrinterHistory, fetchPrinterState, sendPrinterCommand } from '../api/printerApi';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+    createPrinter,
+    fetchPrinters,
+    fetchPrinterHistory,
+    fetchPrinterState,
+    sendPrinterCommand,
+} from '../api/printerApi';
 import PrinterCard from '../components/printers/PrinterCard';
 import PrinterHistoryTable from '../components/printers/PrinterHistoryTable';
+import Modal from '../components/Modal';
 
 const QUICK_COMMANDS = [
     { label: 'Home axes', command: 'G28' },
@@ -17,53 +24,116 @@ export default function PrintersDashboard() {
     const [selectedId, setSelectedId] = useState(null);
     const [loading, setLoading] = useState(false);
     const [autoRefresh, setAutoRefresh] = useState(true);
+    const [staleData, setStaleData] = useState({});
+    const failCountRef = useRef(0);
+    const MAX_RETRIES = 3;
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [isCreatingPrinter, setIsCreatingPrinter] = useState(false);
+    const [createError, setCreateError] = useState('');
+    const [newPrinter, setNewPrinter] = useState({
+        name: '',
+        type: 'MOONRAKER',
+        ipAddress: '',
+        port: '7125',
+        apiKey: '',
+    });
 
-    // Fetch printers list on mount
-useEffect(() => {
-    const loadPrinters = async () => {
+    const loadPrinters = useCallback(async (preferredPrinterId = null) => {
         try {
             const res = await fetchPrinters();
-            console.log('Fetched printers:', res.data); // Debug log
-            setPrinters(res.data || []);
-            if (res.data && res.data.length > 0) {
-                setSelectedId(res.data[0].id);
+            const printerList = res.data || [];
+            setPrinters(printerList);
+
+            if (printerList.length === 0) {
+                setSelectedId(null);
+                return;
             }
+
+            if (preferredPrinterId && printerList.some((printer) => printer.id === preferredPrinterId)) {
+                setSelectedId(preferredPrinterId);
+                return;
+            }
+
+            if (selectedId && printerList.some((printer) => printer.id === selectedId)) {
+                return;
+            }
+
+            setSelectedId(null);
         } catch (error) {
             console.error('Error loading printers:', error);
             setPrinters([]);
         }
-    };
-    loadPrinters();
-}, []);
+    }, [selectedId]);
 
-    // Fetch state and history for selected printer
+    // Fetch printers list on mount
+    useEffect(() => {
+        loadPrinters();
+    }, [loadPrinters]);
+
+    // Check if a snapshot has any meaningful data (not just null fields)
+    const hasRealData = (data) =>
+        data && (data.nozzleTemp != null || data.bedTemp != null || data.state != null);
+
+    // Core fetch logic shared by auto-refresh and manual actions
+    const fetchData = useCallback(async (printerId, { isAutoRefresh = false, onDone } = {}) => {
+        if (!printerId) return;
+        if (!isAutoRefresh) setLoading(true);
+        let gotData = false;
+        try {
+            const stateRes = await fetchPrinterState(printerId);
+            if (hasRealData(stateRes.data)) {
+                setSnapshots((prev) => ({ ...prev, [printerId]: stateRes.data }));
+                setStaleData((prev) => ({ ...prev, [printerId]: null }));
+                gotData = true;
+            } else {
+                setStaleData((prev) => prev[printerId] ? prev : ({ ...prev, [printerId]: new Date() }));
+            }
+        } catch (error) {
+            console.error('Failed to fetch printer state:', error);
+            setStaleData((prev) => prev[printerId] ? prev : ({ ...prev, [printerId]: new Date() }));
+        }
+        try {
+            const historyRes = await fetchPrinterHistory(printerId, { limit: 50 });
+            if (historyRes.data) {
+                setHistory(historyRes.data);
+            }
+        } catch (error) {
+            console.error('Failed to fetch printer history:', error);
+        }
+        if (!isAutoRefresh) setLoading(false);
+        if (onDone) onDone(gotData);
+    }, []);
+
+    // Auto-refresh with retry limit: stops after MAX_RETRIES consecutive failures
     useEffect(() => {
         if (!selectedId) return;
+        let cancelled = false;
+        failCountRef.current = 0;
 
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const [stateRes, historyRes] = await Promise.all([
-                    fetchPrinterState(selectedId),
-                    fetchPrinterHistory(selectedId, { limit: 50 }),
-                ]);
-                setSnapshots((prev) => ({ ...prev, [selectedId]: stateRes.data }));
-                setHistory(historyRes.data);
-            } catch (error) {
-                console.error('Failed to fetch printer data:', error);
-            } finally {
-                setLoading(false);
+        // Initial fetch
+        fetchData(selectedId, {
+            isAutoRefresh: false,
+            onDone: (ok) => { failCountRef.current = ok ? 0 : 1; },
+        });
+
+        if (!autoRefresh) return () => { cancelled = true; };
+
+        const interval = setInterval(() => {
+            if (cancelled) return;
+            if (failCountRef.current >= MAX_RETRIES) {
+                clearInterval(interval);
+                return;
             }
-        };
+            fetchData(selectedId, {
+                isAutoRefresh: true,
+                onDone: (ok) => {
+                    failCountRef.current = ok ? 0 : failCountRef.current + 1;
+                },
+            });
+        }, 2000);
 
-        fetchData();
-
-        // Auto-refresh every 2 seconds if enabled
-        if (autoRefresh) {
-            const interval = setInterval(fetchData, 2000);
-            return () => clearInterval(interval);
-        }
-    }, [selectedId, autoRefresh]);
+        return () => { cancelled = true; clearInterval(interval); };
+    }, [selectedId, autoRefresh, fetchData]);
 
     const selectedPrinter = useMemo(
         () => printers.find((p) => p.id === selectedId),
@@ -72,11 +142,25 @@ useEffect(() => {
 
     const selectedSnapshot = snapshots[selectedId];
 
+    // Manual action: send command, re-fetch, and reset retry counter to resume auto-refresh
     const handleCommand = async (command) => {
         if (!selectedId) return;
         await sendPrinterCommand(selectedId, command);
-        const state = await fetchPrinterState(selectedId);
-        setSnapshots((prev) => ({ ...prev, [selectedId]: state.data }));
+        failCountRef.current = 0;
+        fetchData(selectedId, {
+            onDone: (ok) => {
+                failCountRef.current = ok ? 0 : 1;
+                // Re-trigger the auto-refresh effect so the interval restarts
+                if (ok) setAutoRefresh((v) => v);
+            },
+        });
+    };
+
+    // Manual retry for disconnected printers
+    const handleRetry = () => {
+        failCountRef.current = 0;
+        setAutoRefresh((v) => !v);
+        setTimeout(() => setAutoRefresh((v) => !v), 0);
     };
 
     const hasData = selectedSnapshot && (
@@ -84,6 +168,48 @@ useEffect(() => {
         selectedSnapshot.bedTemp !== null ||
         selectedSnapshot.state !== null
     );
+
+    const isStale = selectedId && !!staleData[selectedId];
+
+    const handleCreateInputChange = (event) => {
+        const { name, value } = event.target;
+        setNewPrinter((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const resetCreateForm = () => {
+        setNewPrinter({
+            name: '',
+            type: 'MOONRAKER',
+            ipAddress: '',
+            port: '7125',
+            apiKey: '',
+        });
+        setCreateError('');
+    };
+
+    const handleCreatePrinter = async (event) => {
+        event.preventDefault();
+        setIsCreatingPrinter(true);
+        setCreateError('');
+
+        try {
+            const payload = {
+                ...newPrinter,
+                port: newPrinter.port ? Number(newPrinter.port) : null,
+            };
+
+            const response = await createPrinter(payload);
+            const createdPrinterId = response?.data?.id;
+
+            await loadPrinters(createdPrinterId);
+            setIsCreateModalOpen(false);
+            resetCreateForm();
+        } catch (error) {
+            setCreateError(error.message || 'Unable to create printer.');
+        } finally {
+            setIsCreatingPrinter(false);
+        }
+    };
 
     return (
         <div>
@@ -93,31 +219,133 @@ useEffect(() => {
                         <h2 className="text-2xl font-semibold text-gray-800">Printers</h2>
                         <p className="text-gray-500">Monitor temperatures, progress and push basic commands.</p>
                     </div>
-                    <button
-                        onClick={() => setAutoRefresh(!autoRefresh)}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                            autoRefresh
-                                ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                        }`}
-                    >
-                        {autoRefresh ? '🔄 Auto-refresh ON' : '⏸️ Auto-refresh OFF'}
-                    </button>
+                    <div className="ml-auto flex items-center gap-2">
+                        {/* Printer Selector */}
+                        <div className="w-56">
+                            <select
+                                id="printer-select"
+                                className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                value={selectedId ?? ''}
+                                onChange={(e) => setSelectedId(e.target.value)}
+                            >
+                                <option value="" disabled={selectedId !== null && selectedId !== ''}>Select a Printer</option>
+                                {printers.map((printer) => (
+                                    <option key={printer.id} value={printer.id}>
+                                        {printer.name} — {printer.ipAddress}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <button
+                            onClick={() => setIsCreateModalOpen(true)}
+                            className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-700"
+                        >
+                            + Add printer
+                        </button>
+                        <button
+                            onClick={() => setAutoRefresh(!autoRefresh)}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                autoRefresh
+                                    ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                        >
+                            {autoRefresh ? 'Auto-refresh ON' : 'Auto-refresh OFF'}
+                        </button>
+                    </div>
                 </div>
             </header>
 
-            {/* Printer Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                {printers.map((printer) => (
-                    <PrinterCard
-                        key={printer.id}
-                        printer={printer}
-                        snapshot={snapshots[printer.id]}
-                        onSelect={setSelectedId}
-                        isActive={printer.id === selectedId}
-                    />
-                ))}
-            </div>
+            <Modal open={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} className="w-full max-w-lg">
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">Create a new printer</h3>
+                <form className="space-y-4" onSubmit={handleCreatePrinter}>
+                    <div>
+                        <label className="block text-sm text-gray-700 mb-1" htmlFor="name">Name</label>
+                        <input
+                            id="name"
+                            name="name"
+                            value={newPrinter.name}
+                            onChange={handleCreateInputChange}
+                            required
+                            className="w-full border border-gray-300 rounded px-3 py-2"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm text-gray-700 mb-1" htmlFor="type">Type</label>
+                        <select
+                            id="type"
+                            name="type"
+                            value={newPrinter.type}
+                            onChange={handleCreateInputChange}
+                            className="w-full border border-gray-300 rounded px-3 py-2"
+                        >
+                            <option value="MOONRAKER">MOONRAKER</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm text-gray-700 mb-1" htmlFor="ipAddress">IP address</label>
+                        <input
+                            id="ipAddress"
+                            name="ipAddress"
+                            value={newPrinter.ipAddress}
+                            onChange={handleCreateInputChange}
+                            required
+                            className="w-full border border-gray-300 rounded px-3 py-2"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm text-gray-700 mb-1" htmlFor="port">Port</label>
+                        <input
+                            id="port"
+                            name="port"
+                            type="number"
+                            min="1"
+                            max="65535"
+                            value={newPrinter.port}
+                            onChange={handleCreateInputChange}
+                            className="w-full border border-gray-300 rounded px-3 py-2"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm text-gray-700 mb-1" htmlFor="apiKey">API key (optional)</label>
+                        <input
+                            id="apiKey"
+                            name="apiKey"
+                            value={newPrinter.apiKey}
+                            onChange={handleCreateInputChange}
+                            className="w-full border border-gray-300 rounded px-3 py-2"
+                        />
+                    </div>
+
+                    {createError && (
+                        <p className="text-sm text-red-600">{createError}</p>
+                    )}
+
+                    <div className="flex justify-end gap-2 pt-2">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setIsCreateModalOpen(false);
+                                resetCreateForm();
+                            }}
+                            className="px-4 py-2 rounded bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            disabled={isCreatingPrinter}
+                            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 disabled:bg-blue-300"
+                        >
+                            {isCreatingPrinter ? 'Creating...' : 'Create printer'}
+                        </button>
+                    </div>
+                </form>
+            </Modal>
 
             {/* Selected Printer Details */}
             {selectedPrinter && (
@@ -134,9 +362,11 @@ useEffect(() => {
                             <div className="flex items-center gap-3">
                                 {loading && <span className="text-sm text-blue-600">Refreshing…</span>}
                                 <div className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                                    hasData ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                    isStale ? 'bg-orange-100 text-orange-800'
+                                        : hasData ? 'bg-green-100 text-green-800'
+                                        : 'bg-red-100 text-red-800'
                                 }`}>
-                                    {hasData ? '🟢 Connected' : '🔴 Offline'}
+                                    {isStale ? 'Connection lost' : hasData ? 'Connected' : 'Offline'}
                                 </div>
                             </div>
                         </div>
@@ -155,6 +385,29 @@ useEffect(() => {
                             ))}
                         </div>
                     </section>
+
+                    {/* Stale data warning */}
+                    {isStale && hasData && (
+                        <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <span className="text-orange-600 text-lg">&#9888;</span>
+                                <div>
+                                    <p className="text-sm font-semibold text-orange-800">
+                                        Printer disconnected — showing last known data
+                                    </p>
+                                    <p className="text-xs text-orange-600">
+                                        Since {staleData[selectedId].toLocaleTimeString()}
+                                    </p>
+                                </div>
+                            </div>
+                            <button
+                                onClick={handleRetry}
+                                className="px-3 py-1.5 rounded bg-orange-600 text-white text-sm hover:bg-orange-700"
+                            >
+                                Retry
+                            </button>
+                        </div>
+                    )}
 
                     {/* Comprehensive Data Display */}
                     {!hasData ? (
@@ -180,6 +433,9 @@ useEffect(() => {
                                         </div>
                                         <div className="text-2xl font-bold text-orange-600">
                                             {selectedSnapshot.nozzleTemp?.toFixed(1) || '--'}°C
+                                            <span className="text-sm font-normal text-gray-500 ml-2">
+                                                → {selectedSnapshot.targetNozzle ? `${selectedSnapshot.targetNozzle.toFixed(0)}°C` : '--'}
+                                            </span>
                                         </div>
                                         <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                                             <div
@@ -197,6 +453,9 @@ useEffect(() => {
                                         </div>
                                         <div className="text-2xl font-bold text-red-600">
                                             {selectedSnapshot.bedTemp?.toFixed(1) || '--'}°C
+                                            <span className="text-sm font-normal text-gray-500 ml-2">
+                                                → {selectedSnapshot.targetBed ? `${selectedSnapshot.targetBed.toFixed(0)}°C` : '--'}
+                                            </span>
                                         </div>
                                         <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                                             <div
@@ -368,11 +627,11 @@ useEffect(() => {
 
                     {/* Raw Data Debug */}
                     {selectedSnapshot && (
-                        <details className="mt-6 bg-white rounded-lg shadow p-5">
+                        <details className="mt-6 bg-white rounded-lg shadow p-5 min-w-0">
                             <summary className="cursor-pointer text-sm font-semibold text-gray-700">
-                                🔍 Show Raw Data (Debug)
+                                Show Raw Data (Debug)
                             </summary>
-                            <pre className="mt-4 p-4 bg-gray-50 rounded text-xs overflow-auto">
+                            <pre className="mt-4 p-4 bg-gray-50 rounded text-xs overflow-auto max-w-full whitespace-pre-wrap break-words">
                                 {JSON.stringify(selectedSnapshot, null, 2)}
                             </pre>
                         </details>

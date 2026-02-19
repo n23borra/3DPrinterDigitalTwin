@@ -20,6 +20,17 @@ const PrinterIcon = () => (
     </svg>
 );
 
+const CommandsIcon = () => (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M4 7h16" />
+        <path d="M4 12h16" />
+        <path d="M4 17h16" />
+        <circle cx="8" cy="7" r="1" fill="currentColor" />
+        <circle cx="16" cy="12" r="1" fill="currentColor" />
+        <circle cx="10" cy="17" r="1" fill="currentColor" />
+    </svg>
+);
+
 const AuditIcon = () => (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
         <path d="M6 4h9l3 3v11a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" />
@@ -43,6 +54,13 @@ const AlertIcon = () => (
     </svg>
 );
 
+const MaintenanceIcon = () => (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M14.7 6.3a1 1 0 010 1.4l-2.2 2.2a5 5 0 006.6 6.6l2.2-2.2a1 1 0 011.4 0l1.1 1.1a1 1 0 010 1.4l-1.8 1.8a7 7 0 01-9.9 0L9 15.9a7 7 0 010-9.9l1.8-1.8a1 1 0 011.4 0l2.5 2.1z" />
+        <circle cx="7" cy="17" r="2" />
+    </svg>
+);
+
 const SettingsIcon = () => (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8">
         <circle cx="12" cy="12" r="3" />
@@ -53,6 +71,7 @@ const SettingsIcon = () => (
 const baseMenuItems  = [
     {id: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: <DashboardIcon/>},
     {id: 'printers', label: 'Printers', path: '/printers', icon: <PrinterIcon/>},
+    {id: 'maintenance', label: 'Maintenance', path: '/maintenance', icon: <MaintenanceIcon/>},
     {id: 'alerts', label: 'Alerts', path: '/alerts', icon: <AlertIcon/>},
     {id: 'audit', label: 'Audit Logs', path: '/audit', icon: <AuditIcon/>},
     {id: 'settings', label: 'Settings', path: '/settings', icon: <SettingsIcon/>},
@@ -88,8 +107,18 @@ export default function DashboardLayout() {
 
     const menuItems = useMemo(() => {
         const items = [...baseMenuItems];
-        if (user?.role === 'SUPER_ADMIN') {
+
+        if (['ADMIN', 'SUPER_ADMIN'].includes(user?.role)) {
             items.splice(3, 0, {
+                id: 'commands',
+                label: 'Commands',
+                path: '/commands',
+                icon: <CommandsIcon/>,
+            });
+        }
+
+        if (user?.role === 'SUPER_ADMIN') {
+            items.splice(4, 0, {
                 id: 'user-management',
                 label: 'User Management',
                 path: '/admin/users',
