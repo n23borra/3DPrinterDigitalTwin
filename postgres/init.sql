@@ -62,7 +62,7 @@ SELECT gen_random_uuid(), 'Fake Printer', 'MOONRAKER', '127.0.0.1', 7125, 'OFFLI
 WHERE NOT EXISTS (SELECT 1 FROM printers WHERE name = 'Fake Printer');
 
 INSERT INTO printers (id, name, type, ip_address, port, status)
-SELECT gen_random_uuid(), 'K1 Max', 'MOONRAKER', '10.129.69.60', 4408, 'OFFLINE' --port nb could also be 7125, 80 or something else I can't connect to portail invite
+SELECT gen_random_uuid(), 'K1 Max', 'MOONRAKER', '10.29.232.199', 4408, 'OFFLINE' --port nb could also be 7125, 80 or something else I can't connect to portail invite
 WHERE NOT EXISTS (SELECT 1 FROM printers WHERE name = 'K1 Max');
 
 /* =========================
