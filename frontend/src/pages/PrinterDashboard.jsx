@@ -57,6 +57,8 @@ export default function PrintersDashboard() {
             if (selectedId && printerList.some((printer) => printer.id === selectedId)) {
                 return;
             }
+
+            setSelectedId(null);
         } catch (error) {
             console.error('Error loading printers:', error);
             setPrinters([]);
@@ -217,24 +219,29 @@ export default function PrintersDashboard() {
                         <h2 className="text-2xl font-semibold text-gray-800">Printers</h2>
                         <p className="text-gray-500">Monitor temperatures, progress and push basic commands.</p>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="ml-auto flex items-center gap-2">
                         {/* Printer Selector */}
-                        <select
-                            id="printer-select"
-                            className="w-56 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            value={selectedId ?? ''}
-                            onChange={(e) => setSelectedId(e.target.value)}
+                        <div className="w-56">
+                            <select
+                                id="printer-select"
+                                className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                value={selectedId ?? ''}
+                                onChange={(e) => setSelectedId(e.target.value)}
+                            >
+                                <option value="" disabled={selectedId !== null && selectedId !== ''}>Select a Printer</option>
+                                {printers.map((printer) => (
+                                    <option key={printer.id} value={printer.id}>
+                                        {printer.name} — {printer.ipAddress}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <button
+                            onClick={() => setIsCreateModalOpen(true)}
+                            className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-700"
                         >
-                            <option value="" disabled>Choose your printer</option>
-                            {printers.map((printer) => (
-                                <option key={printer.id} value={printer.id}>
-                                    {printer.name} — {printer.ipAddress}
-                                </option>
-                            ))}
-                        </select>
-                        <Button onClick={() => setIsCreateModalOpen(true)} className="rounded-lg text-sm font-medium">
                             + Add printer
-                        </Button>
+                        </button>
                         <button
                             onClick={() => setAutoRefresh(!autoRefresh)}
                             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
@@ -336,7 +343,7 @@ export default function PrintersDashboard() {
                 </form>
             </Modal>
 
-{/* Selected Printer Details */}
+            {/* Selected Printer Details */}
             {selectedPrinter && (
                 <>
                     {/* Header Section */}
