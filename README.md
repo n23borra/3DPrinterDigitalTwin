@@ -44,6 +44,10 @@ npm run dev
 ```
 psql -h localhost -U twin -d twin -f db/schema.sql
 ```
+or 
+```
+docker exec -it 3dprinterdigitaltwin-postgres-1 psql -U twin -d twin
+```
 
 ### Docker Compose (optionnel)
 ```

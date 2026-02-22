@@ -68,7 +68,13 @@ public class RawPrinterState {
     Long systemUptime;   // NEW - System uptime in seconds
     
     // ===== BED MESH (static data, loaded once) =====
-    String bedMeshProfile; // NEW - active bed mesh profile name
+    String bedMeshProfile;   // active bed mesh profile name
+    String bedMeshMin;       // mesh area min [x, y] as JSON string
+    String bedMeshMax;       // mesh area max [x, y] as JSON string
+    String bedMeshMatrix;    // probed Z-offset matrix as JSON 2D array
+
+    // ===== Z-TILT =====
+    Boolean zTiltApplied;    // whether Z-tilt adjustment has been applied
     
     // ===== RAW DATA =====
     String rawPayload;   // Complete JSON response for debugging
