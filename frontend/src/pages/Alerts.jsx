@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { fetchPrinters } from '../api/printerApi';
 import Button from '../components/Button';
 import api from '../api/api';
 import Loader from '../components/Loader';
@@ -6,13 +7,15 @@ import Modal from '../components/Modal';
 
 const SEVERITY_OPTIONS = ['ALL', 'INFO', 'WARNING', 'CRITICAL'];
 const PRIORITY_OPTIONS = ['ALL', 'LOW', 'MEDIUM', 'HIGH'];
-const STATUS_OPTIONS = ['ALL', 'UNRESOLVED', 'RESOLVED'];
+const STATUS_OPTIONS = ['ALL', 'UNRESOLVED', 'IN_PROGRESS', 'RESOLVED'];
 
 /**
  * Shows the list of alerts for the authenticated user with management capabilities.
  * @returns {JSX.Element} Page section displaying alerts or a loader.
  */
 export default function Alerts() {
+    const [printers, setPrinters] = useState([]);
+    const [selectedPrinterId, setSelectedPrinterId] = useState('');
     const [alerts, setAlerts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [userId, setUserId] = useState(null);
@@ -40,9 +43,18 @@ export default function Alerts() {
                 setUserRole(user.role || 'USER');
                 const { data } = await api.get('/alerts');
                 setAlerts(Array.isArray(data) ? data : []);
+
+                const response = await fetchPrinters();
+                const printerList = response?.data || [];
+                setPrinters(printerList);
+                if (printerList.length > 0) {
+                    setSelectedPrinterId(printerList[0].id);
+                }
+                console.log('Selected printer UUID : ', selectedPrinterId);
             } catch (e) {
                 console.error(e);
                 setAlerts([]);
+                setPrinters([]);
             } finally {
                 setLoading(false);
             }
@@ -70,9 +82,7 @@ export default function Alerts() {
             const matchesPriority = priorityFilter === 'ALL' || alert.priority === priorityFilter;
 
             // Status filter
-            const matchesStatus = statusFilter === 'ALL' || 
-                (statusFilter === 'RESOLVED' && alert.resolved) ||
-                (statusFilter === 'UNRESOLVED' && !alert.resolved);
+            const matchesStatus = statusFilter === 'ALL' || alert.status === statusFilter;
 
             return matchesSearch && matchesSeverity && matchesPriority && matchesStatus;
         });
@@ -97,10 +107,11 @@ export default function Alerts() {
             return;
         }
         try {
-            console.log('Sending POST to /alerts with:', {userId, ...formData});
+            console.log('Sending POST to /alerts with:', {userId, selectedPrinterId, ...formData});
             await api.post('/alerts', {
                 userId,
                 title: formData.title,
+                printerId: selectedPrinterId,
                 details: formData.details || null,
                 severity: formData.severity,
                 priority: formData.priority,
@@ -119,7 +130,7 @@ export default function Alerts() {
 
     const toggleResolved = async (alert) => {
         try {
-            await api.patch(`/alerts/${alert.id}/resolved`, { resolved: !alert.resolved });
+            await api.patch(`/alerts/${alert.id}/resolved`, { status: alert.status });
             await refreshAlerts();
         } catch (e) {
             console.error(e);
@@ -160,6 +171,28 @@ export default function Alerts() {
                 return 'bg-gray-600 text-white';
         }
     };
+
+    const getStatusText = (status) => {
+        switch(status) {
+            case 'UNRESOLVED': 
+                return 'Mark alert as in progress';
+            case 'IN_PROGRESS':
+                return 'Mark as resolved';
+            case 'RESOLVED':
+                return 'Mark unresolved';
+        }
+    }
+
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'UNRESOLVED':
+                return 'bg-red-500 text-white hover:bg-red-600';
+            case 'IN_PROGRESS':
+                return 'bg-yellow-500 text-white hover:bg-yellow-600';
+            case 'RESOLVED':
+                return 'bg-green-600 text-white hover:bg-green-700';
+        }
+    }
 
     if (loading) return <Loader />;
 
@@ -348,11 +381,11 @@ export default function Alerts() {
             ) : (
                 <ul className="bg-white rounded shadow divide-y">
                     {getFilteredAlerts().map((alert) => (
-                        <li key={alert.id} className={`p-4 ${alert.resolved ? 'opacity-60' : ''}`}>
+                        <li key={alert.id} className={`p-4 ${alert.status === 'RESOLVED' ? 'opacity-60' : ''}`}>
                             <div className="flex items-start justify-between">
                                 <div className="flex-1">
                                     <div className="flex items-center gap-2 mb-2">
-                                        <span className={`text-lg font-semibold ${alert.resolved ? 'line-through text-gray-500' : ''}`}>
+                                        <span className={`text-lg font-semibold ${alert.status === 'RESOLVED' ? 'line-through text-gray-500' : ''}`}>
                                             {alert.title}
                                         </span>
                                         <span className={`px-2 py-1 rounded text-xs font-semibold ${getSeverityColor(alert.severity)}`}>
@@ -373,12 +406,9 @@ export default function Alerts() {
                                         <button
                                             onClick={() => toggleResolved(alert)}
                                             className={`px-2 py-1 rounded text-xs font-semibold ${
-                                                alert.resolved
-                                                    ? 'bg-yellow-500 text-white hover:bg-yellow-600'
-                                                    : 'bg-green-600 text-white hover:bg-green-700'
-                                            }`}
+                                                getStatusColor(alert.status)}`}
                                         >
-                                            {alert.resolved ? 'Reopen' : 'Mark Fixed'}
+                                            {getStatusText(alert.status)}
                                         </button>
                                     )}
                                     {isAdmin() && (

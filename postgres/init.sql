@@ -50,10 +50,11 @@ CREATE TABLE IF NOT EXISTS alerts
 (
    id             BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
    user_id        BIGINT, 
+   printer_id     UUID,
    title          VARCHAR(50)    NOT NULL,
    details        VARCHAR(150),
    ts             TIMESTAMPTZ    NOT NULL DEFAULT now(),
-   resolved       boolean        NOT NULL,
+   status         VARCHAR(20)    NOT NULL,
    severity       VARCHAR(20),
    priority       VARCHAR(20),
    category       VARCHAR(50),

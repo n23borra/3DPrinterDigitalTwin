@@ -1,6 +1,7 @@
 package com.fablab.backend.repositories;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -26,7 +27,7 @@ public interface AlertRepository extends JpaRepository<Alert, Long> {
      * @param resolved false to get unresolved alerts
      * @return list of unresolved alerts
      */
-    List<Alert> findByUserIdAndResolved(Long userId, boolean resolved);
+    List<Alert> findByUserIdAndStatus(Long userId, Alert.Status status);
     
     /**
      * Finds all unresolved alerts globally (for admins).
@@ -34,5 +35,7 @@ public interface AlertRepository extends JpaRepository<Alert, Long> {
      * @param resolved false to get unresolved alerts
      * @return list of unresolved alerts
      */
-    List<Alert> findByResolved(boolean resolved);
+    List<Alert> findByStatus(Alert.Status status);
+
+    List<Alert> findByPrinterId(UUID printerId);
 }

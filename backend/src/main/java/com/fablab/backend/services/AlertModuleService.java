@@ -492,7 +492,7 @@ public class AlertModuleService {
             if (status == null) {
                 return new PrinterError("00000", "Aucun snapshot disponible", "");
             }
-            boolean zTiltApplied = status.getZTilt();
+            boolean zTiltApplied = status.getZTiltApplied();
             if (!zTiltApplied) {
                 String code = "ZT0001";
                 String baseMsg = "Plateau non ajusté horizontalement : Z_TILT_ADJUST non appliqué";
@@ -714,7 +714,7 @@ public class AlertModuleService {
                     .category(category)
                     .severity(severity)
                     .priority(severity == Alert.Severity.CRITICAL ? Alert.Priority.HIGH : Alert.Priority.MEDIUM)
-                    .resolved(false)
+                    .status(Alert.Status.UNRESOLVED)
                     .build();
             alertRepository.save(alert);
 
