@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -24,6 +25,10 @@ public class Alert {
     // User who created/owns this alert (nullable for system-generated alerts)
     private Long userId;
 
+    // Printer from which the alert came
+    @Column(nullable = false)
+    private UUID printerId;
+
     // Alert title/name
     @Column(nullable = false)
     private String title;
@@ -38,8 +43,9 @@ public class Alert {
     private Instant logTime = Instant.now();
 
     // Whether the alert has been resolved/repaired
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private boolean resolved = false;
+    private Status status = Status.UNRESOLVED;
 
     // Severity level: INFO, WARNING, CRITICAL
     @Enumerated(EnumType.STRING)
@@ -64,5 +70,9 @@ public class Alert {
 
     public enum Priority {
         LOW, MEDIUM, HIGH
+    }
+
+    public enum Status {
+        UNRESOLVED, IN_PROGRESS, RESOLVED
     }
 }

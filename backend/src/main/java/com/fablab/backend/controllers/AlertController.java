@@ -1,6 +1,7 @@
 package com.fablab.backend.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,6 +59,7 @@ public class AlertController {
     public static record CreateAlertRequest(
         Long userId,
         String title,
+        UUID printerId,
         String details,
         String severity,
         String priority,
@@ -99,7 +101,23 @@ public class AlertController {
      */
     @GetMapping("/unresolved")
     public List<AlertDTO> getAllUnresolvedAlerts() {
-        return alertRepository.findByResolved(false)
+        return alertRepository.findByStatus(Alert.Status.UNRESOLVED)
+                .stream()
+                .map(AlertDTO::from)
+                .toList();
+    }
+
+    @GetMapping("/in_progress")
+    public List<AlertDTO> getAllInProgressAlerts(){
+        return alertRepository.findByStatus(Alert.Status.IN_PROGRESS)
+                .stream()
+                .map(AlertDTO::from)
+                .toList();
+    }
+
+    @GetMapping("/resolved")
+    public List<AlertDTO> getAllResolvedAlerts(){
+        return alertRepository.findByStatus(Alert.Status.RESOLVED)
                 .stream()
                 .map(AlertDTO::from)
                 .toList();
@@ -113,7 +131,7 @@ public class AlertController {
      */
     @GetMapping("/user/{userId}/unresolved")
     public List<AlertDTO> getUserUnresolvedAlerts(@PathVariable Long userId) {
-        return alertRepository.findByUserIdAndResolved(userId, false)
+        return alertRepository.findByUserIdAndStatus(userId, Alert.Status.UNRESOLVED)
                 .stream()
                 .map(AlertDTO::from)
                 .toList();
@@ -131,16 +149,18 @@ public class AlertController {
         Alert alert = Alert.builder()
                 .userId(req.userId())
                 .title(req.title())
+                .printerId(req.printerId())
                 .details(req.details())
                 .severity(req.severity() != null ? Alert.Severity.valueOf(req.severity()) : Alert.Severity.INFO)
                 .priority(req.priority() != null ? Alert.Priority.valueOf(req.priority()) : Alert.Priority.MEDIUM)
                 .category(req.category())
                 .assignedTo(req.assignedTo())
-                .resolved(false)
+                .status(Alert.Status.UNRESOLVED)
                 .build();
         Alert saved = alertRepository.save(alert);
 
         if(alert.getSeverity().equals(Alert.Severity.CRITICAL)){
+            
             User user = userRepo.findByEmail("matt.theret@gmail.com")
                     .orElseThrow(() -> new IllegalArgumentException("Email not found"));
             SimpleMailMessage msg = new SimpleMailMessage();
@@ -161,15 +181,23 @@ public class AlertController {
      * @return updated alert DTO or 403 Forbidden if user is not admin
      */
     @PatchMapping("/{id}/resolved")
-    public ResponseEntity<AlertDTO> setResolved(@PathVariable Long id, @RequestBody java.util.Map<String, Boolean> body) {
+    public ResponseEntity<AlertDTO> setResolved(@PathVariable Long id, @RequestBody java.util.Map<String, Alert.Status> body) {
         if (!isCurrentUserAdmin()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        boolean resolved = body.getOrDefault("resolved", Boolean.TRUE);
+        Alert.Status status = body.getOrDefault("status", Alert.Status.UNRESOLVED);
         Alert alert = alertRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Alert not found: " + id));
-        alert.setResolved(resolved);
+        Alert.Status newStatus = Alert.Status.UNRESOLVED;
+        if(status == Alert.Status.UNRESOLVED)
+            newStatus = Alert.Status.IN_PROGRESS;
+        else if(status == Alert.Status.IN_PROGRESS)
+            newStatus = Alert.Status.RESOLVED;
+        alert.setStatus(newStatus);
+        System.err.println("STATUS = "+status+", NEW STATUS = "+newStatus);
+
         Alert saved = alertRepository.save(alert);
+        System.err.println("NEW ALERT "+saved);
         return ResponseEntity.ok(AlertDTO.from(saved));
     }
 
@@ -221,7 +249,7 @@ public class AlertController {
                     .category("LEVELING")
                     .severity(Alert.Severity.INFO)
                     .priority(Alert.Priority.MEDIUM)
-                    .resolved(false)
+                    .status(Alert.Status.UNRESOLVED)
                     .build();
             alertRepository.save(alert);
         System.out.println(alertService.checkBedLeveling(null));

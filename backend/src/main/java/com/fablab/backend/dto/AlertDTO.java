@@ -1,6 +1,7 @@
 package com.fablab.backend.dto;
 
 import java.time.Instant;
+import java.util.UUID;
 
 import com.fablab.backend.models.Alert;
 
@@ -18,17 +19,18 @@ import com.fablab.backend.models.Alert;
  * @param category category/type of alert
  * @param assignedTo id of user assigned to fix (nullable)
  */
-public record AlertDTO(Long id, Long userId, String title, String details, Instant logTime, 
-                       boolean resolved, String severity, String priority, String category, Long assignedTo) {
+public record AlertDTO(Long id, Long userId, UUID printerId, String title, String details, Instant logTime, 
+                       Alert.Status status, String severity, String priority, String category, Long assignedTo) {
     
     public static AlertDTO from(Alert alert) {
         return new AlertDTO(
             alert.getId(),
             alert.getUserId(),
+            alert.getPrinterId(),
             alert.getTitle(),
             alert.getDetails(),
             alert.getLogTime(),
-            alert.isResolved(),
+            alert.getStatus(),
             alert.getSeverity().name(),
             alert.getPriority().name(),
             alert.getCategory(),

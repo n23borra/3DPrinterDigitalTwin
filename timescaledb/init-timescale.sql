@@ -2,7 +2,7 @@ CREATE EXTENSION IF NOT EXISTS timescaledb;
 
 CREATE TABLE printer_snapshots
 (
-    id            BIGINT GENERATED ALWAYS AS IDENTITY,
+    id            BIGINT,
     printer_id    UUID NOT NULL,
     ts            TIMESTAMPTZ NOT NULL,
     bed_temp      NUMERIC,
