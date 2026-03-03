@@ -247,10 +247,10 @@ export default function PrintersDashboard() {
                             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                                 autoRefresh
                                     ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                    : 'bg-orange-100 text-orange-700 hover:bg-orange-200'
                             }`}
                         >
-                            {autoRefresh ? 'Auto-refresh ON' : 'Auto-refresh OFF'}
+                            {autoRefresh ? 'Freeze display' : 'Unfreeze display'}
                         </button>
                     </div>
                 </div>
