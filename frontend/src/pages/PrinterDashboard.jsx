@@ -18,9 +18,11 @@ const QUICK_COMMANDS = [
 ];
 
 // Match the dashboard refresh rate to the polling rate based on printer state:
-//   printing / paused → 2s  (matches pollActivePrinters)
+//   printing / paused → 1s  (matches pollActivePrinters)
 //   anything else     → 10s (matches pollIdlePrinters)
-const getRefreshInterval = (state) => {
+//   stale / offline   → 10s (polling service isn't writing, no point querying fast)
+const getRefreshInterval = (state, isStale) => {
+    if (isStale) return 10000;
     if (!state) return 10000;
     const s = state.toLowerCase();
     return (s === 'printing' || s === 'paused') ? 1000 : 10000;
@@ -113,10 +115,10 @@ export default function PrintersDashboard() {
         if (onDone) onDone(gotData);
     }, []);
 
-    const refreshInterval = getRefreshInterval(snapshots[selectedId]?.state);
+    const refreshInterval = getRefreshInterval(snapshots[selectedId]?.state, !!staleData[selectedId]);
 
-    // Auto-refresh with retry limit: stops after MAX_RETRIES consecutive failures.
-    // The interval adapts to the printer state to match the polling rate.
+    // Auto-refresh: interval adapts to printer state to match the polling write rate.
+    // Keeps retrying indefinitely — no hard stop — rate slows to 10s when stale/offline.
     useEffect(() => {
         if (!selectedId) return;
         let cancelled = false;
@@ -132,10 +134,6 @@ export default function PrintersDashboard() {
 
         const interval = setInterval(() => {
             if (cancelled) return;
-            if (failCountRef.current >= MAX_RETRIES) {
-                clearInterval(interval);
-                return;
-            }
             fetchData(selectedId, {
                 isAutoRefresh: true,
                 onDone: (ok) => {
@@ -370,11 +368,11 @@ export default function PrintersDashboard() {
                             <div className="flex items-center gap-3">
                                 {loading && <span className="text-sm text-blue-600">Refreshing…</span>}
                                 <div className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                                    isStale ? 'bg-orange-100 text-orange-800'
-                                        : hasData ? 'bg-green-100 text-green-800'
-                                        : 'bg-red-100 text-red-800'
+                                    !hasData ? 'bg-red-100 text-red-800'
+                                        : isStale ? 'bg-orange-100 text-orange-800'
+                                        : 'bg-green-100 text-green-800'
                                 }`}>
-                                    {isStale ? 'Connection lost' : hasData ? 'Connected' : 'Offline'}
+                                    {!hasData ? 'Offline' : isStale ? 'Connection lost' : 'Connected'}
                                 </div>
                             </div>
                         </div>
@@ -419,13 +417,21 @@ export default function PrintersDashboard() {
 
                     {/* Comprehensive Data Display */}
                     {!hasData ? (
-                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-6">
-                            <h3 className="text-lg font-semibold text-yellow-800 mb-2">
-                                No Data Available
-                            </h3>
-                            <p className="text-yellow-700">
-                                The printer is not responding. Make sure the printer is powered on and connected to the network.
-                            </p>
+                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-6 flex items-center justify-between">
+                            <div>
+                                <h3 className="text-lg font-semibold text-yellow-800 mb-2">
+                                    No Data Available
+                                </h3>
+                                <p className="text-yellow-700">
+                                    The printer is not responding. Make sure the printer is powered on and connected to the network.
+                                </p>
+                            </div>
+                            <button
+                                onClick={handleRetry}
+                                className="px-3 py-1.5 rounded bg-yellow-600 text-white text-sm hover:bg-yellow-700 ml-4 shrink-0"
+                            >
+                                Retry
+                            </button>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
