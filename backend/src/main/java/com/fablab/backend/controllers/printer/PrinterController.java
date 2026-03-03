@@ -47,6 +47,11 @@ public class PrinterController {
         return ResponseEntity.ok(printerService.fetchAndPersistSnapshot(id));
     }
 
+    @GetMapping("/{id}/latest")
+    public ResponseEntity<PrinterSnapshot> getLatestSnapshot(@PathVariable UUID id) {
+        return ResponseEntity.ok(printerService.getLatestStoredSnapshot(id));
+    }
+
     @GetMapping("/{id}/history")
     public ResponseEntity<List<PrinterSnapshot>> getHistory(
             @PathVariable UUID id,

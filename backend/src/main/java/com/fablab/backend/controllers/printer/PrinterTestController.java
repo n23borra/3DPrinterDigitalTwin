@@ -53,6 +53,18 @@ public class PrinterTestController {
     }
 
     /**
+     * Returns the latest snapshot stored in DB for this printer (no live call).
+     */
+    @GetMapping("/{id}/latest")
+    public ResponseEntity<?> getLatestSnapshot(@PathVariable UUID id) {
+        try {
+            return ResponseEntity.ok(printerService.getLatestStoredSnapshot(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body("No snapshot found: " + e.getMessage());
+        }
+    }
+
+    /**
      * List all printers (for testing)
      */
     @GetMapping
