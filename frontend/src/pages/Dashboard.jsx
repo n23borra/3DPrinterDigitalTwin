@@ -42,8 +42,8 @@ export default function Dashboard() {
                 const response = await api.get("/dashboard/alerts");
                 const alertsByPrinter = response.data;
                 console.log("ALERTS :", alertsByPrinter);
-                const alertsArray = Object.entries(alertsByPrinter).map(([printerId, alerts]) => ({
-                                    printerId,
+                const alertsArray = Object.entries(alertsByPrinter).map(([printerName, alerts]) => ({
+                                    printerName,
                                     alerts
                                     }));
                 console.log("Alerts array : ",alertsArray);
@@ -104,9 +104,9 @@ export default function Dashboard() {
                     <tbody>
                         {alertsByPrinter.length === 0 ? (
                             <tr><td colSpan={2} className="px-4 py-2 text-gray-500">No data</td></tr>
-                        ) : alertsByPrinter.map(({printerId, alerts}) => (
-                            <tr key={printerId}>
-                                <td className="px-4 py-2">{printerId}</td>
+                        ) : alertsByPrinter.map(({printerName, alerts}) => (
+                            <tr key={printerName}>
+                                <td className="px-4 py-2">{printerName}</td>
                                 <td className="px-4 py-2">{alerts.length}</td>
                             </tr>
                         ))}
@@ -127,7 +127,7 @@ export default function Dashboard() {
                             <li key={alert.id} className="py-3 flex items-center justify-between">
                                 <div>
                                     <span className="font-semibold text-gray-800">{alert.title}</span>
-                                    <span className="ml-2 text-sm text-gray-500">({alert.printerId})</span>
+                                    <span className="ml-2 text-sm text-gray-500">({alert.printerName ?? alert.printerId})</span>
                                     <span className={`ml-2 text-xs font-bold ${alert.severity === 'CRITICAL' ? 'text-red-600' : alert.severity === 'WARNING' ? 'text-yellow-600' : 'text-gray-600'}`}>{alert.severity}</span>
                                 </div>
                                 <span className="text-xs text-gray-400">{alert.logTime}</span>
