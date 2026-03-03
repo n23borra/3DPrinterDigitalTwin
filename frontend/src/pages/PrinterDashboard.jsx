@@ -17,6 +17,15 @@ const QUICK_COMMANDS = [
     { label: 'Lower bed', command: 'G1 Z200' },
 ];
 
+// Match the dashboard refresh rate to the polling rate based on printer state:
+//   printing / paused → 2s  (matches pollActivePrinters)
+//   anything else     → 10s (matches pollIdlePrinters)
+const getRefreshInterval = (state) => {
+    if (!state) return 10000;
+    const s = state.toLowerCase();
+    return (s === 'printing' || s === 'paused') ? 1000 : 10000;
+};
+
 export default function PrintersDashboard() {
     const [printers, setPrinters] = useState([]);
     const [snapshots, setSnapshots] = useState({});
@@ -104,7 +113,10 @@ export default function PrintersDashboard() {
         if (onDone) onDone(gotData);
     }, []);
 
-    // Auto-refresh with retry limit: stops after MAX_RETRIES consecutive failures
+    const refreshInterval = getRefreshInterval(snapshots[selectedId]?.state);
+
+    // Auto-refresh with retry limit: stops after MAX_RETRIES consecutive failures.
+    // The interval adapts to the printer state to match the polling rate.
     useEffect(() => {
         if (!selectedId) return;
         let cancelled = false;
@@ -130,10 +142,10 @@ export default function PrintersDashboard() {
                     failCountRef.current = ok ? 0 : failCountRef.current + 1;
                 },
             });
-        }, 2000);
+        }, refreshInterval);
 
         return () => { cancelled = true; clearInterval(interval); };
-    }, [selectedId, autoRefresh, fetchData]);
+    }, [selectedId, autoRefresh, fetchData, refreshInterval]);
 
     const selectedPrinter = useMemo(
         () => printers.find((p) => p.id === selectedId),
