@@ -8,6 +8,7 @@ import Modal from '../components/Modal';
 const SEVERITY_OPTIONS = ['ALL', 'INFO', 'WARNING', 'CRITICAL'];
 const PRIORITY_OPTIONS = ['ALL', 'LOW', 'MEDIUM', 'HIGH'];
 const STATUS_OPTIONS = ['ALL', 'UNRESOLVED', 'IN_PROGRESS', 'RESOLVED'];
+const CATEGORIES = ['POWER_LOSS', 'HEATBED', 'EXTRUDER', 'FILAMENT', 'MOTOR', 'TOOLHEAD', 'FANS', 'LEVELING', 'OTHER'];
 
 /**
  * Shows the list of alerts for the authenticated user with management capabilities.
@@ -30,8 +31,10 @@ export default function Alerts() {
         details: '',
         severity: 'INFO',
         priority: 'MEDIUM',
-        category: ''
+        category: '',
     });
+    const [categoryMode, setCategoryMode] = useState('predefined'); // 'predefined' ou 'custom'
+    const [customCategory, setCustomCategory] = useState('');
 
     const allowedRoles = ['ADMIN', 'SUPER_ADMIN'];
 
@@ -239,13 +242,31 @@ export default function Alerts() {
                             className="w-full border rounded px-2 py-1 mb-3"
                             rows="3"
                         />
-                        <input
-                            type="text"
-                            placeholder="Category (optional)"
-                            value={formData.category}
-                            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                            className="w-full border rounded px-2 py-1 mb-3"
-                        />
+                        <div className="mb-3">
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                                       
+                            <select
+                                value={formData.category || CATEGORIES[0]}
+                                onChange={e => setFormData({ ...formData, category: e.target.value })}
+                                className="w-full border rounded px-2 py-1"
+                            >
+                                {CATEGORIES.map((category) => (
+                                    <option key={category} value={category}>{category}</option>
+                                ))}
+                            </select>
+                            {formData.category !== 'OTHER' ? ("") : (
+                                <input
+                                    type="text"
+                                    placeholder="Custom category"
+                                    value={customCategory}
+                                    onChange={e => {
+                                        setCustomCategory(e.target.value);
+                                        setFormData({ ...formData, category: e.target.value });
+                                    }}
+                                    className="w-full border rounded px-2 py-1"
+                                />
+                            )}
+                        </div>
                         <div className="flex gap-3 mb-3">
                             <Tooltip
                                 text={
@@ -394,6 +415,7 @@ export default function Alerts() {
                                         <span className={`px-2 py-1 rounded text-xs font-semibold ${getPriorityColor(alert.priority)}`}>
                                             {alert.priority}
                                         </span>
+                                        
                                     </div>
                                     {alert.details && <p className="text-sm text-gray-700 mb-2">{alert.details}</p>}
                                     {alert.category && <p className="text-xs text-gray-500">Category: {alert.category}</p>}
@@ -401,6 +423,9 @@ export default function Alerts() {
                                         {new Date(alert.logTime).toLocaleString()}
                                     </p>
                                 </div>
+                                <span className={`flex-1 text-align text-lg font-semibold`}>
+                                            {alert.status}
+                                </span>
                                 <div className="flex gap-2 ml-4">
                                     {isAdmin() && (
                                         <button
