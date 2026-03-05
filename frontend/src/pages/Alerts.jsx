@@ -412,6 +412,7 @@ export default function Alerts() {
                                             {alert.priority}
                                         </span>
                                     </div>
+                                    {(alert.printerName || alert.printerId) && <p className="text-xs text-gray-500">Printer: {alert.printerName ?? alert.printerId}</p>}
                                     {alert.details && <p className="text-sm text-gray-700 mb-2">{alert.details}</p>}
                                     {alert.category && <p className="text-xs text-gray-500">Category: {alert.category}</p>}
                                     <p className="text-xs text-gray-400 mt-1">

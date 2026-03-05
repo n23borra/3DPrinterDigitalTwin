@@ -79,9 +79,11 @@ public class AlertController {
      */
     @GetMapping
     public List<AlertDTO> getAllAlerts() {
+        Map<UUID, String> printerNames = printerRepository.findAll().stream()
+                .collect(Collectors.toMap(Printer::getId, Printer::getName));
         return alertRepository.findAll()
                 .stream()
-                .map(AlertDTO::from)
+                .map(a -> AlertDTO.from(a, printerNames.get(a.getPrinterId())))
                 .toList();
     }
 
