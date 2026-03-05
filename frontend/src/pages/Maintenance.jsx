@@ -16,6 +16,7 @@ export default function Maintenance() {
     const [itemsByPrinter, setItemsByPrinter] = useState({});
     const [form, setForm] = useState(emptyForm);
     const [hoursToAdd, setHoursToAdd] = useState('1');
+    const [hoursToAddByItem, setHoursToAddByItem] = useState({});
 
     useEffect(() => {
         try {
@@ -92,6 +93,24 @@ export default function Maintenance() {
         }));
 
         setForm(emptyForm);
+    };
+
+    const handleAddHours = (itemId) => {
+        const hours = Number(hoursToAddByItem[itemId] || '1');
+
+        if (!Number.isFinite(hours) || hours <= 0) {
+            alert('Veuillez saisir un nombre d\'heures valide.');
+            return;
+        }
+
+        setItemsByPrinter((prev) => ({
+            ...prev,
+            [selectedPrinterId]: (prev[selectedPrinterId] || []).map((item) => (
+                item.id === itemId
+                    ? { ...item, usedHours: Number((item.usedHours + hours).toFixed(2)) }
+                    : item
+            )),
+        }));
     };
 
     const handleAddHoursToAll = () => {
@@ -236,13 +255,30 @@ export default function Maintenance() {
                                             </p>
                                         </div>
 
-                                        <button
-                                            type="button"
-                                            onClick={() => handleDeleteItem(item.id)}
-                                            className="bg-gray-100 text-gray-700 rounded px-3 py-1.5 hover:bg-gray-200"
-                                        >
-                                            Supprimer
-                                        </button>
+                                        <div className="flex items-center gap-2 flex-wrap">
+                                            <input
+                                                type="number"
+                                                min="0.1"
+                                                step="0.1"
+                                                value={hoursToAddByItem[item.id] || '1'}
+                                                onChange={(event) => setHoursToAddByItem((prev) => ({ ...prev, [item.id]: event.target.value }))}
+                                                className="w-28 border border-gray-300 rounded px-2 py-1"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => handleAddHours(item.id)}
+                                                className="bg-emerald-600 text-white rounded px-3 py-1.5 hover:bg-emerald-700"
+                                            >
+                                                Ajouter des heures
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleDeleteItem(item.id)}
+                                                className="bg-gray-100 text-gray-700 rounded px-3 py-1.5 hover:bg-gray-200"
+                                            >
+                                                Supprimer
+                                            </button>
+                                        </div>
                                     </div>
 
                                     <div className="w-full h-2 bg-gray-100 rounded mt-3 overflow-hidden">
