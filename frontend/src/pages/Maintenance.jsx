@@ -15,6 +15,7 @@ export default function Maintenance() {
     const [selectedPrinterId, setSelectedPrinterId] = useState('');
     const [itemsByPrinter, setItemsByPrinter] = useState({});
     const [form, setForm] = useState(emptyForm);
+    const [hoursToAdd, setHoursToAdd] = useState('1');
     const [hoursToAddByItem, setHoursToAddByItem] = useState({});
 
     useEffect(() => {
@@ -95,10 +96,9 @@ export default function Maintenance() {
     };
 
     const handleAddHours = (itemId) => {
-        const rawValue = hoursToAddByItem[itemId] || '1';
-        const hoursToAdd = Number(rawValue);
+        const hours = Number(hoursToAddByItem[itemId] || '1');
 
-        if (!Number.isFinite(hoursToAdd) || hoursToAdd <= 0) {
+        if (!Number.isFinite(hours) || hours <= 0) {
             alert('Veuillez saisir un nombre d\'heures valide.');
             return;
         }
@@ -107,9 +107,26 @@ export default function Maintenance() {
             ...prev,
             [selectedPrinterId]: (prev[selectedPrinterId] || []).map((item) => (
                 item.id === itemId
-                    ? { ...item, usedHours: Number((item.usedHours + hoursToAdd).toFixed(2)) }
+                    ? { ...item, usedHours: Number((item.usedHours + hours).toFixed(2)) }
                     : item
             )),
+        }));
+    };
+
+    const handleAddHoursToAll = () => {
+        const hours = Number(hoursToAdd);
+
+        if (!Number.isFinite(hours) || hours <= 0) {
+            alert('Veuillez saisir un nombre d\'heures valide.');
+            return;
+        }
+
+        setItemsByPrinter((prev) => ({
+            ...prev,
+            [selectedPrinterId]: (prev[selectedPrinterId] || []).map((item) => ({
+                ...item,
+                usedHours: Number((item.usedHours + hours).toFixed(2)),
+            })),
         }));
     };
 
@@ -185,7 +202,30 @@ export default function Maintenance() {
             </section>
 
             <section className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">Objets de maintenance</h3>
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+                    <h3 className="text-lg font-semibold text-gray-800">Objets de maintenance</h3>
+                    {selectedItems.length > 0 && (
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="number"
+                                min="0.1"
+                                step="0.1"
+                                value={hoursToAdd}
+                                onChange={(e) => setHoursToAdd(e.target.value)}
+                                className="w-28 border border-gray-300 rounded px-2 py-1"
+                                placeholder="Heures"
+                            />
+                            <button
+                                type="button"
+                                onClick={handleAddHoursToAll}
+                                disabled={!selectedPrinterId}
+                                className="bg-emerald-600 text-white rounded px-3 py-1.5 hover:bg-emerald-700 disabled:bg-emerald-300"
+                            >
+                                Ajouter des heures
+                            </button>
+                        </div>
+                    )}
+                </div>
 
                 {selectedItems.length === 0 ? (
                     <p className="text-gray-500">Aucun objet de maintenance pour cette imprimante.</p>
@@ -221,10 +261,7 @@ export default function Maintenance() {
                                                 min="0.1"
                                                 step="0.1"
                                                 value={hoursToAddByItem[item.id] || '1'}
-                                                onChange={(event) => {
-                                                    const value = event.target.value;
-                                                    setHoursToAddByItem((prev) => ({ ...prev, [item.id]: value }));
-                                                }}
+                                                onChange={(event) => setHoursToAddByItem((prev) => ({ ...prev, [item.id]: event.target.value }))}
                                                 className="w-28 border border-gray-300 rounded px-2 py-1"
                                             />
                                             <button
