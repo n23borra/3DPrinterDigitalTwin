@@ -19,14 +19,19 @@ import com.fablab.backend.models.Alert;
  * @param category category/type of alert
  * @param assignedTo id of user assigned to fix (nullable)
  */
-public record AlertDTO(Long id, Long userId, UUID printerId, String title, String details, Instant logTime, 
+public record AlertDTO(Long id, Long userId, UUID printerId, String printerName, String title, String details, Instant logTime,
                        Alert.Status status, String severity, String priority, String category, Long assignedTo) {
-    
+
     public static AlertDTO from(Alert alert) {
+        return from(alert, null);
+    }
+
+    public static AlertDTO from(Alert alert, String printerName) {
         return new AlertDTO(
             alert.getId(),
             alert.getUserId(),
             alert.getPrinterId(),
+            printerName,
             alert.getTitle(),
             alert.getDetails(),
             alert.getLogTime(),

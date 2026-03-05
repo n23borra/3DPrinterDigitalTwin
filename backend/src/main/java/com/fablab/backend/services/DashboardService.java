@@ -42,8 +42,7 @@ public class DashboardService {
         return alertRepository.findByPrinterId(printerId);
     }
 
-    public List<UUID> getAllUuids(){
-        List<UUID> ids = printerRepository.findAll().stream().map(Printer::getId).toList();
-        return ids;
+    public List<Printer> getAllPrinters(){
+        return printerRepository.findAll();
     }
 }

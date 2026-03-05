@@ -1,7 +1,9 @@
 package com.fablab.backend.controllers;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fablab.backend.dto.AlertDTO;
 import com.fablab.backend.models.Alert;
 import com.fablab.backend.models.User;
+import com.fablab.backend.models.printer.Printer;
 import com.fablab.backend.repositories.AlertRepository;
 import com.fablab.backend.repositories.UserRepository;
+import com.fablab.backend.repositories.printer.PrinterRepository;
 import com.fablab.backend.services.AlertModuleService;
 
 import lombok.RequiredArgsConstructor;
@@ -37,6 +41,7 @@ public class AlertController {
     private final UserRepository userRepo;
     private final JavaMailSender mailSender;
     private final AlertModuleService alertService;
+    private final PrinterRepository printerRepository;
 
     /**
      * Checks if the current authenticated user has admin or superadmin role.
@@ -74,9 +79,11 @@ public class AlertController {
      */
     @GetMapping
     public List<AlertDTO> getAllAlerts() {
+        Map<UUID, String> printerNames = printerRepository.findAll().stream()
+                .collect(Collectors.toMap(Printer::getId, Printer::getName));
         return alertRepository.findAll()
                 .stream()
-                .map(AlertDTO::from)
+                .map(a -> AlertDTO.from(a, printerNames.get(a.getPrinterId())))
                 .toList();
     }
 
@@ -101,9 +108,11 @@ public class AlertController {
      */
     @GetMapping("/unresolved")
     public List<AlertDTO> getAllUnresolvedAlerts() {
+        Map<UUID, String> printerNames = printerRepository.findAll().stream()
+                .collect(Collectors.toMap(Printer::getId, Printer::getName));
         return alertRepository.findByStatus(Alert.Status.UNRESOLVED)
                 .stream()
-                .map(AlertDTO::from)
+                .map(a -> AlertDTO.from(a, printerNames.get(a.getPrinterId())))
                 .toList();
     }
 

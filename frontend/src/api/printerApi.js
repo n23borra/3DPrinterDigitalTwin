@@ -24,7 +24,7 @@ export const fetchPrinterState = async (id) => {
     if (USE_TEST_ENDPOINTS) {
         // Use test endpoint (no auth required)
         try {
-            const response = await fetch(`http://localhost:8080/api/test/printers/${id}/fetch`);
+            const response = await fetch(`http://localhost:8080/api/test/printers/${id}/latest`);
             const data = await response.json();
             return { data };
         } catch (error) {

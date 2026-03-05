@@ -44,19 +44,27 @@ export default function Alerts() {
                 const { data: user } = await api.get('/me');
                 setUserId(user.id);
                 setUserRole(user.role || 'USER');
+            } catch (e) {
+                console.error('Failed to fetch user info:', e);
+            }
+
+            try {
                 const { data } = await api.get('/alerts');
                 setAlerts(Array.isArray(data) ? data : []);
+            } catch (e) {
+                console.error('Failed to fetch alerts:', e);
+                setAlerts([]);
+            }
 
+            try {
                 const response = await fetchPrinters();
                 const printerList = response?.data || [];
                 setPrinters(printerList);
                 if (printerList.length > 0) {
                     setSelectedPrinterId(printerList[0].id);
                 }
-                console.log('Selected printer UUID : ', selectedPrinterId);
             } catch (e) {
-                console.error(e);
-                setAlerts([]);
+                console.error('Failed to fetch printers:', e);
                 setPrinters([]);
             } finally {
                 setLoading(false);
@@ -267,6 +275,15 @@ export default function Alerts() {
                                 />
                             )}
                         </div>
+                        <select
+                            value={selectedPrinterId}
+                            onChange={(e) => setSelectedPrinterId(e.target.value)}
+                            className="w-full border rounded px-2 py-1 mb-3"
+                        >
+                            {printers.map((p) => (
+                                <option key={p.id} value={p.id}>{p.name}</option>
+                            ))}
+                        </select>
                         <div className="flex gap-3 mb-3">
                             <Tooltip
                                 text={
@@ -417,6 +434,7 @@ export default function Alerts() {
                                         </span>
                                         
                                     </div>
+                                    {(alert.printerName || alert.printerId) && <p className="text-xs text-gray-500">Printer: {alert.printerName ?? alert.printerId}</p>}
                                     {alert.details && <p className="text-sm text-gray-700 mb-2">{alert.details}</p>}
                                     {alert.category && <p className="text-xs text-gray-500">Category: {alert.category}</p>}
                                     <p className="text-xs text-gray-400 mt-1">
