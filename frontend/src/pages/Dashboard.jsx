@@ -12,8 +12,8 @@ export default function Dashboard() {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
     const [counts, setCounts] = useState({userCount: 0, alertCount: 0, printerAvailableCount: 0});
-    const [alertsByPrinter, setAlertsByPrinter] = useState([]); // [{printerName, alertCount}]
-    const [unresolvedAlerts, setUnresolvedAlerts] = useState([]); // [{id, title, printerName, severity, createdAt}]
+    const [alertsByPrinter, setAlertsByPrinter] = useState([]); 
+    const [unresolvedAlerts, setUnresolvedAlerts] = useState([]); 
     let username = 'User';
 
     useEffect(() => {
