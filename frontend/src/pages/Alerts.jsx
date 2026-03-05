@@ -41,19 +41,27 @@ export default function Alerts() {
                 const { data: user } = await api.get('/me');
                 setUserId(user.id);
                 setUserRole(user.role || 'USER');
+            } catch (e) {
+                console.error('Failed to fetch user info:', e);
+            }
+
+            try {
                 const { data } = await api.get('/alerts');
                 setAlerts(Array.isArray(data) ? data : []);
+            } catch (e) {
+                console.error('Failed to fetch alerts:', e);
+                setAlerts([]);
+            }
 
+            try {
                 const response = await fetchPrinters();
                 const printerList = response?.data || [];
                 setPrinters(printerList);
                 if (printerList.length > 0) {
                     setSelectedPrinterId(printerList[0].id);
                 }
-                console.log('Selected printer UUID : ', selectedPrinterId);
             } catch (e) {
-                console.error(e);
-                setAlerts([]);
+                console.error('Failed to fetch printers:', e);
                 setPrinters([]);
             } finally {
                 setLoading(false);
