@@ -33,7 +33,7 @@ export default function Alerts() {
         priority: 'MEDIUM',
         category: '',
     });
-    const [categoryMode, setCategoryMode] = useState('predefined'); // 'predefined' ou 'custom'
+    const [selectedCategory, setSelectedCategory] = useState(); 
     const [customCategory, setCustomCategory] = useState('');
 
     const allowedRoles = ['ADMIN', 'SUPER_ADMIN'];
@@ -254,15 +254,15 @@ export default function Alerts() {
                             <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
                                                        
                             <select
-                                value={formData.category || CATEGORIES[0]}
-                                onChange={e => setFormData({ ...formData, category: e.target.value })}
+                                value={selectedCategory || CATEGORIES[0]}
+                                onChange={e => {setSelectedCategory(e.target.value); setFormData({ ...formData, category: e.target.value })}}
                                 className="w-full border rounded px-2 py-1"
                             >
                                 {CATEGORIES.map((category) => (
                                     <option key={category} value={category}>{category}</option>
                                 ))}
                             </select>
-                            {formData.category !== 'OTHER' ? ("") : (
+                            {selectedCategory !== 'OTHER' ? ("") : (
                                 <input
                                     type="text"
                                     placeholder="Custom category"
