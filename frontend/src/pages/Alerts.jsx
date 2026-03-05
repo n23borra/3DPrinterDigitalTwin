@@ -254,6 +254,15 @@ export default function Alerts() {
                             onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                             className="w-full border rounded px-2 py-1 mb-3"
                         />
+                        <select
+                            value={selectedPrinterId}
+                            onChange={(e) => setSelectedPrinterId(e.target.value)}
+                            className="w-full border rounded px-2 py-1 mb-3"
+                        >
+                            {printers.map((p) => (
+                                <option key={p.id} value={p.id}>{p.name}</option>
+                            ))}
+                        </select>
                         <div className="flex gap-3 mb-3">
                             <Tooltip
                                 text={
