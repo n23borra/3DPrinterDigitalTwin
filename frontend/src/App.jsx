@@ -13,7 +13,6 @@ import Settings from './pages/Settings';
 import ProtectedRoute from './components/ProtectedRoute';
 import SuperAdminRoute from './components/SuperAdminRoute';
 import PrivilegedRoute from './components/PrivilegedRoute';
-import CommandsPage from './pages/CommandsPage';
 import DashboardLayout from './layouts/DashboardLayout';
 
 import AuditLogs from './pages/AuditLogs';
@@ -39,9 +38,6 @@ function App() {
                     <Route path="/alerts" element={<Alerts/>}/>
                     <Route path="/maintenance" element={<Maintenance/>}/>
                     <Route path="/audit" element={<AuditLogs/>}/>
-                    <Route element={<PrivilegedRoute/>}>
-                        <Route path="/commands" element={<CommandsPage/>}/>
-                    </Route>
                     <Route element={<SuperAdminRoute/>}>
                         <Route path="/admin/users" element={<UserManagement/>}/>
                     </Route>
