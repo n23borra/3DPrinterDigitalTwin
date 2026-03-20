@@ -438,7 +438,7 @@ export default function PrintersDashboard() {
                             {/* Temperatures */}
                             <div className="bg-white rounded-lg shadow p-5">
                                 <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                                    🌡️ Temperatures
+                                    Temperatures
                                 </h4>
                                 <div className="space-y-4">
                                     <div>
@@ -495,7 +495,7 @@ export default function PrintersDashboard() {
                             {/* Position */}
                             <div className="bg-white rounded-lg shadow p-5">
                                 <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                                    📍 Position
+                                    Position
                                 </h4>
                                 <div className="space-y-3">
                                     <div className="flex justify-between items-center">
@@ -530,7 +530,7 @@ export default function PrintersDashboard() {
                             {/* Print Status */}
                             <div className="bg-white rounded-lg shadow p-5">
                                 <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                                    🖨️ Print Status
+                                    Print Status
                                 </h4>
                                 <div className="space-y-3">
                                     <div>
@@ -582,7 +582,7 @@ export default function PrintersDashboard() {
                             {(selectedSnapshot.liveVelocity !== null || selectedSnapshot.maxVelocity !== null) && (
                                 <div className="bg-white rounded-lg shadow p-5">
                                     <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                                        ⚡ Motion
+                                        Motion
                                     </h4>
                                     <div className="space-y-3">
                                         {selectedSnapshot.liveVelocity !== null && (
@@ -609,7 +609,7 @@ export default function PrintersDashboard() {
                             {(selectedSnapshot.partFanSpeed !== null || selectedSnapshot.filamentDetected !== null) && (
                                 <div className="bg-white rounded-lg shadow p-5">
                                     <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                                        💨 Fans & Sensors
+                                        Fans & Sensors
                                     </h4>
                                     <div className="space-y-3">
                                         {selectedSnapshot.partFanSpeed !== null && (
