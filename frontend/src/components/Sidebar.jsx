@@ -62,7 +62,7 @@ export default function Sidebar({
         <aside className={clsx(styles.sidebar, isCollapsed && styles.collapsed)}>
             <div className={styles.topSection}>
                 <div className={styles.titleRow}>
-                    <span className={styles.title}>{appTitle}</span>
+                    {!isCollapsed && <span className={styles.title}>{appTitle}</span>}
                     <button
                         type="button"
                         className={styles.collapseButton}

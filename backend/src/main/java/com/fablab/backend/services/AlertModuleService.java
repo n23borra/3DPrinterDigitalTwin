@@ -710,6 +710,7 @@ public class AlertModuleService {
             Alert alert = Alert.builder()
                     .userId(userId)
                     .title(errorCode + " - " + message)
+                    .printerId(UUID.fromString(printerId))
                     .details(message)
                     .category(category)
                     .severity(severity)
